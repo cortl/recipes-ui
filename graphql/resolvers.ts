@@ -1,10 +1,8 @@
-const data = [
-    { title: 'Mashed Potatoes' }
-]
+import recipes from '@cortl/recipes';
 
 const resolvers = {
     Query: {
-        getRecipes: () => data
+        getRecipes: () => recipes
     }
 }
 
