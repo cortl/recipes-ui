@@ -27,6 +27,8 @@ type Recipe = {
     tags: string[];
     time: Time;
     image: string;
+
+    [key: string]: unknown
 }
 
 declare module '@cortl/recipes' {
