@@ -32,8 +32,13 @@ const typeDefs = gql`
     image: String
   }
 
+  input RecipeWhere {
+    slug: String
+  }
+
   type Query {
-    recipes: [Recipe]
+    recipes(where: RecipeWhere): [Recipe]
+    recipe(slug: String!): Recipe
   }
 `
 

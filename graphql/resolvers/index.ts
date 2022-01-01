@@ -1,10 +1,9 @@
-import recipes from '@cortl/recipes';
-
-import { archivedResolver } from './recipe';
+import { archivedResolver, recipeResolver, recipesResolver } from './recipe';
 
 const resolvers = {
     Query: {
-        recipes: () => recipes
+        recipes: recipesResolver,
+        recipe: recipeResolver
     },
 
     Recipe: {
