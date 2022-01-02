@@ -1,8 +1,8 @@
 import recipes from '@cortl/recipes';
 import { UserInputError } from 'apollo-server-micro';
 
-import { ArrayFilter, BooleanFilter, RecipeInput, RecipesWhereInput } from '../../types/resolvers';
-import { getKeyValue, filterBoolean, filterArray } from './utils/filters';
+import { ArrayFilter, BooleanFilter, NumberFilter, RecipeInput, RecipesWhereInput } from '../../types/resolvers';
+import { getKeyValue, filterBoolean, filterArray, filterNumber } from './utils/filters';
 
 const archivedResolver = ({ archived }: Recipe) => {
     return Boolean(archived);
@@ -28,6 +28,10 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
 
                 if (recipeField instanceof Array) {
                     return keep && filterArray(recipeField, filterValue as ArrayFilter)
+                }
+
+                if (typeof recipeField === 'number') {
+                    return keep && filterNumber(recipeField, filterValue as NumberFilter)
                 }
 
                 return keep;

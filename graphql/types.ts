@@ -42,7 +42,15 @@ const typeDefs = gql`
     exists: Boolean
   }
 
+  input NumberFilter {
+    gt: Int
+    lt: Int
+    eq: Int
+    exists: Boolean
+  }
+
   input RecipesWhere {
+    rating: NumberFilter
     image: BooleanFilter
     archived: BooleanFilter
     tags: ArrayFilter

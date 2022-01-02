@@ -1,4 +1,4 @@
-import { ArrayFilter, BooleanFilter } from "../../../types/resolvers";
+import { ArrayFilter, BooleanFilter, NumberFilter } from "../../../types/resolvers";
 
 const getKeyValue = <U extends keyof T, T extends object>(key: U, obj: T) => obj[key];
 
@@ -34,5 +34,28 @@ const filterArray = (value: any[], filter: ArrayFilter) => {
     return keep;
 }
 
+const filterNumber = (value: number, filter: NumberFilter) => {
+    let keep = true;
 
-export { getKeyValue, filterBoolean, filterArray };
+    if (filter.hasOwnProperty('exists')) {
+        keep = keep && filter.exists
+            ? value != null
+            : value == null;
+    }
+
+    if (filter.hasOwnProperty('gt')) {
+        keep = keep && value > filter.gt;
+    }
+
+    if (filter.hasOwnProperty('lt')) {
+        keep = keep && value < filter.lt;
+    }
+
+    if (filter.hasOwnProperty('eq')) {
+        keep = keep && filter.eq === value;
+    }
+
+    return keep;
+}
+
+export { getKeyValue, filterBoolean, filterArray, filterNumber };

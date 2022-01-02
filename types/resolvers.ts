@@ -58,13 +58,16 @@ export type ArrayFilter = {
     exists: boolean;
 }
 
+export type NumberFilter = {
+    exists: boolean;
+    gt: number;
+    lt: number;
+    eq: number;
+}
+
 export type RecipesWhereInput = {
     where: {
-        // rating: {
-        //     gt: number;
-        //     lt: number;
-        //     eq: number;
-        // },
+        rating: NumberFilter,
         tags: ArrayFilter;
         image: StringFilter;
         archived: BooleanFilter;
