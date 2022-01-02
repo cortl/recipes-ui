@@ -2,7 +2,7 @@ import recipes from '@cortl/recipes';
 import { UserInputError } from 'apollo-server-micro';
 
 import { RecipeInput, RecipesWhereInput } from '../../types/resolvers';
-import { hasField } from './utils/filters';
+import { hasField, hasValueIn } from './utils/filters';
 
 const archivedResolver = ({ archived }: Recipe) => {
     return Boolean(archived);
@@ -10,7 +10,8 @@ const archivedResolver = ({ archived }: Recipe) => {
 
 const getFieldForQuery = (queryField: string): any => {
     const fields = {
-        hasImage: 'image'
+        hasImage: 'image',
+        isArchived: 'archived'
     }
 
     return (fields as any)[queryField] ?? queryField;
@@ -26,8 +27,20 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
             const result = Object.entries(args.where).reduce((keep, [filterKey, filterValue]) => {
                 const keyToFilter = getFieldForQuery(filterKey);
 
+                if (!filterValue) {
+                    return keep;
+                }
+
                 if (typeof filterValue === "boolean") {
                     return keep && hasField(keyToFilter, filterValue)(recipe);
+                }
+
+                if (typeof filterValue === "object") {
+                    if (Boolean((filterValue as any).in)) {
+                        const valuesToKeep = (filterValue as RecipesWhereInput['where']['tags']).in
+
+                        return keep && hasValueIn(keyToFilter, valuesToKeep)(recipe)
+                    }
                 }
 
                 return keep;

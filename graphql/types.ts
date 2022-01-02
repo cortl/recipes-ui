@@ -32,8 +32,14 @@ const typeDefs = gql`
     image: String
   }
 
+  input ArrayFilter {
+    in: [String!]!
+  }
+
   input RecipesWhere {
     hasImage: Boolean
+    isArchived: Boolean
+    tags: ArrayFilter
   }
 
   type Query {

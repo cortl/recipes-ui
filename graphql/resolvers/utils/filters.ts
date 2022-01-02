@@ -7,5 +7,15 @@ const hasField = (field: string, value: boolean) => (recipe: Recipe) => {
     return Boolean(recipeValue) === value
 }
 
+const hasValueIn = (field: string, values: any[]) => (recipe: Recipe) => {
+    const recipeValue = getKeyValue<keyof Recipe, Recipe>(field, recipe);
 
-export { hasField };
+    if (recipeValue instanceof Array) {
+        return Boolean(recipeValue) && values.every(value => recipeValue.some(valueToCompare => valueToCompare === value));
+    } else {
+        return Boolean(recipeValue) && values.some(value => value === recipeValue);
+    }
+}
+
+
+export { hasField, hasValueIn };
