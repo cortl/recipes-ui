@@ -1,21 +1,38 @@
+import { ArrayFilter, BooleanFilter } from "../../../types/resolvers";
 
 const getKeyValue = <U extends keyof T, T extends object>(key: U, obj: T) => obj[key];
 
-const hasField = (field: string, value: boolean) => (recipe: Recipe) => {
-    const recipeValue = getKeyValue<keyof Recipe, Recipe>(field, recipe);
+const filterBoolean = (value: boolean | undefined | null, filter: BooleanFilter) => {
+    let keep = true;
 
-    return Boolean(recipeValue) === value
-}
-
-const hasValueIn = (field: string, values: any[]) => (recipe: Recipe) => {
-    const recipeValue = getKeyValue<keyof Recipe, Recipe>(field, recipe);
-
-    if (recipeValue instanceof Array) {
-        return Boolean(recipeValue) && values.every(value => recipeValue.some(valueToCompare => valueToCompare === value));
-    } else {
-        return Boolean(recipeValue) && values.some(value => value === recipeValue);
+    if (filter.hasOwnProperty('exists')) {
+        keep = keep && filter.exists
+            ? value != null
+            : value == null;
     }
+
+    if (filter.hasOwnProperty('is')) {
+        keep = keep && Boolean(value) === filter.is
+    }
+
+    return keep;
+}
+
+const filterArray = (value: any[], filter: ArrayFilter) => {
+    let keep = true;
+
+    if (filter.hasOwnProperty('exists')) {
+        keep = keep && filter.exists
+            ? value != null
+            : value == null;
+    }
+
+    if (filter.hasOwnProperty('in')) {
+        keep = keep && filter.in.every(filterValue => value.some(valueToCompare => valueToCompare === filterValue))
+    }
+
+    return keep;
 }
 
 
-export { hasField, hasValueIn };
+export { getKeyValue, filterBoolean, filterArray };

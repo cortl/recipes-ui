@@ -1,20 +1,11 @@
 import recipes from '@cortl/recipes';
 import { UserInputError } from 'apollo-server-micro';
 
-import { RecipeInput, RecipesWhereInput } from '../../types/resolvers';
-import { hasField, hasValueIn } from './utils/filters';
+import { ArrayFilter, BooleanFilter, RecipeInput, RecipesWhereInput } from '../../types/resolvers';
+import { getKeyValue, filterBoolean, filterArray } from './utils/filters';
 
 const archivedResolver = ({ archived }: Recipe) => {
     return Boolean(archived);
-}
-
-const getFieldForQuery = (queryField: string): any => {
-    const fields = {
-        hasImage: 'image',
-        isArchived: 'archived'
-    }
-
-    return (fields as any)[queryField] ?? queryField;
 }
 
 const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
@@ -23,24 +14,20 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
     }
 
     if (args.where) {
-        return recipes.filter(recipe => {
+        return recipes.slice(0, 50).filter(recipe => {
             const result = Object.entries(args.where).reduce((keep, [filterKey, filterValue]) => {
-                const keyToFilter = getFieldForQuery(filterKey);
-
                 if (!filterValue) {
                     return keep;
                 }
 
-                if (typeof filterValue === "boolean") {
-                    return keep && hasField(keyToFilter, filterValue)(recipe);
+                const recipeField = getKeyValue<keyof Recipe, Recipe>(filterKey, recipe)
+
+                if (typeof recipeField === 'boolean' || recipeField == null) {
+                    return keep && filterBoolean(recipeField, filterValue as BooleanFilter)
                 }
 
-                if (typeof filterValue === "object") {
-                    if (Boolean((filterValue as any).in)) {
-                        const valuesToKeep = (filterValue as RecipesWhereInput['where']['tags']).in
-
-                        return keep && hasValueIn(keyToFilter, valuesToKeep)(recipe)
-                    }
+                if (recipeField instanceof Array) {
+                    return keep && filterArray(recipeField, filterValue as ArrayFilter)
                 }
 
                 return keep;

@@ -32,13 +32,19 @@ const typeDefs = gql`
     image: String
   }
 
+  input BooleanFilter {
+    is: Boolean
+    exists: Boolean
+  }
+
   input ArrayFilter {
     in: [String!]!
+    exists: Boolean
   }
 
   input RecipesWhere {
-    hasImage: Boolean
-    isArchived: Boolean
+    image: BooleanFilter
+    archived: BooleanFilter
     tags: ArrayFilter
   }
 

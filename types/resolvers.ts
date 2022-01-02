@@ -43,6 +43,21 @@ enum Tag {
     GRILLING = "Grilling",
 }
 
+export type BooleanFilter = {
+    exists: boolean;
+    is: boolean
+}
+
+export type StringFilter = {
+    exists: boolean;
+    is: string;
+}
+
+export type ArrayFilter = {
+    in: Tag[],
+    exists: boolean;
+}
+
 export type RecipesWhereInput = {
     where: {
         // rating: {
@@ -50,11 +65,9 @@ export type RecipesWhereInput = {
         //     lt: number;
         //     eq: number;
         // },
-        tags: {
-            in: Tag[]
-        };
-        isArchived: boolean;
-        hasImage: boolean;
+        tags: ArrayFilter;
+        image: StringFilter;
+        archived: BooleanFilter;
 
         [key: string]: unknown
     }
