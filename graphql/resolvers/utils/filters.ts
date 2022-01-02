@@ -1,14 +1,18 @@
-import { ArrayFilter, BooleanFilter, NumberFilter } from "../../../types/resolvers";
+import { ArrayFilter, BooleanFilter, Filter, NumberFilter } from "../../../types/resolvers";
 
 const getKeyValue = <U extends keyof T, T extends object>(key: U, obj: T) => obj[key];
+
+const doesValueExist = (value: any | undefined | null, filter: Filter) => {
+    return filter.exists
+        ? value != null
+        : value == null;
+}
 
 const filterBoolean = (value: boolean | undefined | null, filter: BooleanFilter) => {
     let keep = true;
 
     if (filter.hasOwnProperty('exists')) {
-        keep = keep && filter.exists
-            ? value != null
-            : value == null;
+        keep = keep && doesValueExist(value, filter);
     }
 
     if (filter.hasOwnProperty('is')) {
@@ -22,9 +26,7 @@ const filterArray = (value: any[], filter: ArrayFilter) => {
     let keep = true;
 
     if (filter.hasOwnProperty('exists')) {
-        keep = keep && filter.exists
-            ? value != null
-            : value == null;
+        keep = keep && doesValueExist(value, filter);
     }
 
     if (filter.hasOwnProperty('in')) {
@@ -38,9 +40,7 @@ const filterNumber = (value: number, filter: NumberFilter) => {
     let keep = true;
 
     if (filter.hasOwnProperty('exists')) {
-        keep = keep && filter.exists
-            ? value != null
-            : value == null;
+        keep = keep && doesValueExist(value, filter);
     }
 
     if (filter.hasOwnProperty('gt')) {

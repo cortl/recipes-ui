@@ -14,28 +14,35 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
     }
 
     if (args.where) {
-        return recipes.slice(0, 50).filter(recipe => {
+        return recipes.filter(recipe => {
             const result = Object.entries(args.where).reduce((keep, [filterKey, filterValue]) => {
+                if (!keep) {
+                    return keep;
+                }
+
                 if (!filterValue) {
                     return keep;
                 }
 
                 const recipeField = getKeyValue<keyof Recipe, Recipe>(filterKey, recipe)
+                let recipeMatchesCriteria = true;
 
                 if (typeof recipeField === 'boolean' || recipeField == null) {
-                    return keep && filterBoolean(recipeField, filterValue as BooleanFilter)
+                    recipeMatchesCriteria = recipeMatchesCriteria && filterBoolean(recipeField, filterValue as BooleanFilter)
                 }
 
                 if (recipeField instanceof Array) {
-                    return keep && filterArray(recipeField, filterValue as ArrayFilter)
+                    recipeMatchesCriteria = recipeMatchesCriteria && filterArray(recipeField, filterValue as ArrayFilter)
                 }
 
                 if (typeof recipeField === 'number') {
-                    return keep && filterNumber(recipeField, filterValue as NumberFilter)
+                    recipeMatchesCriteria = recipeMatchesCriteria && filterNumber(recipeField, filterValue as NumberFilter)
                 }
 
-                return keep;
+                return recipeMatchesCriteria;
             }, true);
+
+            console.groupEnd();
 
             return result;
         })

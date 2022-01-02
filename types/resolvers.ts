@@ -43,23 +43,23 @@ enum Tag {
     GRILLING = "Grilling",
 }
 
-export type BooleanFilter = {
+export interface Filter {
     exists: boolean;
+}
+
+export interface BooleanFilter extends Filter {
     is: boolean
 }
 
-export type StringFilter = {
-    exists: boolean;
+export interface StringFilter extends Filter {
     is: string;
 }
 
-export type ArrayFilter = {
+export interface ArrayFilter extends Filter {
     in: Tag[],
-    exists: boolean;
 }
 
-export type NumberFilter = {
-    exists: boolean;
+export interface NumberFilter extends Filter {
     gt: number;
     lt: number;
     eq: number;
