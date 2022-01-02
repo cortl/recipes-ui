@@ -3,18 +3,22 @@ import { UserInputError } from 'apollo-server-micro';
 
 import { ArrayFilter, BooleanFilter, NumberFilter, RecipeInput, RecipesWhereInput } from '../../types/resolvers';
 import { getKeyValue, filterBoolean, filterArray, filterNumber } from './utils/filters';
+import { sortByField } from './utils/sort';
 
 const archivedResolver = ({ archived }: Recipe) => {
     return Boolean(archived);
 }
 
 const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
+
     if (!args) {
         return recipes;
     }
 
+    let results = recipes;
+
     if (args.where) {
-        return recipes.filter(recipe => {
+        results = results.filter(recipe => {
             const result = Object.entries(args.where).reduce((keep, [filterKey, filterValue]) => {
                 if (!keep) {
                     return keep;
@@ -42,13 +46,15 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
                 return recipeMatchesCriteria;
             }, true);
 
-            console.groupEnd();
-
             return result;
         })
     }
 
-    return recipes
+    if (args.sort) {
+        results.sort(sortByField(args.sort.field, args.sort.direction))
+    }
+
+    return results
 }
 
 const recipeResolver = (_root: undefined, args: RecipeInput) => {

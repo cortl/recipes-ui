@@ -56,8 +56,18 @@ const typeDefs = gql`
     tags: ArrayFilter
   }
 
+  enum SortDirection {
+    ASC
+    DESC
+  }
+
+  input Sort {
+    field: String!
+    direction: SortDirection!
+  }
+
   type Query {
-    recipes(where: RecipesWhere): [Recipe]
+    recipes(where: RecipesWhere, sort: Sort): [Recipe]
     recipe(slug: String!): Recipe
   }
 `

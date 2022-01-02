@@ -65,15 +65,26 @@ export interface NumberFilter extends Filter {
     eq: number;
 }
 
+export enum SortDirection {
+    ASC = "ASC",
+    DESC = "DESC"
+}
+
+export interface Sort {
+    field: string;
+    direction: SortDirection
+}
+
 export type RecipesWhereInput = {
     where: {
-        rating: NumberFilter,
-        tags: ArrayFilter;
-        image: StringFilter;
-        archived: BooleanFilter;
+        rating?: NumberFilter,
+        tags?: ArrayFilter;
+        image?: StringFilter;
+        archived?: BooleanFilter;
 
         [key: string]: unknown
-    }
+    },
+    sort?: Sort
 }
 
 
