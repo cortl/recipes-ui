@@ -10,7 +10,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (fileExists) {
     const foundImage = fs.readFileSync(path);
 
-    console.log(foundImage);
     res.status(200).write(foundImage);
     res.end();
   } else {

@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.8",
     "@cortl/recipes": "^3.1.10",
     "apollo-server-micro": "^3.6.2",
     "graphql": "^16.3.0",
