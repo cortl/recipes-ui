@@ -11,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const foundImage = fs.readFileSync(path);
 
     console.log(foundImage);
-    res.status(200).setHeader("Content-Type", "image/jpg").write(foundImage);
+    res.status(200).write(foundImage);
     res.end();
   } else {
     res.status(404).send("Not Found");

@@ -1,4 +1,9 @@
-import { archivedResolver, recipeResolver, recipesResolver } from './recipe';
+import {
+  archivedResolver,
+  imageResolver, 
+  recipeResolver,
+  recipesResolver,
+} from "./recipe";
 
 const resolvers = {
     Query: {
@@ -7,7 +12,8 @@ const resolvers = {
     },
 
     Recipe: {
-        archived: archivedResolver
+        archived: archivedResolver,
+        image: imageResolver,
     }
 }
 

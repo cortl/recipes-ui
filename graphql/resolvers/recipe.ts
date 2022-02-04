@@ -67,4 +67,10 @@ const recipeResolver = (_root: undefined, args: RecipeInput) => {
     return recipe;
 }
 
-export { archivedResolver, recipeResolver, recipesResolver }
+const imageResolver = ({image}: Recipe) => {
+    console.log(image);
+
+    return `http://localhost:3000/api/recipes/images/${image}`;
+}
+
+export { archivedResolver, recipeResolver, imageResolver, recipesResolver }
