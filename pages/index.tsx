@@ -2,6 +2,8 @@ import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
 
 import { Layout } from "../src/client/components/layout";
+import { Error } from "../src/client/components/error";
+import { Loading } from "../src/client/components/loading";
 import { GET_HOMEPAGE_RECIPES } from "../src/client/queries";
 
 import styles from "../styles/Home.module.css";
@@ -22,9 +24,9 @@ const HomePage: NextPage = () => {
   });
 
   const content = loading ? (
-    <p>{"Loading..."}</p>
+    <Loading />
   ) : error ? (
-    <p>{`Error! ${error.message}`}</p>
+    <Error message={error.message} />
   ) : (
     <ul>
       {data.recipes.map(({ title, slug }: Recipe) => {
