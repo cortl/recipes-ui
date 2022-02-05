@@ -1,9 +1,9 @@
-import recipes from '@cortl/recipes';
+import Recipes from '@cortl/recipes';
 import { UserInputError } from 'apollo-server-micro';
 
-import { ArrayFilter, BooleanFilter, NumberFilter, RecipeInput, RecipesWhereInput } from '../../types/resolvers';
-import { getKeyValue, filterBoolean, filterArray, filterNumber } from '../../src/utils/filters';
-import { sortByField } from '../../src/utils/sort';
+import { ArrayFilter, BooleanFilter, NumberFilter, RecipeInput, RecipesWhereInput } from '../../../../types/resolvers';
+import { getKeyValue, filterBoolean, filterArray, filterNumber } from '../../../utils/filters';
+import { sortByField } from '../../../utils/sort';
 
 const archivedResolver = ({ archived }: Recipe) => {
     return Boolean(archived);
@@ -12,10 +12,10 @@ const archivedResolver = ({ archived }: Recipe) => {
 const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
 
     if (!args) {
-        return recipes;
+        return Recipes.asArray;
     }
 
-    let results = recipes;
+    let results = Recipes.asArray;
 
     if (args.where) {
         results = results.filter(recipe => {
@@ -58,7 +58,7 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
 }
 
 const recipeResolver = (_root: undefined, args: RecipeInput) => {
-    const recipe = recipes.find(recipe => recipe.slug === args.slug)
+    const recipe = Recipes.asArray.find((recipe) => recipe.slug === args.slug);
 
     if (!recipe) {
         throw new UserInputError(`${args} not found.`)
@@ -68,8 +68,6 @@ const recipeResolver = (_root: undefined, args: RecipeInput) => {
 }
 
 const imageResolver = ({image}: Recipe) => {
-    console.log(image);
-
     return `http://localhost:3000/api/recipes/images/${image}`;
 }
 

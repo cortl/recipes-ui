@@ -19,8 +19,8 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
       <main className={styles.main}>
         <h1 className={styles.title}>Recipes</h1>
         <ul>
-          {recipes.map(({ title }: Recipe) => {
-            return <li>{title}</li>;
+          {recipes.map(({ title, slug}: Recipe) => {
+            return <li key={slug}>{title}</li>;
           })}
         </ul>
       </main>
