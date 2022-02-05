@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Recipes from "@cortl/recipes";
+import { Layout } from "../src/client/components/layout";
 
 interface IRecipePage {
   title: string;
@@ -7,9 +8,9 @@ interface IRecipePage {
 
 const Recipe: NextPage<IRecipePage> = ({ title }) => {
   return (
-    <>
+    <Layout title={`${title} | Recipes`} description={'a recipe.'}>
       <h1>{title}</h1>
-    </>
+    </Layout>
   );
 };
 
