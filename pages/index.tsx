@@ -1,54 +1,13 @@
+import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
-import Head from "next/head";
+
+import { Layout } from "../src/client/components/layout";
+import { GET_HOMEPAGE_RECIPES } from "../src/client/queries";
+
 import styles from "../styles/Home.module.css";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
-interface HomeProps {
-  recipes: Recipe[];
-}
-
-const Home: NextPage<HomeProps> = ({ recipes }) => {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Recipe Book</title>
-        <meta name="description" content="Collection of recipes I've made" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>Recipes</h1>
-        <ul>
-          {recipes.map(({ title, slug}: Recipe) => {
-            return <li key={slug}>{title}</li>;
-          })}
-        </ul>
-      </main>
-
-      <footer className={styles.footer}>
-        <a href="https://cortlan.dev" target="_blank" rel="noopener noreferrer">
-          Built with 💖 by Cortlan Bainbridge
-        </a>
-      </footer>
-    </div>
-  );
-};
-
-const getStaticProps = async () => {
-  const client = new ApolloClient({
-    uri: "http://localhost:3000/api/graphql",
-    cache: new InMemoryCache(),
-  });
-
-  const { data } = await client.query({
-    query: gql`
-      query GetHomePageRecipes($where: RecipesWhere, $sort: Sort) {
-        recipes(where: $where, sort: $sort) {
-          title
-          slug
-        }
-      }
-    `,
+const HomePage: NextPage = () => {
+  const { loading, error, data } = useQuery(GET_HOMEPAGE_RECIPES, {
     variables: {
       where: {
         archived: {
@@ -62,9 +21,27 @@ const getStaticProps = async () => {
     },
   });
 
-  return { props: { recipes: data.recipes } };
+  const content = loading ? (
+    <p>{"Loading..."}</p>
+  ) : error ? (
+    <p>{`Error! ${error.message}`}</p>
+  ) : (
+    <ul>
+      {data.recipes.map(({ title, slug }: Recipe) => {
+        return <li key={slug}>{title}</li>;
+      })}
+    </ul>
+  );
+
+  return (
+    <Layout
+      title={"Recipe Book"}
+      description={"Collection of recipes I've made"}
+    >
+      <h1 className={styles.title}>Recipes</h1>
+      {content}
+    </Layout>
+  );
 };
 
-export { getStaticProps };
-
-export default Home;
+export default HomePage;
