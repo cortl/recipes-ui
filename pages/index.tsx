@@ -1,48 +1,66 @@
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import queryString from "query-string";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Center,
+  Container,
+  FormControl,
+  FormLabel,
+  Heading,
+  HStack,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  Stack,
+  VStack,
+} from "@chakra-ui/react";
 
 import { Layout } from "../src/client/components/layout";
 import { Error } from "../src/client/components/error";
 import { Loading } from "../src/client/components/loading";
-
-import styles from "../styles/Home.module.css";
-import { Button, ButtonGroup, filter, TagLeftIcon } from "@chakra-ui/react";
 import { useRecipes } from "../src/client/recipe-hooks";
 
-const BUTTONS = [
+// const BUTTONS = [
+
+// "Thanksgiving",
+// "Christmas",
+// "Super Bowl",
+// "Baking",
+// "Roasting",
+// "Frying",
+// "Slow Cooker",
+// "Braising & Stewing",
+// "No Cook",
+// "Stovetop",
+// "Fermenting",
+// "Pressure Cooker",
+// "Seasoning Blend",
+// "Grilling",
+// ];
+
+const PROTEIN_BUTTONS = [
   "Vegan",
   "Vegetarian",
   "Poultry",
   "Fish",
-  // "Beef",
-  // "Pork",
-  // "Drink",
-  // "Soup",
-  // "Appetizer",
-  // "Quick",
-  // "Salad",
-  // "Sandwich",
-  // "Pasta",
-  // "Dinner",
-  // "Dessert",
-  // "Breakfast",
-  // "Meal Prep",
-  // "Topping",
-  // "Thanksgiving",
-  // "Christmas",
-  // "Super Bowl",
-  // "Baking",
-  // "Roasting",
-  // "Frying",
-  // "Slow Cooker",
-  // "Braising & Stewing",
-  // "No Cook",
-  // "Stovetop",
-  // "Fermenting",
-  // "Pressure Cooker",
-  // "Seasoning Blend",
-  // "Grilling",
+  "Beef",
+  "Pork",
+];
+
+const MEAL_TYPE_BUTTONS = [
+  "Soup",
+  "Salad",
+  "Sandwich",
+  "Pasta",
+  "Dinner",
+  "Dessert",
+  "Breakfast",
+  "Meal Prep",
+  "Topping",
 ];
 
 const removeFromArray = (arr: string[], str: string) => {
@@ -89,24 +107,11 @@ const HomePage: NextPage = () => {
   ) : error ? (
     <Error message={error.message} />
   ) : (
-    <>
-      <ButtonGroup>
-        {BUTTONS.map((tagName) => (
-          <Button
-            key={tagName}
-            onClick={onTagClick(tagName)}
-            isActive={filters.includes(tagName)}
-          >
-            {tagName}
-          </Button>
-        ))}
-      </ButtonGroup>
-      <ul>
-        {data.recipes.map(({ title, slug }: Recipe) => {
-          return <li key={slug}>{title}</li>;
-        })}
-      </ul>
-    </>
+    <ul>
+      {data.recipes.map(({ title, slug }: Recipe) => {
+        return <li key={slug}>{title}</li>;
+      })}
+    </ul>
   );
 
   return (
@@ -114,10 +119,58 @@ const HomePage: NextPage = () => {
       title={"Recipe Book"}
       description={"Collection of recipes I've made"}
     >
-      <h1 className={styles.title}>Recipes</h1>
-      {content}
+      <VStack mt={24} mb={2}>
+        <Center>
+          <Heading as="h1" size="4xl">
+            {"Recipe Book"}
+          </Heading>
+        </Center>
+      </VStack>
+
+      <Container maxW={"container.md"}>
+        <Stack pt={5}>
+          <Heading size="md">{"Protein"}</Heading>
+          <ButtonGroup alignItems="left" variant={"outline"}>
+            {PROTEIN_BUTTONS.map((tagName) => (
+              <Button
+                key={tagName}
+                onClick={onTagClick(tagName)}
+                isActive={filters.includes(tagName)}
+              >
+                {tagName}
+              </Button>
+            ))}
+          </ButtonGroup>
+          <Heading size="md">{"Meal"}</Heading>
+          <ButtonGroup alignItems="left" variant={"outline"}>
+            {MEAL_TYPE_BUTTONS.map((tagName) => (
+              <Button
+                key={tagName}
+                onClick={onTagClick(tagName)}
+                isActive={filters.includes(tagName)}
+              >
+                {tagName}
+              </Button>
+            ))}
+          </ButtonGroup>
+        </Stack>
+        {content}
+      </Container>
     </Layout>
   );
 };
+
+const Thing = (
+  <Box
+    w={"100%"}
+    borderRadius={"lg"}
+    border="1px"
+    borderColor={"whiteAlpha.300"}
+    padding={3}
+    mt={5}
+  >
+    <Stack></Stack>
+  </Box>
+);
 
 export default HomePage;

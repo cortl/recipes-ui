@@ -1,5 +1,9 @@
-const Loading: React.FC = () => (
-    <p>{'Loading...'}</p>
-)
+import { Box, Spinner } from "@chakra-ui/react";
 
-export {Loading}
+const Loading: React.FC = () => (
+  <Box minH={12}>
+    <Spinner size="xl" />
+  </Box>
+);
+
+export { Loading };
