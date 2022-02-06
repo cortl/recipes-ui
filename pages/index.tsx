@@ -2,19 +2,12 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import queryString from "query-string";
 import {
-  Box,
   Button,
   ButtonGroup,
   Center,
   Container,
-  FormControl,
-  FormLabel,
+  Flex,
   Heading,
-  HStack,
-  Slider,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderTrack,
   Stack,
   VStack,
 } from "@chakra-ui/react";
@@ -23,45 +16,8 @@ import { Layout } from "../src/client/components/layout";
 import { Error } from "../src/client/components/error";
 import { Loading } from "../src/client/components/loading";
 import { useRecipes } from "../src/client/recipe-hooks";
-
-// const BUTTONS = [
-
-// "Thanksgiving",
-// "Christmas",
-// "Super Bowl",
-// "Baking",
-// "Roasting",
-// "Frying",
-// "Slow Cooker",
-// "Braising & Stewing",
-// "No Cook",
-// "Stovetop",
-// "Fermenting",
-// "Pressure Cooker",
-// "Seasoning Blend",
-// "Grilling",
-// ];
-
-const PROTEIN_BUTTONS = [
-  "Vegan",
-  "Vegetarian",
-  "Poultry",
-  "Fish",
-  "Beef",
-  "Pork",
-];
-
-const MEAL_TYPE_BUTTONS = [
-  "Soup",
-  "Salad",
-  "Sandwich",
-  "Pasta",
-  "Dinner",
-  "Dessert",
-  "Breakfast",
-  "Meal Prep",
-  "Topping",
-];
+import { MEAL_TYPES, PROTEINS } from "../src/utils/tags";
+import { RecipeCard } from "../src/domain/recipe-card";
 
 const removeFromArray = (arr: string[], str: string) => {
   const index = arr.indexOf(str);
@@ -107,11 +63,11 @@ const HomePage: NextPage = () => {
   ) : error ? (
     <Error message={error.message} />
   ) : (
-    <ul>
-      {data.recipes.map(({ title, slug }: Recipe) => {
-        return <li key={slug}>{title}</li>;
-      })}
-    </ul>
+    <Flex flexFlow={"wrap"} justifyContent={"space-around"} mr="auto" ml="auto">
+      {data.recipes.map(({ title, slug, image, tags }: Recipe) => (
+        <RecipeCard key={slug} title={title} image={image} tags={tags} />
+      ))}
+    </Flex>
   );
 
   return (
@@ -127,11 +83,11 @@ const HomePage: NextPage = () => {
         </Center>
       </VStack>
 
-      <Container maxW={"container.md"}>
+      <Container maxW={"container.xl"}>
         <Stack pt={5}>
           <Heading size="md">{"Protein"}</Heading>
           <ButtonGroup alignItems="left" variant={"outline"}>
-            {PROTEIN_BUTTONS.map((tagName) => (
+            {PROTEINS.map((tagName) => (
               <Button
                 key={tagName}
                 onClick={onTagClick(tagName)}
@@ -143,7 +99,7 @@ const HomePage: NextPage = () => {
           </ButtonGroup>
           <Heading size="md">{"Meal"}</Heading>
           <ButtonGroup alignItems="left" variant={"outline"}>
-            {MEAL_TYPE_BUTTONS.map((tagName) => (
+            {MEAL_TYPES.map((tagName) => (
               <Button
                 key={tagName}
                 onClick={onTagClick(tagName)}
@@ -159,18 +115,5 @@ const HomePage: NextPage = () => {
     </Layout>
   );
 };
-
-const Thing = (
-  <Box
-    w={"100%"}
-    borderRadius={"lg"}
-    border="1px"
-    borderColor={"whiteAlpha.300"}
-    padding={3}
-    mt={5}
-  >
-    <Stack></Stack>
-  </Box>
-);
 
 export default HomePage;

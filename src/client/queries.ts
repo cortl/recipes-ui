@@ -5,6 +5,8 @@ const GET_HOMEPAGE_RECIPES = gql`
     recipes(where: $where, sort: $sort) {
       title
       slug
+      image
+      tags
     }
   }
 `;
