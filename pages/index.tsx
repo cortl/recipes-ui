@@ -1,61 +1,18 @@
-import { useRouter } from "next/router";
 import type { NextPage } from "next";
-import queryString from "query-string";
-import {
-  Button,
-  ButtonGroup,
-  Center,
-  Container,
-  Flex,
-  Heading,
-  Stack,
-  VStack,
-} from "@chakra-ui/react";
+import { Center, Container, Heading, Stack, VStack } from "@chakra-ui/react";
 
 import { Layout } from "../src/client/components/layout";
 import { Error } from "../src/client/components/error";
 import { Loading } from "../src/client/components/loading";
 import { useRecipes } from "../src/client/recipe-hooks";
-import { MEAL_TYPES, PROTEINS } from "../src/utils/tags";
 import { RecipeCard } from "../src/domain/recipe-card";
 
-const removeFromArray = (arr: string[], str: string) => {
-  const index = arr.indexOf(str);
-  if (index > -1) {
-    arr.splice(index, 1);
-  }
-};
+import styles from "../styles/Home.module.css";
+import { useQueryFilters } from "../src/client/hooks/useQueryFilters";
+import { Filters } from "../src/domain/filters";
 
 const HomePage: NextPage = () => {
-  const router = useRouter();
-
-  const queryFilters = router.query.filters;
-  const filters = queryFilters
-    ? Array.isArray(queryFilters)
-      ? queryFilters
-      : [queryFilters]
-    : [];
-
-  const onTagClick = (tag: string) => () => {
-    let newFilters = [...filters];
-
-    if (!newFilters.includes(tag)) {
-      newFilters.push(tag);
-    } else {
-      removeFromArray(newFilters, tag);
-    }
-
-    router.push(
-      `/?${queryString.stringify({
-        filters: newFilters,
-      })}`,
-      undefined,
-      {
-        shallow: true,
-      }
-    );
-  };
-
+  const filters = useQueryFilters();
   const { loading, error, data } = useRecipes(filters);
 
   const content = loading ? (
@@ -63,11 +20,11 @@ const HomePage: NextPage = () => {
   ) : error ? (
     <Error message={error.message} />
   ) : (
-    <Flex flexFlow={"wrap"} justifyContent={"space-around"}>
-      {data.recipes.map(({ title, slug, image, tags }: Recipe) => (
+    <div className={styles.masonry}>
+      {data.recipes.slice(0, 10).map(({ title, slug, image, tags }: Recipe) => (
         <RecipeCard key={slug} title={title} image={image} tags={tags} />
       ))}
-    </Flex>
+    </div>
   );
 
   return (
@@ -85,30 +42,7 @@ const HomePage: NextPage = () => {
 
       <Container maxW={"container.xl"}>
         <Stack pt={5}>
-          <Heading size="md">{"Protein"}</Heading>
-          <ButtonGroup alignItems="left" variant={"outline"}>
-            {PROTEINS.map((tagName) => (
-              <Button
-                key={tagName}
-                onClick={onTagClick(tagName)}
-                isActive={filters.includes(tagName)}
-              >
-                {tagName}
-              </Button>
-            ))}
-          </ButtonGroup>
-          <Heading size="md">{"Meal"}</Heading>
-          <ButtonGroup alignItems="left" variant={"outline"}>
-            {MEAL_TYPES.map((tagName) => (
-              <Button
-                key={tagName}
-                onClick={onTagClick(tagName)}
-                isActive={filters.includes(tagName)}
-              >
-                {tagName}
-              </Button>
-            ))}
-          </ButtonGroup>
+          <Filters />
         </Stack>
         {content}
       </Container>

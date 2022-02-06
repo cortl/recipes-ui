@@ -17,7 +17,7 @@ const buildTagsFor = (tagCategory: string[], tags: string[], color: string) => {
   }
 
   return (
-    <Box pb={1} display="flex" alignItems="baseline">
+    <Box display={'inline-block'}>
       {proteinTags.map((tag) => (
         <Badge key={tag} borderRadius="full" px="2" mr="1" colorScheme={color}>
           {tag}
@@ -42,4 +42,4 @@ const RecipeCard: React.FC<IRecipeCard> = ({ image, title, tags }) => (
   </Card>
 );
 
-export {RecipeCard}
+export { RecipeCard };
