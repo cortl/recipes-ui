@@ -63,7 +63,7 @@ const HomePage: NextPage = () => {
   ) : error ? (
     <Error message={error.message} />
   ) : (
-    <Flex flexFlow={"wrap"} justifyContent={"space-around"} mr="auto" ml="auto">
+    <Flex flexFlow={"wrap"} justifyContent={"space-around"}>
       {data.recipes.map(({ title, slug, image, tags }: Recipe) => (
         <RecipeCard key={slug} title={title} image={image} tags={tags} />
       ))}
