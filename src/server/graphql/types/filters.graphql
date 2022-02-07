@@ -8,6 +8,10 @@ input ArrayFilter {
   exists: Boolean
 }
 
+input StringFilter {
+  like: String!
+}
+
 input NumberFilter {
   gt: Int
   lt: Int

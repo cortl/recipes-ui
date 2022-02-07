@@ -52,7 +52,7 @@ export interface BooleanFilter extends Filter {
 }
 
 export interface StringFilter extends Filter {
-    is: string;
+    like: string;
 }
 
 export interface ArrayFilter extends Filter {
@@ -77,6 +77,7 @@ export interface Sort {
 
 export type RecipesWhereInput = {
     where: {
+        title?: StringFilter,
         rating?: NumberFilter,
         tags?: ArrayFilter;
         image?: StringFilter;

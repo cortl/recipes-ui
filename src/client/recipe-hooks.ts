@@ -1,10 +1,15 @@
 import { useQuery } from "@apollo/client";
 import { GET_HOMEPAGE_RECIPES } from "./queries";
 
-const useRecipes = (tags: string[]) => {
+const useRecipes = (tags: string[], search: string) => {
   return useQuery(GET_HOMEPAGE_RECIPES, {
     variables: {
       where: {
+        title: search
+          ? {
+              like: search,
+            }
+          : undefined,
         archived: {
           is: false,
         },

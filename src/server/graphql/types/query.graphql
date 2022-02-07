@@ -1,4 +1,5 @@
 input RecipesWhere {
+  title: StringFilter
   rating: NumberFilter
   image: BooleanFilter
   archived: BooleanFilter

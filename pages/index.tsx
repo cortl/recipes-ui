@@ -15,25 +15,21 @@ import { Loading } from "../src/client/components/loading";
 import { useRecipes } from "../src/client/recipe-hooks";
 import { useQueryFilters } from "../src/client/hooks/useQueryFilters";
 import { Filters } from "../src/domain/filters";
-import { useSearch } from "../src/client/hooks/useSearch";
 import { ResultsList } from "../src/domain/results-list";
 import { useDebounce } from "../src/client/hooks/useDebounce";
 
 const HomePage: NextPage = () => {
   const filters = useQueryFilters();
-  const { loading, error, data } = useRecipes(filters);
   const [search, setSearch] = useState("");
   const debouncedSearchTerm: string = useDebounce<string>(search, 500);
-  const results = useSearch(data?.recipes ?? [], debouncedSearchTerm, {
-    keys: ["title"],
-  });
+  const { loading, error, data } = useRecipes(filters, debouncedSearchTerm);
 
   const content = loading ? (
     <Loading />
   ) : error ? (
     <Error message={error.message} />
   ) : (
-    <ResultsList recipes={results} />
+    <ResultsList recipes={data.recipes} />
   );
 
   return (

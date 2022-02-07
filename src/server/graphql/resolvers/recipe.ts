@@ -1,5 +1,6 @@
 import Recipes from '@cortl/recipes';
-import { UserInputError } from 'apollo-server-micro';
+import { UserInputError } from 'apollo-server-micro'
+import Fuse from "fuse.js";;
 
 import { ArrayFilter, BooleanFilter, NumberFilter, RecipeInput, RecipesWhereInput } from '../../../../types/resolvers';
 import { getKeyValue, filterBoolean, filterArray, filterNumber } from '../../../utils/filters';
@@ -10,7 +11,6 @@ const archivedResolver = ({ archived }: Recipe) => {
 }
 
 const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
-
     if (!args) {
         return Recipes.asArray;
     }
@@ -50,7 +50,13 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
         })
     }
 
-    if (args.sort) {
+    if (args.where.title?.like) {
+        const fuse = new Fuse(results, {
+            keys: ['title']
+        });
+
+        results = fuse.search(args.where.title?.like).map(({ item }) => item);
+    } else if (args.sort) {
         results.sort(sortByField(args.sort.field, args.sort.direction))
     }
 
