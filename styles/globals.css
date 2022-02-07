@@ -14,3 +14,20 @@ a {
 * {
   box-sizing: border-box;
 }
+
+main {
+  margin-bottom: 1.5rem;
+}
+
+.masonry {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: -30px;
+  width: auto;
+}
+
+.masonry-column {
+  padding-left: 30px;
+  background-clip: padding-box;
+}

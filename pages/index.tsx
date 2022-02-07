@@ -1,13 +1,12 @@
 import type { NextPage } from "next";
 import { Center, Container, Heading, Stack, VStack } from "@chakra-ui/react";
+import Masonry from "react-masonry-css";
 
 import { Layout } from "../src/client/components/layout";
 import { Error } from "../src/client/components/error";
 import { Loading } from "../src/client/components/loading";
 import { useRecipes } from "../src/client/recipe-hooks";
 import { RecipeCard } from "../src/domain/recipe-card";
-
-import styles from "../styles/Home.module.css";
 import { useQueryFilters } from "../src/client/hooks/useQueryFilters";
 import { Filters } from "../src/domain/filters";
 
@@ -20,11 +19,15 @@ const HomePage: NextPage = () => {
   ) : error ? (
     <Error message={error.message} />
   ) : (
-    <div className={styles.masonry}>
+    <Masonry
+      breakpointCols={3}
+      className="masonry"
+      columnClassName="masonry-column"
+    >
       {data.recipes.slice(0, 10).map(({ title, slug, image, tags }: Recipe) => (
         <RecipeCard key={slug} title={title} image={image} tags={tags} />
       ))}
-    </div>
+    </Masonry>
   );
 
   return (

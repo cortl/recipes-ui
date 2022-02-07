@@ -1,6 +1,5 @@
 import Head from "next/head";
 import React from "react";
-import { Center, Container } from "@chakra-ui/react";
 
 import styles from "../../../styles/Home.module.css";
 
