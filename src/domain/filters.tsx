@@ -25,15 +25,21 @@ const Filters: React.FC = () => {
       removeFromArray(newFilters, tag);
     }
 
-    router.push(
-      `/?${queryString.stringify({
-        filters: newFilters,
-      })}`,
-      undefined,
-      {
+    if (newFilters.length) {
+      router.push(
+        `/?${queryString.stringify({
+          filters: newFilters,
+        })}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      );
+    } else {
+      router.push("/", undefined, {
         shallow: true,
-      }
-    );
+      });
+    }
   };
 
   return (
@@ -42,7 +48,7 @@ const Filters: React.FC = () => {
       <ButtonGroup alignItems="left" variant={"outline"}>
         {PROTEINS.map((tagName) => (
           <Button
-            key={tagName}
+            key={`protein-${tagName}`}
             onClick={onTagClick(tagName)}
             isActive={filters.includes(tagName)}
           >
@@ -54,7 +60,7 @@ const Filters: React.FC = () => {
       <ButtonGroup alignItems="left" variant={"outline"}>
         {MEAL_TYPES.map((tagName) => (
           <Button
-            key={tagName}
+            key={`meal-${tagName}`}
             onClick={onTagClick(tagName)}
             isActive={filters.includes(tagName)}
           >

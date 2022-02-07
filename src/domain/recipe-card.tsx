@@ -19,7 +19,7 @@ const buildTagsFor = (tagCategory: string[], tags: string[], color: string) => {
   return (
     <Box display={'inline-block'}>
       {proteinTags.map((tag) => (
-        <Badge key={tag} borderRadius="full" px="2" mr="1" colorScheme={color}>
+        <Badge key={`${color}-${tag}`} borderRadius="full" px="2" mr="1" colorScheme={color}>
           {tag}
         </Badge>
       ))}
