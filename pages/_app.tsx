@@ -6,7 +6,20 @@ import "../styles/globals.css";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/api/graphql",
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          recipes: {
+            keyArgs: false,
+            merge: (existing = [], incoming) => {
+              return [...existing, ...incoming];
+            },
+          },
+        },
+      },
+    },
+  }),
 });
 
 function MyApp({ Component, pageProps }: AppProps) {

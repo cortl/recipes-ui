@@ -11,7 +11,7 @@ import {
   Stack,
   VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchIcon } from "@chakra-ui/icons";
 
 import { Layout } from "../src/client/components/layout";
@@ -21,12 +21,29 @@ import { useRecipes } from "../src/client/recipe-hooks";
 import { useQueryFilters } from "../src/client/hooks/useQueryFilters";
 import { Filters } from "../src/client/domain/filters";
 import { ResultsList } from "../src/client/domain/results-list";
+import { usePageBottom } from "../src/client/hooks/usePageBottom";
+
+const PAGE_SIZE = 12;
 
 const HomePage: NextPage = () => {
   const filters = useQueryFilters();
   const [search, setSearch] = useState("");
   const [useableSearch, setUseableSearch] = useState("");
-  const { loading, error, data } = useRecipes(filters, useableSearch, 0, 20);
+  const [offset, setOffset] = useState(0);
+  const bottom = usePageBottom();
+  const { loading, error, data, fetchMore } = useRecipes(
+    filters,
+    useableSearch,
+    offset,
+    PAGE_SIZE
+  );
+
+  useEffect(() => {
+    fetchMore({
+      variables: { offset: offset + PAGE_SIZE, limit: PAGE_SIZE },
+    });
+    setOffset(offset + PAGE_SIZE);
+  }, [bottom]);
 
   const content = loading ? (
     <Loading />

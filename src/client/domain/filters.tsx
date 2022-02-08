@@ -3,7 +3,6 @@ import {
   ButtonGroup,
   FormControl,
   FormLabel,
-  Heading,
 } from "@chakra-ui/react";
 import queryString from "query-string";
 import { useRouter } from "next/router";
