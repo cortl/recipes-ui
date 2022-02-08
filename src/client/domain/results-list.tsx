@@ -14,7 +14,13 @@ const ResultsList: React.FC<IResultsList> = ({ recipes }) => {
       columnClassName="masonry-column"
     >
       {recipes.map(({ title, slug, image, tags }: Recipe) => (
-        <RecipeCard key={slug} title={title} image={image} tags={tags} />
+        <RecipeCard
+          key={slug}
+          slug={slug}
+          title={title}
+          image={image}
+          tags={tags}
+        />
       ))}
     </Masonry>
   );

@@ -2,8 +2,8 @@ import { Button, ButtonGroup, Heading } from "@chakra-ui/react";
 import queryString from "query-string";
 import { useRouter } from "next/router";
 
-import { MEAL_TYPES, PROTEINS } from "../utils/tags";
-import { useQueryFilters } from "../client/hooks/useQueryFilters";
+import { MEAL_TYPES, PROTEINS } from "../../utils/tags";
+import { useQueryFilters } from "../hooks/useQueryFilters";
 
 const removeFromArray = (arr: string[], str: string) => {
   const index = arr.indexOf(str);
