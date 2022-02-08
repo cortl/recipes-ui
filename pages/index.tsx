@@ -26,7 +26,7 @@ const HomePage: NextPage = () => {
   const filters = useQueryFilters();
   const [search, setSearch] = useState("");
   const [useableSearch, setUseableSearch] = useState("");
-  const { loading, error, data } = useRecipes(filters, useableSearch);
+  const { loading, error, data } = useRecipes(filters, useableSearch, 0, 20);
 
   const content = loading ? (
     <Loading />

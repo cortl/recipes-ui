@@ -60,7 +60,9 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
         results.sort(sortByField(args.sort.field, args.sort.direction))
     }
 
-    return results
+    const {offset, limit} = args;
+
+    return results.slice(offset, offset + limit);
 }
 
 const recipeResolver = (_root: undefined, args: RecipeInput) => {

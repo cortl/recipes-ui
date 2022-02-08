@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { GET_HOMEPAGE_RECIPES } from "./queries";
 
-const useRecipes = (tags: string[], search: string) => {
+const useRecipes = (tags: string[], search: string, offset: number, limit: number) => {
   return useQuery(GET_HOMEPAGE_RECIPES, {
     variables: {
       where: {
@@ -23,6 +23,8 @@ const useRecipes = (tags: string[], search: string) => {
         field: "rating",
         direction: "DESC",
       },
+      offset,
+      limit
     },
   });
 };

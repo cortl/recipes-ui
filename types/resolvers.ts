@@ -86,6 +86,8 @@ export type RecipesWhereInput = {
         [key: string]: unknown
     },
     sort?: Sort
+    limit: number
+    offset: number
 }
 
 
