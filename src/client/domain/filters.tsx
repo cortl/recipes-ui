@@ -1,4 +1,10 @@
-import { Button, ButtonGroup, Heading } from "@chakra-ui/react";
+import {
+  Button,
+  ButtonGroup,
+  FormControl,
+  FormLabel,
+  Heading,
+} from "@chakra-ui/react";
 import queryString from "query-string";
 import { useRouter } from "next/router";
 
@@ -44,30 +50,34 @@ const Filters: React.FC = () => {
 
   return (
     <>
-      <Heading size="md">{"Protein"}</Heading>
-      <ButtonGroup alignItems="left" variant={"outline"}>
-        {PROTEINS.map((tagName) => (
-          <Button
-            key={`protein-${tagName}`}
-            onClick={onTagClick(tagName)}
-            isActive={filters.includes(tagName)}
-          >
-            {tagName}
-          </Button>
-        ))}
-      </ButtonGroup>
-      <Heading size="md">{"Meal"}</Heading>
-      <ButtonGroup alignItems="left" variant={"outline"}>
-        {MEAL_TYPES.map((tagName) => (
-          <Button
-            key={`meal-${tagName}`}
-            onClick={onTagClick(tagName)}
-            isActive={filters.includes(tagName)}
-          >
-            {tagName}
-          </Button>
-        ))}
-      </ButtonGroup>
+      <FormControl>
+        <FormLabel htmlFor="protein">{"Protein"}</FormLabel>
+        <ButtonGroup alignItems="left" variant={"outline"}>
+          {PROTEINS.map((tagName) => (
+            <Button
+              key={`protein-${tagName}`}
+              onClick={onTagClick(tagName)}
+              isActive={filters.includes(tagName)}
+            >
+              {tagName}
+            </Button>
+          ))}
+        </ButtonGroup>
+      </FormControl>
+      <FormControl>
+        <FormLabel htmlFor="meal">{"Meal"}</FormLabel>
+        <ButtonGroup alignItems="left" variant={"outline"}>
+          {MEAL_TYPES.map((tagName) => (
+            <Button
+              key={`meal-${tagName}`}
+              onClick={onTagClick(tagName)}
+              isActive={filters.includes(tagName)}
+            >
+              {tagName}
+            </Button>
+          ))}
+        </ButtonGroup>
+      </FormControl>
     </>
   );
 };
