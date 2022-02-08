@@ -2,27 +2,31 @@ import type { NextPage } from "next";
 import {
   Center,
   Container,
+  FormControl,
+  FormLabel,
   Heading,
+  HStack,
+  IconButton,
   Input,
   Stack,
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { SearchIcon } from "@chakra-ui/icons";
 
 import { Layout } from "../src/client/components/layout";
 import { Error } from "../src/client/components/error";
 import { Loading } from "../src/client/components/loading";
 import { useRecipes } from "../src/client/recipe-hooks";
 import { useQueryFilters } from "../src/client/hooks/useQueryFilters";
-import { Filters } from "../src/domain/filters";
-import { ResultsList } from "../src/domain/results-list";
-import { useDebounce } from "../src/client/hooks/useDebounce";
+import { Filters } from "../src/client/domain/filters";
+import { ResultsList } from "../src/client/domain/results-list";
 
 const HomePage: NextPage = () => {
   const filters = useQueryFilters();
   const [search, setSearch] = useState("");
-  const debouncedSearchTerm: string = useDebounce<string>(search, 500);
-  const { loading, error, data } = useRecipes(filters, debouncedSearchTerm);
+  const [useableSearch, setUseableSearch] = useState("");
+  const { loading, error, data } = useRecipes(filters, useableSearch);
 
   const content = loading ? (
     <Loading />
@@ -47,12 +51,31 @@ const HomePage: NextPage = () => {
 
       <Container maxW={"container.xl"}>
         <Stack pt={5}>
-          <Input
-            placeholder="Search..."
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-          />
+          <FormControl>
+            <FormLabel htmlFor="search">Search</FormLabel>
+            <HStack>
+              <Input
+                id="search"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+
+                  if (e.target.value === "") {
+                    setUseableSearch("");
+                  }
+                }}
+              />
+              <IconButton
+                aria-label="search recipes"
+                icon={<SearchIcon />}
+                onClick={() => {
+                  setUseableSearch(search);
+                }}
+              >
+                {"Search"}
+              </IconButton>
+            </HStack>
+          </FormControl>
         </Stack>
         <Stack pt={5}>
           <Filters />
