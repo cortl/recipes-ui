@@ -39,12 +39,12 @@ const HomePage: NextPage = () => {
     PAGE_SIZE
   );
 
-  const resetAndFetch = () => {
+  const resetAndFetch = useCallback(() => {
     fetchMore({
       variables: { offset: 0, limit: PAGE_SIZE },
     });
     setOffset(0);
-  };
+  }, [fetchMore, setOffset]);
 
   useEffect(() => {
     if (isBottom) {
@@ -53,7 +53,7 @@ const HomePage: NextPage = () => {
       });
       setOffset(offset + PAGE_SIZE);
     }
-  }, [isBottom]);
+  }, [isBottom, fetchMore, setOffset, offset]);
 
   const onEnter = useCallback(
     (e) => {
@@ -62,7 +62,7 @@ const HomePage: NextPage = () => {
         setUseableSearch(search);
       }
     },
-    [resetAndFetch, setUseableSearch]
+    [resetAndFetch, setUseableSearch, search]
   );
 
   const content = loading ? (
