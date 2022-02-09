@@ -21,7 +21,7 @@ const ResultsList: React.FC<IResultsList> = ({ recipes }) => {
         className="masonry"
         columnClassName="masonry-column"
       >
-        {recipes.map(({ title, slug, image, tags, time }: Recipe, i) => (
+        {recipes.map(({ title, slug, image, tags, time }, i) => (
           <RecipeCard
             key={`${i}-${slug}`}
             slug={slug}
@@ -35,7 +35,7 @@ const ResultsList: React.FC<IResultsList> = ({ recipes }) => {
     );
   } else {
     return (
-      <Center pt='5'>
+      <Center pt="5">
         <Text>{"Looks like there isn't anything here... 😿"}</Text>
       </Center>
     );
