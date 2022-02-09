@@ -113,6 +113,7 @@ const HomePage: NextPage = () => {
               />
               <IconButton
                 aria-label="filter recipes"
+                isActive={filtersToggled}
                 icon={<ViewIcon />}
                 onClick={() => {
                   setToggledFilters(!filtersToggled);
