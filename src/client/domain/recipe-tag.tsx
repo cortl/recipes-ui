@@ -1,4 +1,4 @@
-import { HOLIDAYS, MEAL_TYPES, METHODS, PROTEINS } from "../../utils/tags";
+import { HOLIDAYS, MEAL_TYPES, METHODS, PROTEINS } from "../../constants/tags";
 import { TagCollection } from "../components/tag-collection";
 
 enum RecipeTagType {

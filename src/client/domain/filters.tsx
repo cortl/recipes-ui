@@ -8,7 +8,7 @@ import {
 import queryString from "query-string";
 import { useRouter } from "next/router";
 
-import { MEAL_TYPES, PROTEINS } from "../../utils/tags";
+import { HOLIDAYS, MEAL_TYPES, METHODS, PROTEINS } from "../../constants/tags";
 import { useQueryFilters } from "../hooks/useQueryFilters";
 
 const removeFromArray = (arr: string[], str: string) => {
@@ -21,6 +21,13 @@ const removeFromArray = (arr: string[], str: string) => {
 interface IFilters {
   onChange?: () => void;
 }
+
+const FILTERS = [
+  { name: "Protein", tags: PROTEINS },
+  { name: "Meal", tags: MEAL_TYPES },
+  { name: "Methods", tags: METHODS },
+  { name: "Holidays", tags: HOLIDAYS },
+];
 
 const Filters: React.FC<IFilters> = ({ onChange }) => {
   const router = useRouter();
@@ -56,38 +63,24 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
 
   return (
     <>
-      <FormControl as="fieldset">
-        <FormLabel as="legend">{"Protein"}</FormLabel>
-        <CheckboxGroup>
-          <Stack spacing={[1, 3, 5]} direction={["column", "column", "row"]}>
-            {PROTEINS.map((tagName) => (
-              <Checkbox
-                key={`protein-${tagName}`}
-                onChange={onTagClick(tagName)}
-                isChecked={filters.includes(tagName)}
-              >
-                {tagName}
-              </Checkbox>
-            ))}
-          </Stack>
-        </CheckboxGroup>
-      </FormControl>
-      <FormControl as="fieldset">
-        <FormLabel as="legend">{"Meal"}</FormLabel>
-        <CheckboxGroup>
-          <Stack spacing={[1, 3, 5]} direction={["column", "column", "row"]}>
-            {MEAL_TYPES.map((tagName) => (
-              <Checkbox
-                key={`meal-${tagName}`}
-                onChange={onTagClick(tagName)}
-                isChecked={filters.includes(tagName)}
-              >
-                {tagName}
-              </Checkbox>
-            ))}
-          </Stack>
-        </CheckboxGroup>
-      </FormControl>
+      {FILTERS.map(({ name, tags }) => (
+        <FormControl as="fieldset">
+          <FormLabel as="legend">{name}</FormLabel>
+          <CheckboxGroup>
+            <Stack spacing={[1, 3, 5]} direction={["column", "column", "row"]}>
+              {tags.map((tagName) => (
+                <Checkbox
+                  key={`${name}-${tagName}`}
+                  onChange={onTagClick(tagName)}
+                  isChecked={filters.includes(tagName)}
+                >
+                  {tagName}
+                </Checkbox>
+              ))}
+            </Stack>
+          </CheckboxGroup>
+        </FormControl>
+      ))}
     </>
   );
 };
