@@ -12,7 +12,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
-import { SearchIcon } from "@chakra-ui/icons";
+import { SearchIcon, ViewIcon } from "@chakra-ui/icons";
 
 import { Layout } from "../src/client/components/layout";
 import { Error } from "../src/client/components/error";
@@ -30,6 +30,7 @@ const HomePage: NextPage = () => {
   const [search, setSearch] = useState("");
   const [useableSearch, setUseableSearch] = useState("");
   const [offset, setOffset] = useState(0);
+  const [filtersToggled, setToggledFilters] = useState(false);
   const isBottom = usePageBottom();
   const { loading, error, data, fetchMore } = useRecipes(
     filters,
@@ -109,15 +110,22 @@ const HomePage: NextPage = () => {
                   resetAndFetch();
                   setUseableSearch(search);
                 }}
-              >
-                {"Search"}
-              </IconButton>
+              />
+              <IconButton
+                aria-label="filter recipes"
+                icon={<ViewIcon />}
+                onClick={() => {
+                  setToggledFilters(!filtersToggled);
+                }}
+              />
             </HStack>
           </FormControl>
         </Stack>
-        <Stack pt={5}>
-          <Filters onChange={resetAndFetch} />
-        </Stack>
+        {filtersToggled && (
+          <Stack pt={5}>
+            <Filters onChange={resetAndFetch} />
+          </Stack>
+        )}
         {content}
       </Container>
     </Layout>
