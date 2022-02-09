@@ -6,6 +6,7 @@ import {
   LinkOverlay,
   LinkBox,
   Stack,
+  Skeleton,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -37,7 +38,7 @@ const RecipeCard: React.FC<IRecipeCard> = ({
     <Card>
       {image && (
         <LinkBox>
-          <Image src={image} />
+          <Image src={image} fallback={<Skeleton height={'40'}/>} />
           <Link href={`/${slug}`} passHref>
             <LinkOverlay />
           </Link>
