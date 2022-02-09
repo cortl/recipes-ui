@@ -64,7 +64,7 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
   return (
     <>
       {FILTERS.map(({ name, tags }) => (
-        <FormControl as="fieldset">
+        <FormControl as="fieldset" key={`${name}-filter-group`}>
           <FormLabel as="legend">{name}</FormLabel>
           <CheckboxGroup>
             <Stack spacing={[1, 3, 5]} direction={["column", "column", "row"]}>
