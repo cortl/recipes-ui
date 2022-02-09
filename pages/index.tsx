@@ -11,7 +11,7 @@ import {
   Stack,
   VStack,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SearchIcon } from "@chakra-ui/icons";
 
 import { Layout } from "../src/client/components/layout";
@@ -38,6 +38,13 @@ const HomePage: NextPage = () => {
     PAGE_SIZE
   );
 
+  const resetAndFetch = () => {
+    fetchMore({
+      variables: { offset: 0, limit: PAGE_SIZE },
+    });
+    setOffset(0);
+  };
+
   useEffect(() => {
     if (isBottom) {
       fetchMore({
@@ -46,6 +53,16 @@ const HomePage: NextPage = () => {
       setOffset(offset + PAGE_SIZE);
     }
   }, [isBottom]);
+
+  const onEnter = useCallback(
+    (e) => {
+      if (e.key === "Enter") {
+        resetAndFetch();
+        setUseableSearch(search);
+      }
+    },
+    [resetAndFetch, setUseableSearch]
+  );
 
   const content = loading ? (
     <Loading />
@@ -83,11 +100,13 @@ const HomePage: NextPage = () => {
                     setUseableSearch("");
                   }
                 }}
+                onKeyPress={onEnter}
               />
               <IconButton
                 aria-label="search recipes"
                 icon={<SearchIcon />}
                 onClick={() => {
+                  resetAndFetch();
                   setUseableSearch(search);
                 }}
               >
@@ -97,14 +116,7 @@ const HomePage: NextPage = () => {
           </FormControl>
         </Stack>
         <Stack pt={5}>
-          <Filters
-            onChange={() => {
-              fetchMore({
-                variables: { offset: 0, limit: PAGE_SIZE },
-              });
-              setOffset(0);
-            }}
-          />
+          <Filters onChange={resetAndFetch} />
         </Stack>
         {content}
       </Container>
