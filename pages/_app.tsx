@@ -11,9 +11,8 @@ const client = new ApolloClient({
       Query: {
         fields: {
           recipes: {
-            keyArgs: false,
-            merge: (existing = [], incoming) => {
-              return [...existing, ...incoming];
+            merge: (existing = [], added) => {
+              return [...existing, ...added];
             },
           },
         },

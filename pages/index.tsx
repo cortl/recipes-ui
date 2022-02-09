@@ -30,7 +30,7 @@ const HomePage: NextPage = () => {
   const [search, setSearch] = useState("");
   const [useableSearch, setUseableSearch] = useState("");
   const [offset, setOffset] = useState(0);
-  const bottom = usePageBottom();
+  const isBottom = usePageBottom();
   const { loading, error, data, fetchMore } = useRecipes(
     filters,
     useableSearch,
@@ -39,11 +39,13 @@ const HomePage: NextPage = () => {
   );
 
   useEffect(() => {
-    fetchMore({
-      variables: { offset: offset + PAGE_SIZE, limit: PAGE_SIZE },
-    });
-    setOffset(offset + PAGE_SIZE);
-  }, [bottom]);
+    if (isBottom) {
+      fetchMore({
+        variables: { offset: offset + PAGE_SIZE, limit: PAGE_SIZE },
+      });
+      setOffset(offset + PAGE_SIZE);
+    }
+  }, [isBottom]);
 
   const content = loading ? (
     <Loading />
@@ -95,7 +97,14 @@ const HomePage: NextPage = () => {
           </FormControl>
         </Stack>
         <Stack pt={5}>
-          <Filters />
+          <Filters
+            onChange={() => {
+              fetchMore({
+                variables: { offset: 0, limit: PAGE_SIZE },
+              });
+              setOffset(0);
+            }}
+          />
         </Stack>
         {content}
       </Container>

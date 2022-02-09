@@ -1,9 +1,4 @@
-import {
-  Button,
-  ButtonGroup,
-  FormControl,
-  FormLabel,
-} from "@chakra-ui/react";
+import { Button, ButtonGroup, FormControl, FormLabel } from "@chakra-ui/react";
 import queryString from "query-string";
 import { useRouter } from "next/router";
 
@@ -17,7 +12,11 @@ const removeFromArray = (arr: string[], str: string) => {
   }
 };
 
-const Filters: React.FC = () => {
+interface IFilters {
+  onChange?: () => void;
+}
+
+const Filters: React.FC<IFilters> = ({ onChange }) => {
   const router = useRouter();
   const filters = useQueryFilters();
 
@@ -45,6 +44,8 @@ const Filters: React.FC = () => {
         shallow: true,
       });
     }
+
+    onChange && onChange();
   };
 
   return (
