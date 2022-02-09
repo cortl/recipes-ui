@@ -6,10 +6,16 @@ interface IResultsList {
   recipes: Recipe[];
 }
 
+const responsiveBreakpoints = {
+  default: 3,
+  768: 2,
+  480: 1,
+};
+
 const ResultsList: React.FC<IResultsList> = ({ recipes }) => {
   return (
     <Masonry
-      breakpointCols={3}
+      breakpointCols={responsiveBreakpoints}
       className="masonry"
       columnClassName="masonry-column"
     >

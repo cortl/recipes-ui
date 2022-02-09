@@ -15,6 +15,8 @@ const Card: React.FC<ICard> = ({ children }) => {
       borderColor={"whiteAlpha.300"}
       alignSelf={"flex-start"}
       mt={5}
+      mr='auto'
+      ml='auto'
     >
       {children}
     </Box>
