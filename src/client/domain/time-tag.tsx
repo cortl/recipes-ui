@@ -1,5 +1,3 @@
-import { Badge } from "@chakra-ui/react";
-import { Tag } from "../components/tag";
 import { TagCollection } from "../components/tag-collection";
 interface ITimeTag {
   time: Recipe["time"];
