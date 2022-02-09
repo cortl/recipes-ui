@@ -1,4 +1,10 @@
-import { Button, ButtonGroup, FormControl, FormLabel } from "@chakra-ui/react";
+import {
+  Checkbox,
+  CheckboxGroup,
+  FormControl,
+  FormLabel,
+  Stack,
+} from "@chakra-ui/react";
 import queryString from "query-string";
 import { useRouter } from "next/router";
 
@@ -50,33 +56,37 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
 
   return (
     <>
-      <FormControl>
-        <FormLabel htmlFor="protein">{"Protein"}</FormLabel>
-        <ButtonGroup alignItems="left" variant={"outline"}>
-          {PROTEINS.map((tagName) => (
-            <Button
-              key={`protein-${tagName}`}
-              onClick={onTagClick(tagName)}
-              isActive={filters.includes(tagName)}
-            >
-              {tagName}
-            </Button>
-          ))}
-        </ButtonGroup>
+      <FormControl as="fieldset">
+        <FormLabel as="legend">{"Protein"}</FormLabel>
+        <CheckboxGroup>
+          <Stack spacing={[1, 3, 5]} direction={["column", "column", "row"]}>
+            {PROTEINS.map((tagName) => (
+              <Checkbox
+                key={`protein-${tagName}`}
+                onChange={onTagClick(tagName)}
+                isChecked={filters.includes(tagName)}
+              >
+                {tagName}
+              </Checkbox>
+            ))}
+          </Stack>
+        </CheckboxGroup>
       </FormControl>
-      <FormControl>
-        <FormLabel htmlFor="meal">{"Meal"}</FormLabel>
-        <ButtonGroup alignItems="left" variant={"outline"}>
-          {MEAL_TYPES.map((tagName) => (
-            <Button
-              key={`meal-${tagName}`}
-              onClick={onTagClick(tagName)}
-              isActive={filters.includes(tagName)}
-            >
-              {tagName}
-            </Button>
-          ))}
-        </ButtonGroup>
+      <FormControl as="fieldset">
+        <FormLabel as="legend">{"Meal"}</FormLabel>
+        <CheckboxGroup>
+          <Stack spacing={[1, 3, 5]} direction={["column", "column", "row"]}>
+            {MEAL_TYPES.map((tagName) => (
+              <Checkbox
+                key={`meal-${tagName}`}
+                onChange={onTagClick(tagName)}
+                isChecked={filters.includes(tagName)}
+              >
+                {tagName}
+              </Checkbox>
+            ))}
+          </Stack>
+        </CheckboxGroup>
       </FormControl>
     </>
   );
