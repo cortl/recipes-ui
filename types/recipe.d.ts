@@ -25,7 +25,7 @@ type Recipe = {
     archived?: boolean;
     ingredients: Ingredient[];
     tags: string[];
-    time: Time;
+    time: Time[];
     image: string;
 
     [key: string]: unknown

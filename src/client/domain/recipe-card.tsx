@@ -5,6 +5,7 @@ import {
   Link as CLink,
   LinkOverlay,
   LinkBox,
+  Stack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -15,15 +16,17 @@ import {
   MethodTags,
   ProteinTags,
 } from "./recipe-tag";
+import { TimeTag } from "./time-tag";
 
 interface IRecipeCard {
   title: string;
   slug: string;
   image: string;
   tags: string[];
+  time: Recipe['time']
 }
 
-const RecipeCard: React.FC<IRecipeCard> = ({ image, title, slug, tags }) => (
+const RecipeCard: React.FC<IRecipeCard> = ({ image, title, slug, tags, time }) => (
   <Card>
     <LinkBox>
       <Image src={image} />
@@ -36,6 +39,10 @@ const RecipeCard: React.FC<IRecipeCard> = ({ image, title, slug, tags }) => (
       <MealTypeTags slug={slug} tags={tags} />
       <MethodTags slug={slug} tags={tags} />
       <HolidayTags slug={slug} tags={tags} />
+      
+      <Stack mt={1}>
+        <TimeTag time={time}/>
+      </Stack>
       <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
         <Link href={`/${slug}`}>
           <CLink>

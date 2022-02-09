@@ -13,6 +13,13 @@ const GET_HOMEPAGE_RECIPES = gql`
       slug
       image
       tags
+      time {
+        label
+        units {
+          label
+          measurement
+        }
+      }
     }
   }
 `;

@@ -1,23 +1,17 @@
-import { Badge, Box } from "@chakra-ui/react";
+import { Box, TagProps } from "@chakra-ui/react";
+import { Tag } from "./tag";
 
-interface ITagCollection {
+interface ITagCollection extends TagProps {
   id: string;
-  color: string;
   tags: string[];
 }
 
-const TagCollection: React.FC<ITagCollection> = ({ tags, id, color }) => (
+const TagCollection: React.FC<ITagCollection> = ({ tags, id, ...rest }) => (
   <Box display={"inline-block"}>
     {tags.map((tag) => (
-      <Badge
-        key={`${id}-${tag}`}
-        borderRadius="full"
-        px="2"
-        mr="1"
-        colorScheme={color}
-      >
+      <Tag key={`${id}-${tag}`} {...rest}>
         {tag}
-      </Badge>
+      </Tag>
     ))}
   </Box>
 );
