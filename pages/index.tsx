@@ -1,15 +1,12 @@
 import type { NextPage } from "next";
 import {
-  Center,
   Container,
   FormControl,
   FormLabel,
-  Heading,
   HStack,
   IconButton,
   Input,
   Stack,
-  VStack,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { SearchIcon, ViewIcon } from "@chakra-ui/icons";
@@ -22,6 +19,7 @@ import { useQueryFilters } from "../src/client/hooks/useQueryFilters";
 import { Filters } from "../src/client/domain/filters";
 import { ResultsList } from "../src/client/domain/results-list";
 import { usePageBottom } from "../src/client/hooks/usePageBottom";
+import { PageHeader } from "../src/client/components/page-header";
 
 const PAGE_SIZE = 12;
 
@@ -47,7 +45,7 @@ const HomePage: NextPage = () => {
   }, [fetchMore, setOffset]);
 
   useEffect(() => {
-    if (isBottom) {
+    if (isBottom && offset <= data?.recipes.length) {
       fetchMore({
         variables: { offset: offset + PAGE_SIZE, limit: PAGE_SIZE },
       });
@@ -78,14 +76,7 @@ const HomePage: NextPage = () => {
       title={"Recipe Book"}
       description={"Collection of recipes I've made"}
     >
-      <VStack mt={24} mb={2}>
-        <Center>
-          <Heading as="h1" size="4xl">
-            {"Recipe Book"}
-          </Heading>
-        </Center>
-      </VStack>
-
+      <PageHeader text={"Recipe Book"} />
       <Container maxW={"container.xl"}>
         <Stack pt={5}>
           <FormControl>
