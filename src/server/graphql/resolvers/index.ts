@@ -1,20 +1,20 @@
 import {
   archivedResolver,
-  imageResolver, 
+  imageResolver,
   recipeResolver,
   recipesResolver,
 } from "./recipe";
 
 const resolvers = {
-    Query: {
-        recipes: recipesResolver,
-        recipe: recipeResolver
-    },
+  Query: {
+    recipes: recipesResolver,
+    recipe: recipeResolver,
+  },
 
-    Recipe: {
-        archived: archivedResolver,
-        image: imageResolver,
-    }
-}
+  Recipe: {
+    archived: archivedResolver,
+    image: imageResolver,
+  },
+};
 
-export { resolvers }
+export { resolvers };

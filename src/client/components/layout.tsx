@@ -27,7 +27,7 @@ const Layout: React.FC<ILayout> = ({ title, description, children }) => {
         <Box mt={5} ml={5}>
           <Link href="/" passHref>
             <CLink>
-              <ArrowBackIcon w={6} h={6}/>
+              <ArrowBackIcon w={6} h={6} />
             </CLink>
           </Link>
         </Box>

@@ -1,9 +1,9 @@
-import { ApolloServer } from 'apollo-server-micro'
-import type { NextApiRequest, NextApiResponse, PageConfig } from 'next'
+import { ApolloServer } from "apollo-server-micro";
+import type { NextApiRequest, NextApiResponse, PageConfig } from "next";
 import fs from "fs";
 
-import { resolvers } from '../../src/server/graphql/resolvers';
-import { buildSchema } from 'graphql';
+import { resolvers } from "../../src/server/graphql/resolvers";
+import { buildSchema } from "graphql";
 
 const SCHEMA_PATH = "src/server/graphql/types";
 
@@ -20,7 +20,7 @@ const startServer = apolloServer.start();
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await startServer;
   await apolloServer.createHandler({ path: "/api/graphql" })(req, res);
-}
+};
 
 export const config: PageConfig = {
   api: {
