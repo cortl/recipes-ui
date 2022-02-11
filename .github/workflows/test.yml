@@ -4,7 +4,8 @@ on:
     branches:
       - main
 jobs:
-  Explore-GitHub-Actions:
+  verify-code:
+    name: Verify & Build
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -18,4 +19,27 @@ jobs:
       - name: Verify code
         run: |
           npm run verify
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Build Next.js
+        run: |
+          npm run build
+      - name: 
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: out
+          retention-days: 1
+  Deploy:
+    name: Deploy
+    needs: verify-code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Retrieve build
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: out
+      - name: test
+        run: |
+          ls -l
