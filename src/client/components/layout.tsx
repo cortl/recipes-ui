@@ -20,7 +20,7 @@ const Layout: React.FC<ILayout> = ({ title, description, children }) => {
       <main>{children}</main>
       <footer className={styles.footer}>
         <a href="https://cortlan.dev" target="_blank" rel="noopener noreferrer">
-          Built with 💖 by Cortlan Bainbridge
+          Built with 💖 by Cortlan
         </a>
       </footer>
     </>
