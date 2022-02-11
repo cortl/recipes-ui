@@ -5,7 +5,7 @@ import { Tag } from "./tag";
 
 interface ITagCollection extends TagProps {
   id: string;
-  slug: string;
+  slug?: string;
   tags: string[];
 }
 
@@ -16,15 +16,21 @@ const TagCollection: React.FC<ITagCollection> = ({
   ...rest
 }) => (
   <Box display={"inline-block"}>
-    {tags.map((tag) => (
-      <Link href={`/?filters=${tag}`} passHref>
-        <CLink>
-          <Tag key={`${id}-${tag}`} {...rest}>
-            {tag}
-          </Tag>
-        </CLink>
-      </Link>
-    ))}
+    {tags.map((tag) => {
+      const createdTag = (
+        <Tag key={`${id}-${tag}`} {...rest}>
+          {tag}
+        </Tag>
+      );
+
+      return slug ? (
+        <Link href={`/?filters=${tag}`} passHref>
+          <CLink>{createdTag}</CLink>
+        </Link>
+      ) : (
+        createdTag
+      );
+    })}
   </Box>
 );
 
