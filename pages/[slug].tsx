@@ -1,7 +1,5 @@
 import type { NextPage } from "next";
 import Recipes from "@cortl/recipes";
-import { Layout } from "../src/client/components/layout";
-import { PageHeader } from "../src/client/components/page-header";
 import {
   Container,
   Heading,
@@ -19,7 +17,12 @@ import {
   Img,
   BoxProps,
   FlexProps,
+  Center,
 } from "@chakra-ui/react";
+
+import { Layout } from "../src/client/components/layout";
+import { PageHeader } from "../src/client/components/page-header";
+import { RecipeTags } from "../src/client/domain/recipe-tags";
 
 interface IRecipePage extends Recipe {}
 
@@ -77,6 +80,8 @@ const Recipe: NextPage<IRecipePage> = ({
   image,
   servings,
   time,
+  slug,
+  tags,
   createdDate,
   source,
   notes,
@@ -96,6 +101,9 @@ const Recipe: NextPage<IRecipePage> = ({
           <Box maxW={"lg"} pt={5} pb={5} mr={"auto"} ml={"auto"}>
             <Stack>
               <PageHeader text={title} />
+              <Center>
+                <RecipeTags slug={slug} tags={tags} />
+              </Center>
               <Text size={"small"} textAlign={"center"}>
                 {`Adapted from `}
                 <Link href={source}>{author}</Link>

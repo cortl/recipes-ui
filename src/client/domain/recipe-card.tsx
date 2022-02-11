@@ -7,16 +7,12 @@ import {
   LinkBox,
   Stack,
   Skeleton,
+  Center,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
 import { Card } from "../components/card";
-import {
-  HolidayTags,
-  MealTypeTags,
-  MethodTags,
-  ProteinTags,
-} from "./recipe-tag";
+import { RecipeTags } from "./recipe-tags";
 import { TimeTag } from "./time-tag";
 
 interface IRecipeCard {
@@ -38,18 +34,14 @@ const RecipeCard: React.FC<IRecipeCard> = ({
     <Card>
       {image && (
         <LinkBox>
-          <Image src={image} fallback={<Skeleton height={'40'}/>} />
+          <Image src={image} fallback={<Skeleton height={"40"} />} />
           <Link href={`/${slug}`} passHref>
             <LinkOverlay />
           </Link>
         </LinkBox>
       )}
       <Box p="6">
-        <ProteinTags slug={slug} tags={tags} />
-        <MealTypeTags slug={slug} tags={tags} />
-        <MethodTags slug={slug} tags={tags} />
-        <HolidayTags slug={slug} tags={tags} />
-
+        <RecipeTags slug={slug} tags={tags} />
         <Stack mt={1}>
           <TimeTag time={time} />
         </Stack>
