@@ -1,6 +1,8 @@
 name: Verify
 on:
-  push: [main]
+  push:
+    branches:
+      - main
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
