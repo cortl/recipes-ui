@@ -18,6 +18,7 @@ import {
   Box,
   Img,
   BoxProps,
+  FlexProps,
 } from "@chakra-ui/react";
 
 interface IRecipePage extends Recipe {}
@@ -82,11 +83,19 @@ const Recipe: NextPage<IRecipePage> = ({
 }) => {
   const author = getSitenameFromUrl(source);
   const shouldDisplayMiscSection = Boolean(notes.length);
+  const flexProps: FlexProps = image
+    ? {
+        flexWrap: ["wrap", "wrap", "nowrap"],
+      }
+    : { flexDirection: "column" };
 
   return (
     <Layout title={`${title} | Recipes`} description={"a recipe."}>
       <Container maxW={"container.lg"}>
-        <Flex alignItems={"center"} flexWrap={["wrap", "wrap", "nowrap"]}>
+        <Flex
+          alignItems={"center"}
+          {...flexProps}
+        >
           <Box maxW={"lg"} pt={5} pb={5} mr={"auto"} ml={"auto"}>
             <Stack>
               <PageHeader text={title} />
