@@ -73,7 +73,7 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
     });
   }
 
-  if (args.where.title?.like) {
+  if (args.where?.title?.like) {
     const fuse = new Fuse(results, {
       keys: ["title"],
     });
