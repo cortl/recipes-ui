@@ -22,7 +22,7 @@ jobs:
       - name: Build Next.js
         run: |
           npm run build
-      - name: 
+      - name:
         uses: actions/upload-artifact@v2
         with:
           name: build

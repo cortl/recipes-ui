@@ -6,6 +6,7 @@
     "build": "next build && next export",
     "start": "next start",
     "lint": "next lint",
+    "format": "npx prettier --write .",
     "verify": "npx prettier --check . && npm run lint"
   },
   "dependencies": {
