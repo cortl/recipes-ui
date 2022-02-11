@@ -8,35 +8,39 @@ import {
   ListItem,
   Stack,
   UnorderedList,
-  Image,
   Text,
   List,
   SimpleGrid,
   GridItem,
-  Center,
   Flex,
   Link,
   Spacer,
-  VStack,
+  Box,
+  Img,
+  BoxProps,
 } from "@chakra-ui/react";
-import { url } from "inspector";
 
 interface IRecipePage extends Recipe {}
 
-interface IIngredientCollection {
+interface IIngredientCollection extends BoxProps {
   showLabel?: boolean;
   ingredient: Ingredient;
 }
 
 const IngredientCollection: React.FC<IIngredientCollection> = ({
   ingredient,
+  showLabel,
+  ...rest
 }) => {
   return (
-    <UnorderedList listStylePos={"inside"} spacing={5}>
-      {ingredient.items.map((item, i) => (
-        <ListItem key={`ingredient-${i}`}>{item}</ListItem>
-      ))}
-    </UnorderedList>
+    <Box {...rest}>
+      {showLabel && <Heading size={"md"}>{ingredient.category}</Heading>}
+      <UnorderedList listStylePos={"inside"} spacing={5}>
+        {ingredient.items.map((item, i) => (
+          <ListItem key={`ingredient-${i}`}>{item}</ListItem>
+        ))}
+      </UnorderedList>
+    </Box>
   );
 };
 
@@ -82,11 +86,11 @@ const Recipe: NextPage<IRecipePage> = ({
   return (
     <Layout title={`${title} | Recipes`} description={"a recipe."}>
       <Container maxW={"container.lg"}>
-        <SimpleGrid columns={[1, 1, 1, 2]} mt={8}>
-          <GridItem>
-            <VStack>
+        <Flex alignItems={"center"} flexWrap={["wrap", "wrap", "nowrap"]}>
+          <Box maxW={"lg"} pt={5} pb={5} mr={"auto"} ml={"auto"}>
+            <Stack>
               <PageHeader text={title} />
-              <Text>
+              <Text size={"small"} textAlign={"center"}>
                 {`Adapted from `}
                 <Link href={source}>{author}</Link>
                 {createdDate ? ` on ${createdDate}` : ""}
@@ -94,14 +98,13 @@ const Recipe: NextPage<IRecipePage> = ({
               <SimpleGrid columns={[1, 1, 1, time.length]}>
                 {time.map(buildTime)}
               </SimpleGrid>
-            </VStack>
-          </GridItem>
-          <GridItem mt={8}>
-            <Center>
-              <Image src={image} />
-            </Center>
-          </GridItem>
-        </SimpleGrid>
+            </Stack>
+          </Box>
+          <Box maxW={"lg"} pl={[0, 0, 5]} pt={5} pb={5} mr={"auto"} ml={"auto"}>
+            <Img src={image} />
+          </Box>
+        </Flex>
+
         <Stack mt={8}>
           <Flex borderBottom={"1px"} borderColor={"whiteAlpha.300"}>
             <Heading size="xl">{"Ingredients"}</Heading>
@@ -113,11 +116,14 @@ const Recipe: NextPage<IRecipePage> = ({
             <IngredientCollection ingredient={ingredients[0]} />
           ) : (
             ingredients.map((ingredientGroup) => {
-              <IngredientCollection
-                key={ingredientGroup.category}
-                showLabel
-                ingredient={ingredientGroup}
-              />;
+              return (
+                <IngredientCollection
+                  key={ingredientGroup.category}
+                  showLabel
+                  ingredient={ingredientGroup}
+                  mb={8}
+                />
+              );
             })
           )}
         </Stack>
