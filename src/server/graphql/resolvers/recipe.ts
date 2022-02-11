@@ -99,7 +99,7 @@ const recipeResolver = (_root: undefined, args: RecipeInput) => {
 };
 
 const imageResolver = ({ image }: Recipe) => {
-  if (image) return `http://localhost:3000/api/recipes/images/${image}`;
+  if (image) return `/api/recipes/images/${image}`;
 
   return null;
 };

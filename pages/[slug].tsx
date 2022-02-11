@@ -195,7 +195,7 @@ const getStaticProps = async (context: Params) => {
   return {
     props: {
       ...recipe,
-      image: image ? `http://localhost:3000/api/recipes/images/${image}` : null,
+      image: image ? `/api/recipes/images/${image}` : null,
     },
   };
 };

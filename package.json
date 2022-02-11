@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
-    "start": "next start",
+    "build": "next build",
+    "start": "next start -p 8080",
     "lint": "next lint",
     "format": "npx prettier --write .",
     "verify": "npx prettier --check . && npm run lint"
