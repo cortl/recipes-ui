@@ -47,7 +47,7 @@ const Generic: React.FC<IGenericRecipeTag> = ({ slug, type, tags }) => {
   }
 
   return (
-    <TagCollection id={`${slug}-${key}`} colorScheme={color} tags={givenTags} />
+    <TagCollection id={`${slug}-${key}`} slug={slug} colorScheme={color} tags={givenTags} />
   );
 };
 
