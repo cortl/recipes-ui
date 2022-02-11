@@ -51,7 +51,7 @@ const HomePage: NextPage = () => {
       });
       setOffset(offset + PAGE_SIZE);
     }
-  }, [isBottom, fetchMore, setOffset, offset]);
+  }, [isBottom, fetchMore, setOffset, offset, data]);
 
   const onEnter = useCallback(
     (e) => {

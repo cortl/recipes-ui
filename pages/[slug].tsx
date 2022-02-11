@@ -92,10 +92,7 @@ const Recipe: NextPage<IRecipePage> = ({
   return (
     <Layout title={`${title} | Recipes`} description={"a recipe."}>
       <Container maxW={"container.lg"}>
-        <Flex
-          alignItems={"center"}
-          {...flexProps}
-        >
+        <Flex alignItems={"center"} {...flexProps}>
           <Box maxW={"lg"} pt={5} pb={5} mr={"auto"} ml={"auto"}>
             <Stack>
               <PageHeader text={title} />
@@ -163,8 +160,8 @@ const Recipe: NextPage<IRecipePage> = ({
               {"Misc."}
             </Heading>
             <UnorderedList spacing={5} listStylePos={"inside"}>
-              {notes.map((note) => (
-                <ListItem>{note}</ListItem>
+              {notes.map((note, i) => (
+                <ListItem key={`note-${i}`}>{note}</ListItem>
               ))}
             </UnorderedList>
           </Stack>
