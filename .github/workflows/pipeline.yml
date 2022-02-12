@@ -20,6 +20,11 @@ jobs:
       - name: Verify code
         run: |
           npm run verify
+      - name: Create env file
+        run: |
+          cat << EOF > .env
+          NEXT_PUBLIC_GOOGLE_ANALYTICS=${{ secrets.GOOGLE_ANALYTICS_ID }}
+          EOF
       - name: Build Next.js
         run: |
           npm run build
@@ -41,11 +46,6 @@ jobs:
         with:
           name: build
           path: .next
-      - name: Create env file
-        run: |
-          cat << EOF > .env
-          NEXT_PUBLIC_GOOGLE_ANALYTICS=${{ secrets.GOOGLE_ANALYTICS_ID }}
-          EOF
       - name: "Google Auth"
         uses: "google-github-actions/auth@v0"
         with:
