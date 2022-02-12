@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useColorMode } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 interface ICard {
@@ -6,13 +6,18 @@ interface ICard {
 }
 
 const Card: React.FC<ICard> = ({ children }) => {
+  const { colorMode } = useColorMode();
+
+  const borderColor =
+    colorMode === "light" ? "blackAlpha.300" : "whiteAlpha.300";
+
   return (
     <Box
       borderRadius={"lg"}
       maxW={"sm"}
       overflow="hidden"
       border="1px"
-      borderColor={"whiteAlpha.300"}
+      borderColor={borderColor}
       alignSelf={"flex-start"}
       mt={5}
       mr="auto"

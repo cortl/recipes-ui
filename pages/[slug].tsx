@@ -18,6 +18,7 @@ import {
   BoxProps,
   FlexProps,
   Center,
+  useColorMode,
 } from "@chakra-ui/react";
 
 import { Layout } from "../src/client/components/layout";
@@ -87,6 +88,10 @@ const Recipe: NextPage<IRecipePage> = ({
   notes,
 }) => {
   const author = getSitenameFromUrl(source);
+  const { colorMode } = useColorMode();
+
+  const borderColor =
+    colorMode === "light" ? "blackAlpha.300" : "whiteAlpha.300";
   const shouldDisplayMiscSection = Boolean(notes.length);
   const flexProps: FlexProps = image
     ? {
@@ -120,7 +125,7 @@ const Recipe: NextPage<IRecipePage> = ({
         </Flex>
 
         <Stack mt={8}>
-          <Flex borderBottom={"1px"} borderColor={"whiteAlpha.300"}>
+          <Flex borderBottom={"1px"} borderColor={borderColor}>
             <Heading size="xl">{"Ingredients"}</Heading>
             <Spacer />
             <Text textAlign={"right"}>{`Serves/makes ${servings}`}</Text>
@@ -142,11 +147,7 @@ const Recipe: NextPage<IRecipePage> = ({
           )}
         </Stack>
         <Stack mt={8}>
-          <Heading
-            size="xl"
-            borderBottom={"1px"}
-            borderColor={"whiteAlpha.300"}
-          >
+          <Heading size="xl" borderBottom={"1px"} borderColor={borderColor}>
             {"Instructions"}
           </Heading>
           <List spacing={5} listStylePos={"inside"}>
@@ -160,11 +161,7 @@ const Recipe: NextPage<IRecipePage> = ({
         </Stack>
         {shouldDisplayMiscSection && (
           <Stack mt={8}>
-            <Heading
-              size="xl"
-              borderBottom={"1px"}
-              borderColor={"whiteAlpha.300"}
-            >
+            <Heading size="xl" borderBottom={"1px"} borderColor={borderColor}>
               {"Misc."}
             </Heading>
             <UnorderedList spacing={5} listStylePos={"inside"}>
