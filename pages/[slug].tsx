@@ -89,7 +89,6 @@ const Recipe: NextPage<IRecipePage> = ({
 }) => {
   const author = getSitenameFromUrl(source);
   const { colorMode } = useColorMode();
-
   const borderColor =
     colorMode === "light" ? "blackAlpha.300" : "whiteAlpha.300";
   const shouldDisplayMiscSection = Boolean(notes.length);
