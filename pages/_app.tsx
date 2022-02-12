@@ -3,6 +3,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import { theme } from "../src/client/theme";
+import { usePageChange } from "../src/client/hooks/usePageChange";
 
 import "../styles/globals.css";
 
@@ -24,6 +25,8 @@ const client = new ApolloClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  usePageChange();
+
   return (
     <ApolloProvider client={client}>
       <ChakraProvider theme={theme}>

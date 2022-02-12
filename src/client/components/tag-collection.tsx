@@ -17,18 +17,16 @@ const TagCollection: React.FC<ITagCollection> = ({
 }) => (
   <Box display={"inline-block"}>
     {tags.map((tag) => {
-      const createdTag = (
+      return slug ? (
+        <Link key={`${id}-${tag}`} href={`/?filters=${tag}`} passHref>
+          <CLink>
+            <Tag {...rest}>{tag}</Tag>
+          </CLink>
+        </Link>
+      ) : (
         <Tag key={`${id}-${tag}`} {...rest}>
           {tag}
         </Tag>
-      );
-
-      return slug ? (
-        <Link href={`/?filters=${tag}`} passHref>
-          <CLink>{createdTag}</CLink>
-        </Link>
-      ) : (
-        createdTag
       );
     })}
   </Box>
