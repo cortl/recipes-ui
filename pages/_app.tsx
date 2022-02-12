@@ -6,6 +6,7 @@ import { theme } from "../src/client/theme";
 import { usePageChange } from "../src/client/hooks/usePageChange";
 
 import "../styles/globals.css";
+import { useServiceWorker } from "../src/client/hooks/useServiceWorker";
 
 const client = new ApolloClient({
   uri: "/api/graphql",
@@ -26,6 +27,7 @@ const client = new ApolloClient({
 
 function MyApp({ Component, pageProps }: AppProps) {
   usePageChange();
+  useServiceWorker();
 
   return (
     <ApolloProvider client={client}>
