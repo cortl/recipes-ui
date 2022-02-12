@@ -11,11 +11,13 @@ NEXT_PUBLIC_GOOGLE_ANALYTICS=YOUR_GOOGLE_ANALYTICS_ID
 ```
 
 ### Local Development
+
 1. `nvm use`
 2. `npm install`
-3.  `npm run dev`
+3. `npm run dev`
 
 ### Production Development
+
 1. `nvm use`
 2. `npm install`
 3. `npm run build`
