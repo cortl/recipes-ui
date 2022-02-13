@@ -1,6 +1,6 @@
 runtime: nodejs16
 handlers:
-  - url: /sw.js
-    expiration: 0d 0h 0s
-    http_headers:
-      Cache-Control: no-cache
+  - url: /sw\.js
+    static_files: sw.js
+    upload: public/service-worker\.js
+    expiration: 0m
