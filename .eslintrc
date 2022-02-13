@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "@cortl/eslint-config"
-  ],
+  "extends": ["@cortl/eslint-config"],
   "rules": {
     "react/no-array-index-key": "warn",
     "@typescript-eslint/no-floating-promises": "warn"

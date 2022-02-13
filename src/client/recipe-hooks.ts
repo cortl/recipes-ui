@@ -2,8 +2,8 @@ import { QueryResult, useQuery } from "@apollo/client";
 import { GET_HOMEPAGE_RECIPES } from "./queries";
 
 type RecipeResult = {
-  recipes: Recipe[]
-}
+  recipes: Recipe[];
+};
 
 const useRecipes = (
   tags: string[],
