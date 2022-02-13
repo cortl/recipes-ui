@@ -1,7 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+import type { NextApiRequest, NextApiResponse } from "next";
+
+const handler = (req: NextApiRequest, res: NextApiResponse): void => {
   const { image } = req.query;
 
   const path = `./node_modules/@cortl/recipes/images/${image}`;

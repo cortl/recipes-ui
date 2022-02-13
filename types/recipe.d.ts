@@ -26,7 +26,7 @@ type Recipe = {
   ingredients: Ingredient[];
   tags: string[];
   time: Time[];
-  image: string;
+  image: string | null;
 
   [key: string]: unknown;
 };

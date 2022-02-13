@@ -4,7 +4,7 @@ import { Center, Text } from "@chakra-ui/react";
 import { RecipeCard } from "./recipe-card";
 
 interface IResultsList {
-  recipes: Recipe[];
+  recipes?: Recipe[];
 }
 
 const responsiveBreakpoints = {

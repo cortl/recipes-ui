@@ -6,8 +6,12 @@
     "build": "next build",
     "start": "next start -p 8080",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "format": "npx prettier --write .",
     "verify": "npx prettier --check . && npm run lint"
+  },
+  "engines": {
+    "node": ">=16"
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",
@@ -28,6 +32,7 @@
     "react-masonry-css": "^1.0.16"
   },
   "devDependencies": {
+    "@cortl/eslint-config": "^1.0.3",
     "@types/gtag.js": "^0.0.8",
     "@types/node": "17.0.14",
     "@types/react": "17.0.39",

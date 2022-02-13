@@ -14,8 +14,8 @@ import {
   filterBoolean,
   filterArray,
   filterNumber,
-} from "../../../utils/filters";
-import { sortByField } from "../../../utils/sort";
+} from "../../utils/filters";
+import { sortByField } from "../../utils/sort";
 
 const archivedResolver = ({ archived }: Recipe) => {
   return Boolean(archived);

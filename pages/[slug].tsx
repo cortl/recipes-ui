@@ -1,5 +1,10 @@
-import type { NextPage } from "next";
+import type {
+  GetStaticPathsResult,
+  GetStaticPropsResult,
+  NextPage,
+} from "next";
 import Recipes from "@cortl/recipes";
+import type { BoxProps, FlexProps } from "@chakra-ui/react";
 import {
   Container,
   Heading,
@@ -15,57 +20,45 @@ import {
   Spacer,
   Box,
   Img,
-  BoxProps,
-  FlexProps,
   Center,
   useColorMode,
 } from "@chakra-ui/react";
+import type { ReactElement } from "react";
 
 import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
 import { RecipeTags } from "../src/client/domain/recipe-tags";
+import { getSitenameFromUrl } from "../src/client/utils";
 
-interface IRecipePage extends Recipe {}
+type IRecipePage = Recipe & {};
 
-interface IIngredientCollection extends BoxProps {
+type IIngredientCollection = BoxProps & {
   showLabel?: boolean;
   ingredient: Ingredient;
-}
+};
 
 const IngredientCollection: React.FC<IIngredientCollection> = ({
   ingredient,
   showLabel,
   ...rest
-}) => {
-  return (
-    <Box {...rest}>
-      {showLabel && <Heading size={"md"}>{ingredient.category}</Heading>}
-      <UnorderedList listStylePos={"inside"} spacing={5}>
-        {ingredient.items.map((item, i) => (
-          <ListItem key={`ingredient-${i}`}>{item}</ListItem>
-        ))}
-      </UnorderedList>
-    </Box>
-  );
-};
+}) => (
+  <Box {...rest}>
+    {showLabel && <Heading size="md">{ingredient.category}</Heading>}
+    <UnorderedList listStylePos="inside" spacing={5}>
+      {ingredient.items.map((item, i) => (
+        <ListItem key={`ingredient-${i}`}>{item}</ListItem>
+      ))}
+    </UnorderedList>
+  </Box>
+);
 
-const capitalizeFirstLetter = (string: string) =>
-  string.charAt(0).toUpperCase() + string.slice(1);
-
-const getSitenameFromUrl = (source: string) => {
-  const host = new URL(source).hostname;
-  const site = host.replace("www.", "");
-
-  return capitalizeFirstLetter(site.substring(0, site.indexOf(".")));
-};
-
-const buildTime = (time: Time) => {
-  const { label, units } = time;
+const buildTime = (time: Time): ReactElement => {
+  const { label: category, units } = time;
 
   return (
-    <GridItem key={label}>
-      <Text display={"inline"} fontWeight={"bold"}>{`${label}: `}</Text>
-      <Text display={"inline"}>
+    <GridItem key={category}>
+      <Text display="inline" fontWeight="bold">{`${category}: `}</Text>
+      <Text display="inline">
         {units
           .map(({ measurement, label }) => `${measurement} ${label}`)
           .join(", ")}
@@ -99,16 +92,16 @@ const Recipe: NextPage<IRecipePage> = ({
     : { flexDirection: "column" };
 
   return (
-    <Layout title={`${title} | Recipes`} description={"a recipe."}>
-      <Container maxW={"container.lg"}>
-        <Flex alignItems={"center"} {...flexProps}>
-          <Box maxW={"lg"} pt={5} pb={5} mr={"auto"} ml={"auto"}>
+    <Layout description="a recipe." title={`${title} | Recipes`}>
+      <Container maxW="container.lg">
+        <Flex alignItems="center" {...flexProps}>
+          <Box maxW="lg" ml="auto" mr="auto" pb={5} pt={5}>
             <Stack>
               <PageHeader text={title} />
               <Center>
                 <RecipeTags slug={slug} tags={tags} />
               </Center>
-              <Text size={"small"} textAlign={"center"}>
+              <Text size="small" textAlign="center">
                 {`Adapted from `}
                 <Link href={source}>{author}</Link>
                 {createdDate ? ` on ${createdDate}` : ""}
@@ -118,41 +111,39 @@ const Recipe: NextPage<IRecipePage> = ({
               </SimpleGrid>
             </Stack>
           </Box>
-          <Box maxW={"lg"} pl={[0, 0, 5]} pt={5} pb={5} mr={"auto"} ml={"auto"}>
-            <Img src={image} />
+          <Box maxW="lg" ml="auto" mr="auto" pb={5} pl={[0, 0, 5]} pt={5}>
+            {image && <Img src={image} />}
           </Box>
         </Flex>
 
         <Stack mt={8}>
-          <Flex borderBottom={"1px"} borderColor={borderColor}>
+          <Flex borderBottom="1px" borderColor={borderColor}>
             <Heading size="xl">{"Ingredients"}</Heading>
             <Spacer />
-            <Text textAlign={"right"}>{`Serves/makes ${servings}`}</Text>
+            <Text textAlign="right">{`Serves/makes ${servings}`}</Text>
           </Flex>
 
           {ingredients.length === 1 ? (
             <IngredientCollection ingredient={ingredients[0]} />
           ) : (
-            ingredients.map((ingredientGroup) => {
-              return (
-                <IngredientCollection
-                  key={ingredientGroup.category}
-                  showLabel
-                  ingredient={ingredientGroup}
-                  mb={8}
-                />
-              );
-            })
+            ingredients.map((ingredientGroup) => (
+              <IngredientCollection
+                ingredient={ingredientGroup}
+                key={ingredientGroup.category}
+                mb={8}
+                showLabel
+              />
+            ))
           )}
         </Stack>
         <Stack mt={8}>
-          <Heading size="xl" borderBottom={"1px"} borderColor={borderColor}>
+          <Heading borderBottom="1px" borderColor={borderColor} size="xl">
             {"Instructions"}
           </Heading>
-          <List spacing={5} listStylePos={"inside"}>
+          <List listStylePos="inside" spacing={5}>
             {instructions.map((instruction, i) => (
               <ListItem key={`instruction-${i}`}>
-                <Heading size={"lg"}>{`${i + 1}.`}</Heading>
+                <Heading size="lg">{`${i + 1}.`}</Heading>
                 <Text lineHeight="1.7">{instruction}</Text>
               </ListItem>
             ))}
@@ -160,10 +151,10 @@ const Recipe: NextPage<IRecipePage> = ({
         </Stack>
         {shouldDisplayMiscSection && (
           <Stack mt={8}>
-            <Heading size="xl" borderBottom={"1px"} borderColor={borderColor}>
+            <Heading borderBottom="1px" borderColor={borderColor} size="xl">
               {"Misc."}
             </Heading>
-            <UnorderedList spacing={5} listStylePos={"inside"}>
+            <UnorderedList listStylePos="inside" spacing={5}>
               {notes.map((note, i) => (
                 <ListItem key={`note-${i}`}>{note}</ListItem>
               ))}
@@ -181,7 +172,7 @@ type Params = {
   };
 };
 
-const getStaticProps = async (context: Params) => {
+const getStaticProps = (context: Params): GetStaticPropsResult<IRecipePage> => {
   const {
     params: { slug },
   } = context;
@@ -196,14 +187,14 @@ const getStaticProps = async (context: Params) => {
   };
 };
 
-const getStaticPaths = async () => {
+const getStaticPaths = (): GetStaticPathsResult => {
   const slugs = Recipes.asArray.map(({ slug }) => ({
     params: { slug },
   }));
 
   return {
-    paths: slugs,
     fallback: false,
+    paths: slugs,
   };
 };
 

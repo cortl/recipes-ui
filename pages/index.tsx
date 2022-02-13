@@ -39,22 +39,22 @@ const HomePage: NextPage = () => {
 
   const resetAndFetch = useCallback(() => {
     fetchMore({
-      variables: { offset: 0, limit: PAGE_SIZE },
+      variables: { limit: PAGE_SIZE, offset: 0 },
     });
     setOffset(0);
   }, [fetchMore, setOffset]);
 
   useEffect(() => {
-    if (isBottom && offset <= data?.recipes.length) {
+    if (data?.recipes && isBottom && offset <= data.recipes.length) {
       fetchMore({
-        variables: { offset: offset + PAGE_SIZE, limit: PAGE_SIZE },
+        variables: { limit: PAGE_SIZE, offset: offset + PAGE_SIZE },
       });
       setOffset(offset + PAGE_SIZE);
     }
   }, [isBottom, fetchMore, setOffset, offset, data]);
 
   const onEnter = useCallback(
-    (e) => {
+    (e: React.KeyboardEvent) => {
       if (e.key === "Enter") {
         resetAndFetch();
         setUseableSearch(search);
@@ -63,29 +63,25 @@ const HomePage: NextPage = () => {
     [resetAndFetch, setUseableSearch, search]
   );
 
-  const content = loading ? (
+  const content = loading && Boolean(data?.recipes) ? (
     <Loading />
   ) : error ? (
     <Error message={error.message} />
   ) : (
-    <ResultsList recipes={data.recipes} />
+    <ResultsList recipes={data?.recipes} />
   );
 
   return (
-    <Layout
-      title={"Recipe Book"}
-      description={"Collection of recipes I've made"}
-    >
-      <PageHeader text={"Recipe Book"} />
-      <Container maxW={"container.xl"}>
+    <Layout description={"Collection of recipes I've made"} title="Recipe Book">
+      <PageHeader text="Recipe Book" />
+      <Container maxW="container.xl">
         <Stack pt={5}>
           <FormControl>
-            <FormLabel htmlFor="search">Search</FormLabel>
+            <FormLabel htmlFor="search">{"Search"}</FormLabel>
             <HStack>
               <Input
                 id="search"
-                value={search}
-                onChange={(e) => {
+                onChange={(e): void => {
                   setSearch(e.target.value);
 
                   if (e.target.value === "") {
@@ -93,20 +89,21 @@ const HomePage: NextPage = () => {
                   }
                 }}
                 onKeyPress={onEnter}
+                value={search}
               />
               <IconButton
                 aria-label="search recipes"
                 icon={<SearchIcon />}
-                onClick={() => {
+                onClick={(): void => {
                   resetAndFetch();
                   setUseableSearch(search);
                 }}
               />
               <IconButton
                 aria-label="filter recipes"
-                isActive={filtersToggled}
                 icon={<ViewIcon />}
-                onClick={() => {
+                isActive={filtersToggled}
+                onClick={(): void => {
                   setToggledFilters(!filtersToggled);
                 }}
               />

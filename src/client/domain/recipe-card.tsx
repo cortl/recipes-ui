@@ -18,7 +18,7 @@ import { TimeTag } from "./time-tag";
 interface IRecipeCard {
   title: string;
   slug: string;
-  image: string;
+  image: string | null;
   tags: string[];
   time: Recipe["time"];
 }
