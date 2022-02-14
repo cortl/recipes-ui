@@ -24,6 +24,7 @@ jobs:
         run: |
           cat << EOF > .env
           NEXT_PUBLIC_GOOGLE_ANALYTICS=${{ secrets.GOOGLE_ANALYTICS_ID }}
+          NEXT_PUBLIC_BASE_URL=https://recipes.cortlan.dev
           EOF
       - name: Build Next.js
         run: |

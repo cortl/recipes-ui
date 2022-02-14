@@ -1,3 +1,5 @@
+import process from "node:process";
+
 import type {
   GetStaticPathsResult,
   GetStaticPropsResult,
@@ -92,9 +94,10 @@ const Recipe: NextPage<IRecipePage> = ({
         flexWrap: ["wrap", "wrap", "nowrap"],
       }
     : { flexDirection: "column" };
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   return (
-    <Layout image={image} title={`${title} | Recipes`}>
+    <Layout image={`${baseUrl}${image}`} title={title}>
       <Container maxW="container.lg">
         <Flex alignItems="center" {...flexProps}>
           <Box maxW="lg" ml="auto" mr="auto" pb={5} pt={5}>

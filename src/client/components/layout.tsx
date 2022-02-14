@@ -1,5 +1,5 @@
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Box, Heading, Link as CLink } from "@chakra-ui/react";
+import { Box, Link as CLink } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -16,17 +16,22 @@ interface ILayout {
 
 const Layout: React.FC<ILayout> = ({ title, description, image, children }) => {
   const router = useRouter();
+  const isHomePage = router.pathname === "/";
 
   return (
     <>
       <Head>
-        <title>{title}</title>
-        <meta name="title" content={description} />
+        {isHomePage ? (
+          <title>{title}</title>
+        ) : (
+          <title>{`${title} | Recipe Book`}</title>
+        )}
+        <meta name="title" content={title} />
         {description && <meta name="description" content={description} />}
         {image && <meta name="image" content={image} />}
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {router.pathname !== "/" && (
+      {!isHomePage && (
         <Box mt={5} ml={5}>
           <Link href="/" passHref>
             <CLink>
