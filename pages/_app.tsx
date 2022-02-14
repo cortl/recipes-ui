@@ -23,7 +23,7 @@ const client = new ApolloClient({
       },
     },
   }),
-  uri: "/api/graphql2",
+  uri: "/api/graphql",
 });
 
 const MyApp = ({ Component, pageProps }: AppProps): ReactNode => {
