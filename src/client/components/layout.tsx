@@ -33,10 +33,10 @@ const Layout: React.FC<ILayout> = ({
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
 
-        <title>{title}</title>
-        <meta property="og:title" content={useableTitle} />
-        <meta name="twitter:title" content={useableTitle} />
-        <meta name="title" content={useableTitle} />
+        <title>{useableTitle}</title>
+        <meta property="og:title" content={title} />
+        <meta name="twitter:title" content={title} />
+        <meta name="title" content={title} />
 
         <meta
           property="twitter:domain"
