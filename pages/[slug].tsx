@@ -118,7 +118,7 @@ const Recipe: NextPage<IRecipePage> = ({
           </Box>
         </Flex>
 
-        <Stack mt={8} as="section">
+        <Stack as="section" mt={8}>
           <Flex borderBottom="1px" borderColor={borderColor}>
             <Heading size="xl">{"Ingredients"}</Heading>
             <Spacer />
@@ -138,7 +138,7 @@ const Recipe: NextPage<IRecipePage> = ({
             ))
           )}
         </Stack>
-        <Stack mt={8} as="section">
+        <Stack as="section" mt={8}>
           <Heading borderBottom="1px" borderColor={borderColor} size="xl">
             {"Instructions"}
           </Heading>
@@ -152,7 +152,7 @@ const Recipe: NextPage<IRecipePage> = ({
           </List>
         </Stack>
         {shouldDisplayMiscSection && (
-          <Stack mt={8} as="section">
+          <Stack as="section" mt={8}>
             <Heading borderBottom="1px" borderColor={borderColor} size="xl">
               {"Misc."}
             </Heading>
