@@ -1,3 +1,5 @@
+import process from "process";
+
 import type { NextPage } from "next";
 import {
   Container,
@@ -24,6 +26,7 @@ import { PageHeader } from "../src/client/components/page-header";
 const PAGE_SIZE = 12;
 
 const HomePage: NextPage = () => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const filters = useQueryFilters();
   const [search, setSearch] = useState("");
   const [useableSearch, setUseableSearch] = useState("");
@@ -73,7 +76,11 @@ const HomePage: NextPage = () => {
     );
 
   return (
-    <Layout description={"Collection of recipes I've made"} title="Recipe Book">
+    <Layout
+      description={"Collection of recipes I've made"}
+      title="Recipe Book"
+      url={baseUrl}
+    >
       <PageHeader text="Recipe Book" />
       <Container maxW="container.xl">
         <Stack pt={5}>

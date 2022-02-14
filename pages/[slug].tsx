@@ -95,9 +95,10 @@ const Recipe: NextPage<IRecipePage> = ({
       }
     : { flexDirection: "column" };
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const url = `${baseUrl}/${slug}`;
 
   return (
-    <Layout image={`${baseUrl}${image}`} title={title}>
+    <Layout image={`${baseUrl}${image}`} title={title} url={url}>
       <Container maxW="container.lg">
         <Flex alignItems="center" {...flexProps}>
           <Box maxW="lg" ml="auto" mr="auto" pb={5} pt={5}>

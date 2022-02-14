@@ -1,3 +1,5 @@
+import process from "process";
+
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { Box, Link as CLink } from "@chakra-ui/react";
 import Head from "next/head";
@@ -11,24 +13,56 @@ interface ILayout {
   title: string;
   description?: string;
   image?: string | null;
+  url?: string;
   children: React.ReactNode;
 }
 
-const Layout: React.FC<ILayout> = ({ title, description, image, children }) => {
+const Layout: React.FC<ILayout> = ({
+  title,
+  description,
+  url,
+  image,
+  children,
+}) => {
   const router = useRouter();
   const isHomePage = router.pathname === "/";
-
+  const useableTitle = isHomePage ? title : `${title} | Recipe Book`;
   return (
     <>
       <Head>
-        {isHomePage ? (
-          <title>{title}</title>
-        ) : (
-          <title>{`${title} | Recipe Book`}</title>
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <title>{title}</title>
+        <meta property="og:title" content={useableTitle} />
+        <meta name="twitter:title" content={useableTitle} />
+        <meta name="title" content={useableTitle} />
+
+        <meta
+          property="twitter:domain"
+          content={process.env.NEXT_PUBLIC_BASE_URL}
+        />
+        {url && (
+          <>
+            <meta property="twitter:url" content={url} />
+            <meta property="og:url" content={url} />
+          </>
         )}
-        <meta name="title" content={title} />
-        {description && <meta name="description" content={description} />}
-        {image && <meta name="image" content={image} />}
+
+        {description && (
+          <>
+            <meta name="twitter:description" content={description} />
+            <meta property="og:description" content={description} />
+            <meta name="description" content={description} />
+          </>
+        )}
+        {image && (
+          <>
+            <meta name="image" content={image} />
+            <meta name="twitter:image" content={image} />
+            <meta property="og:image" content={image} />
+          </>
+        )}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {!isHomePage && (
