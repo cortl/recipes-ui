@@ -94,7 +94,7 @@ const Recipe: NextPage<IRecipePage> = ({
     : { flexDirection: "column" };
 
   return (
-    <Layout description="a recipe." title={`${title} | Recipes`}>
+    <Layout image={image} title={`${title} | Recipes`}>
       <Container maxW="container.lg">
         <Flex alignItems="center" {...flexProps}>
           <Box maxW="lg" ml="auto" mr="auto" pb={5} pt={5}>

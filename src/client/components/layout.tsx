@@ -9,18 +9,21 @@ import styles from "../../../styles/Home.module.css";
 
 interface ILayout {
   title: string;
-  description: string;
+  description?: string;
+  image?: string | null;
   children: React.ReactNode;
 }
 
-const Layout: React.FC<ILayout> = ({ title, description, children }) => {
+const Layout: React.FC<ILayout> = ({ title, description, image, children }) => {
   const router = useRouter();
 
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta name="description" content={description} />
+        <meta name="title" content={description} />
+        {description && <meta name="description" content={description} />}
+        {image && <meta name="image" content={image} />}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {router.pathname !== "/" && (
