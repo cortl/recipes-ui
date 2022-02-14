@@ -28,7 +28,7 @@ import type { ReactElement } from "react";
 import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
 import { RecipeTags } from "../src/client/domain/recipe-tags";
-import { getSitenameFromUrl } from "../src/client/utils";
+import { capitalizeFirstLetter, getSitenameFromUrl } from "../src/client/utils";
 
 type IRecipePage = Recipe & {};
 
@@ -43,7 +43,9 @@ const IngredientCollection: React.FC<IIngredientCollection> = ({
   ...rest
 }) => (
   <Box {...rest}>
-    {showLabel && <Heading size="md">{ingredient.category}</Heading>}
+    {showLabel && (
+      <Heading size="md">{capitalizeFirstLetter(ingredient.category)}</Heading>
+    )}
     <UnorderedList listStylePos="inside" spacing={5}>
       {ingredient.items.map((item, i) => (
         <ListItem key={`ingredient-${i}`}>{item}</ListItem>
