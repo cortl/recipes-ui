@@ -48,7 +48,7 @@ const IngredientCollection: React.FC<IIngredientCollection> = ({
     {showLabel && (
       <Heading size="md">{capitalizeFirstLetter(ingredient.category)}</Heading>
     )}
-    <UnorderedList listStylePos="inside" spacing={5}>
+    <UnorderedList listStylePos="inside" spacing={5} m="0">
       {ingredient.items.map((item, i) => (
         <ListItem key={`ingredient-${i}`}>{item}</ListItem>
       ))}
