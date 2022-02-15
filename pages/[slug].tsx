@@ -123,7 +123,11 @@ const Recipe: NextPage<IRecipePage> = ({
         </Flex>
 
         <Stack as="section" mt={8}>
-          <Flex borderBottom="1px" borderColor={borderColor}>
+          <Flex
+            alignItems={"baseline"}
+            borderBottom="1px"
+            borderColor={borderColor}
+          >
             <Heading size="xl">{"Ingredients"}</Heading>
             <Spacer />
             <Text textAlign="right">{`Serves/makes ${servings}`}</Text>
