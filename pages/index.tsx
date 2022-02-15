@@ -66,14 +66,13 @@ const HomePage: NextPage = () => {
     [resetAndFetch, setUseableSearch, search]
   );
 
-  const content =
-    loading && Boolean(data?.recipes) ? (
-      <Loading />
-    ) : error ? (
-      <Error message={error.message} />
-    ) : (
-      <ResultsList recipes={data?.recipes} />
-    );
+  const content = error ? (
+    <Error message={error.message} />
+  ) : loading || !Boolean(data?.recipes) ? (
+    <Loading />
+  ) : (
+    <ResultsList recipes={data?.recipes} />
+  );
 
   return (
     <Layout
