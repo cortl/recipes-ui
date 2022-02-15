@@ -71,7 +71,7 @@ const HomePage: NextPage = () => {
   ) : loading || !data?.recipes ? (
     <Loading />
   ) : (
-    <ResultsList recipes={data?.recipes} />
+    <ResultsList recipes={data.recipes} />
   );
 
   return (
