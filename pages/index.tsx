@@ -68,7 +68,7 @@ const HomePage: NextPage = () => {
 
   const content = error ? (
     <Error message={error.message} />
-  ) : loading || !Boolean(data?.recipes) ? (
+  ) : loading || !data?.recipes ? (
     <Loading />
   ) : (
     <ResultsList recipes={data?.recipes} />
