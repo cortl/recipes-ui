@@ -48,7 +48,7 @@ const IngredientCollection: React.FC<IIngredientCollection> = ({
     {showLabel && (
       <Heading size="md">{capitalizeFirstLetter(ingredient.category)}</Heading>
     )}
-    <UnorderedList listStylePos="inside" spacing={5} m="0">
+    <UnorderedList listStylePos="inside" m="0" spacing={5}>
       {ingredient.items.map((item, i) => (
         <ListItem key={`ingredient-${i}`}>{item}</ListItem>
       ))}
@@ -124,7 +124,7 @@ const Recipe: NextPage<IRecipePage> = ({
 
         <Stack as="section" mt={8}>
           <Flex
-            alignItems={"baseline"}
+            alignItems="baseline"
             borderBottom="1px"
             borderColor={borderColor}
           >
