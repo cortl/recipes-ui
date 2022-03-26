@@ -5,7 +5,7 @@ interface IPageHeader extends BoxProps {
 }
 
 const PageHeader: React.FC<IPageHeader> = ({ text, ...rest }) => (
-  <VStack mt={24} mb={2} {...rest}>
+  <VStack mt={12} mb={12} {...rest}>
     <Center>
       <Heading as="h1" size="4xl" textAlign={"center"}>
         {text}
