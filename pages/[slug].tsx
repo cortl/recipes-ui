@@ -51,9 +51,7 @@ const IngredientCollection: React.FC<IIngredientCollection> = ({
     )}
     <UnorderedList listStylePos="inside" m="0" mb={mb} spacing={2}>
       {ingredient.items.map((item, i) => (
-        <ListItem fontSize="lg" key={`ingredient-${i}`}>
-          {item}
-        </ListItem>
+        <ListItem key={`ingredient-${i}`}>{item}</ListItem>
       ))}
     </UnorderedList>
   </Box>
@@ -64,12 +62,8 @@ const buildTime = (time: Time): ReactElement => {
 
   return (
     <GridItem key={category}>
-      <Text
-        display="inline"
-        fontSize="lg"
-        fontWeight="bold"
-      >{`${category}: `}</Text>
-      <Text display="inline" fontSize="lg">
+      <Text display="inline" fontWeight="bold">{`${category}: `}</Text>
+      <Text display="inline">
         {units
           .map(({ measurement, label }) => `${measurement} ${label}`)
           .join(", ")}
@@ -106,7 +100,7 @@ const Recipe: NextPage<IRecipePage> = ({
 
   return (
     <Layout image={`${baseUrl}${image}`} title={title} url={url}>
-      <Container maxW="container.lg">
+      <Container fontSize="lg" maxW="container.lg">
         <Flex alignItems="center" {...flexProps}>
           <Box maxW="lg" ml="auto" mr="auto" pb={5} pt={5}>
             <Stack>
@@ -114,7 +108,7 @@ const Recipe: NextPage<IRecipePage> = ({
               <Center>
                 <RecipeTags slug={slug} tags={tags} />
               </Center>
-              <Text size="small" textAlign="center" fontSize={"lg"}>
+              <Text size="small" textAlign="center">
                 {`Adapted from `}
                 <Link href={source}>{author}</Link>
                 {createdDate ? ` on ${createdDate}` : ""}
@@ -137,10 +131,7 @@ const Recipe: NextPage<IRecipePage> = ({
           >
             <Heading size="xl">{"Ingredients"}</Heading>
             <Spacer />
-            <Text
-              fontSize="lg"
-              textAlign="right"
-            >{`Serves/makes ${servings}`}</Text>
+            <Text textAlign="right">{`Serves/makes ${servings}`}</Text>
           </Flex>
 
           {ingredients.length === 1 ? (
@@ -164,9 +155,7 @@ const Recipe: NextPage<IRecipePage> = ({
             {instructions.map((instruction, i) => (
               <ListItem key={`instruction-${i}`}>
                 <Heading size="lg">{`${i + 1}.`}</Heading>
-                <Text lineHeight="1.7" fontSize={"lg"}>
-                  {instruction}
-                </Text>
+                <Text lineHeight="1.7">{instruction}</Text>
               </ListItem>
             ))}
           </List>
