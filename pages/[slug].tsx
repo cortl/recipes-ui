@@ -42,13 +42,14 @@ type IIngredientCollection = BoxProps & {
 const IngredientCollection: React.FC<IIngredientCollection> = ({
   ingredient,
   showLabel,
+  mb,
   ...rest
 }) => (
   <Box {...rest}>
     {showLabel && (
       <Heading size="md">{capitalizeFirstLetter(ingredient.category)}</Heading>
     )}
-    <UnorderedList listStylePos="inside" m="0" mb="5" spacing={2}>
+    <UnorderedList listStylePos="inside" m="0" mb={mb} spacing={2}>
       {ingredient.items.map((item, i) => (
         <ListItem fontSize="lg" key={`ingredient-${i}`}>
           {item}
@@ -145,11 +146,11 @@ const Recipe: NextPage<IRecipePage> = ({
           {ingredients.length === 1 ? (
             <IngredientCollection ingredient={ingredients[0]} />
           ) : (
-            ingredients.map((ingredientGroup) => (
+            ingredients.map((ingredientGroup, i) => (
               <IngredientCollection
                 ingredient={ingredientGroup}
                 key={ingredientGroup.category}
-                mb={8}
+                mb={ingredients.length - 1 > i ? "5" : "0"}
                 showLabel
               />
             ))
