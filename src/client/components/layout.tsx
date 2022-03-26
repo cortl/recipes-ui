@@ -1,7 +1,7 @@
 import process from "process";
 
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Box, Link as CLink } from "@chakra-ui/react";
+import { Box, Link as CLink, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -27,6 +27,7 @@ const Layout: React.FC<ILayout> = ({
   const router = useRouter();
   const isHomePage = router.pathname === "/";
   const useableTitle = isHomePage ? title : `${title} | Recipe Book`;
+
   return (
     <>
       <Head>
@@ -76,9 +77,15 @@ const Layout: React.FC<ILayout> = ({
       )}
       <main>{children}</main>
       <footer className={styles.footer}>
-        <a href="https://cortlan.dev" target="_blank" rel="noopener noreferrer">
-          Built with 💖 by Cortlan
-        </a>
+        <Text fontSize="lg">
+          <a
+            href="https://cortlan.dev"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {`Built with 💖 by Cortlan`}
+          </a>
+        </Text>
       </footer>
     </>
   );

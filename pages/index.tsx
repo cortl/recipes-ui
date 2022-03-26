@@ -81,7 +81,7 @@ const HomePage: NextPage = () => {
       url={baseUrl}
     >
       <PageHeader text="Recipe Book" />
-      <Container maxW="container.xl">
+      <Container fontSize="lg" maxW="container.xl">
         <Stack pt={5}>
           <FormControl>
             <FormLabel htmlFor="search">{"Search"}</FormLabel>
