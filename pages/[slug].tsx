@@ -48,9 +48,11 @@ const IngredientCollection: React.FC<IIngredientCollection> = ({
     {showLabel && (
       <Heading size="md">{capitalizeFirstLetter(ingredient.category)}</Heading>
     )}
-    <UnorderedList listStylePos="inside" m="0" spacing={5}>
+    <UnorderedList listStylePos="inside" m="0" mb="5" spacing={2}>
       {ingredient.items.map((item, i) => (
-        <ListItem key={`ingredient-${i}`}>{item}</ListItem>
+        <ListItem fontSize="lg" key={`ingredient-${i}`}>
+          {item}
+        </ListItem>
       ))}
     </UnorderedList>
   </Box>
@@ -61,8 +63,12 @@ const buildTime = (time: Time): ReactElement => {
 
   return (
     <GridItem key={category}>
-      <Text display="inline" fontWeight="bold">{`${category}: `}</Text>
-      <Text display="inline">
+      <Text
+        display="inline"
+        fontSize="lg"
+        fontWeight="bold"
+      >{`${category}: `}</Text>
+      <Text display="inline" fontSize="lg">
         {units
           .map(({ measurement, label }) => `${measurement} ${label}`)
           .join(", ")}
@@ -107,7 +113,7 @@ const Recipe: NextPage<IRecipePage> = ({
               <Center>
                 <RecipeTags slug={slug} tags={tags} />
               </Center>
-              <Text size="small" textAlign="center">
+              <Text size="small" textAlign="center" fontSize={"lg"}>
                 {`Adapted from `}
                 <Link href={source}>{author}</Link>
                 {createdDate ? ` on ${createdDate}` : ""}
@@ -130,7 +136,10 @@ const Recipe: NextPage<IRecipePage> = ({
           >
             <Heading size="xl">{"Ingredients"}</Heading>
             <Spacer />
-            <Text textAlign="right">{`Serves/makes ${servings}`}</Text>
+            <Text
+              fontSize="lg"
+              textAlign="right"
+            >{`Serves/makes ${servings}`}</Text>
           </Flex>
 
           {ingredients.length === 1 ? (
@@ -154,7 +163,9 @@ const Recipe: NextPage<IRecipePage> = ({
             {instructions.map((instruction, i) => (
               <ListItem key={`instruction-${i}`}>
                 <Heading size="lg">{`${i + 1}.`}</Heading>
-                <Text lineHeight="1.7">{instruction}</Text>
+                <Text lineHeight="1.7" fontSize={"lg"}>
+                  {instruction}
+                </Text>
               </ListItem>
             ))}
           </List>
