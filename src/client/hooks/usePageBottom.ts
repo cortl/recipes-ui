@@ -8,9 +8,12 @@ const usePageBottom = () => {
       const isBottom =
         window.innerHeight + document.documentElement.scrollTop >=
         document.documentElement.offsetHeight - 50;
+
       setBottom(isBottom);
     };
+
     window.addEventListener("scroll", handleScroll);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };

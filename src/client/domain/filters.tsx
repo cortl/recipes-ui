@@ -13,12 +13,13 @@ import { useQueryFilters } from "../hooks/useQueryFilters";
 
 const removeFromArray = (arr: string[], str: string) => {
   const index = arr.indexOf(str);
+
   if (index > -1) {
     arr.splice(index, 1);
   }
 };
 
-interface IFilters {
+type IFilters = {
   onChange?: () => void;
 }
 
@@ -34,7 +35,7 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
   const filters = useQueryFilters();
 
   const onTagClick = (tag: string) => () => {
-    let newFilters = [...filters];
+    const newFilters = [...filters];
 
     if (!newFilters.includes(tag)) {
       newFilters.push(tag);
@@ -67,12 +68,12 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
         <FormControl as="fieldset" key={`${name}-filter-group`}>
           <FormLabel as="legend">{name}</FormLabel>
           <CheckboxGroup>
-            <Stack spacing={[1, 3, 5]} direction={["column", "column", "row"]}>
+            <Stack direction={["column", "column", "row"]} spacing={[1, 3, 5]}>
               {tags.map((tagName) => (
                 <Checkbox
+                  isChecked={filters.includes(tagName)}
                   key={`${name}-${tagName}`}
                   onChange={onTagClick(tagName)}
-                  isChecked={filters.includes(tagName)}
                 >
                   {tagName}
                 </Checkbox>

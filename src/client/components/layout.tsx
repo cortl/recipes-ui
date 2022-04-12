@@ -9,7 +9,7 @@ import React from "react";
 
 import styles from "../../../styles/Home.module.css";
 
-interface ILayout {
+type ILayout = {
   title: string;
   description?: string;
   image?: string | null;
@@ -31,46 +31,46 @@ const Layout: React.FC<ILayout> = ({
   return (
     <>
       <Head>
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta content="website" property="og:type" />
+        <meta content="summary_large_image" name="twitter:card" />
 
         <title>{useableTitle}</title>
-        <meta property="og:title" content={title} />
-        <meta name="twitter:title" content={title} />
-        <meta name="title" content={title} />
+        <meta content={title} property="og:title" />
+        <meta content={title} name="twitter:title" />
+        <meta content={title} name="title" />
 
         <meta
-          property="twitter:domain"
           content={process.env.NEXT_PUBLIC_BASE_URL}
+          property="twitter:domain"
         />
         {url && (
           <>
-            <meta property="twitter:url" content={url} />
-            <meta property="og:url" content={url} />
+            <meta content={url} property="twitter:url" />
+            <meta content={url} property="og:url" />
           </>
         )}
 
         {description && (
           <>
-            <meta name="twitter:description" content={description} />
-            <meta property="og:description" content={description} />
-            <meta name="description" content={description} />
+            <meta content={description} name="twitter:description" />
+            <meta content={description} property="og:description" />
+            <meta content={description} name="description" />
           </>
         )}
         {image && (
           <>
-            <meta name="image" content={image} />
-            <meta name="twitter:image" content={image} />
-            <meta property="og:image" content={image} />
+            <meta content={image} name="image" />
+            <meta content={image} name="twitter:image" />
+            <meta content={image} property="og:image" />
           </>
         )}
-        <link rel="icon" href="/favicon.ico" />
+        <link href="/favicon.ico" rel="icon" />
       </Head>
       {!isHomePage && (
-        <Box mt={5} ml={5}>
+        <Box ml={5} mt={5}>
           <Link href="/" passHref>
             <CLink>
-              <ArrowBackIcon w={6} h={6} />
+              <ArrowBackIcon h={6} w={6} />
             </CLink>
           </Link>
         </Box>

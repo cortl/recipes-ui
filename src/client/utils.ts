@@ -3,6 +3,7 @@ const capitalize = (str: string): string =>
 
 const capitalizeFirstLetter = (string: string): string => {
   const spl = string.split(" ");
+
   return spl.map(capitalize).join(" ");
 };
 

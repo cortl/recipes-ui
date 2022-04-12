@@ -1,4 +1,5 @@
 import { Box, BoxProps, Flex, Wrap, WrapItem } from "@chakra-ui/react";
+
 import {
   HolidayTags,
   MealTypeTags,
@@ -6,7 +7,7 @@ import {
   ProteinTags,
 } from "./recipe-tag";
 
-interface IRecipeTags {
+type IRecipeTags = {
   slug: string;
   tags: string[];
 }

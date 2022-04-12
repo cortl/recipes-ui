@@ -1,5 +1,6 @@
 import { TagCollection } from "../components/tag-collection";
-interface ITimeTag {
+
+type ITimeTag = {
   time: Recipe["time"];
 }
 

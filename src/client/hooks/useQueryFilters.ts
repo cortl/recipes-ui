@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-const useQueryFilters = () => {
+const useQueryFilters = (): string[] => {
   const router = useRouter();
 
   const queryFilters = router.query.filters;

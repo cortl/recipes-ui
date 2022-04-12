@@ -12,10 +12,11 @@ import {
 import Link from "next/link";
 
 import { Card } from "../components/card";
+
 import { RecipeTags } from "./recipe-tags";
 import { TimeTag } from "./time-tag";
 
-interface IRecipeCard {
+type IRecipeCard = {
   title: string;
   slug: string;
   image: string | null;
@@ -29,12 +30,11 @@ const RecipeCard: React.FC<IRecipeCard> = ({
   slug,
   tags,
   time,
-}) => {
-  return (
+}) => (
     <Card>
       {image && (
         <LinkBox>
-          <Image src={image} fallback={<Skeleton height={"40"} />} />
+          <Image fallback={<Skeleton height="40" />} src={image} />
           <Link href={`/${slug}`} passHref>
             <LinkOverlay />
           </Link>
@@ -45,7 +45,7 @@ const RecipeCard: React.FC<IRecipeCard> = ({
         <Stack mt={1}>
           <TimeTag time={time} />
         </Stack>
-        <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
+        <Box as="h4" fontWeight="semibold" lineHeight="tight" mt="1">
           <Link href={`/${slug}`}>
             <CLink>
               <Text isTruncated>{title}</Text>
@@ -55,5 +55,5 @@ const RecipeCard: React.FC<IRecipeCard> = ({
       </Box>
     </Card>
   );
-};
+
 export { RecipeCard };

@@ -3,7 +3,7 @@ import { Center, Text } from "@chakra-ui/react";
 
 import { RecipeCard } from "./recipe-card";
 
-interface IResultsList {
+type IResultsList = {
   recipes?: Recipe[];
 }
 
@@ -23,23 +23,24 @@ const ResultsList: React.FC<IResultsList> = ({ recipes }) => {
       >
         {recipes.map(({ title, slug, image, tags, time }, i) => (
           <RecipeCard
+            image={image}
             key={`${i}-${slug}`}
             slug={slug}
-            title={title}
-            image={image}
             tags={tags}
             time={time}
+            title={title}
           />
         ))}
       </Masonry>
     );
-  } else {
+  }
+ 
     return (
       <Center pt="5">
         <Text>{"Looks like there isn't anything here... 😿"}</Text>
       </Center>
     );
-  }
+  
 };
 
 export { ResultsList };

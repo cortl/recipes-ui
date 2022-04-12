@@ -6,13 +6,13 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-interface IError {
+type IError = {
   message: string;
 }
 
 const Error: React.FC<IError> = ({ message }) => (
   <Box mt={8}>
-    <Alert status="error" borderRadius={"lg"}>
+    <Alert borderRadius="lg" status="error">
       <AlertIcon />
       <AlertTitle>{"Error!"}</AlertTitle>
       <AlertDescription>{message}</AlertDescription>

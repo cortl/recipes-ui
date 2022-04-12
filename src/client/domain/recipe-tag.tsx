@@ -31,7 +31,7 @@ const MAPPING = {
   },
 };
 
-interface IGenericRecipeTag {
+type IGenericRecipeTag = {
   type: RecipeTagType;
   tags: string[];
   slug: string;
@@ -48,33 +48,33 @@ const Generic: React.FC<IGenericRecipeTag> = ({ slug, type, tags }) => {
 
   return (
     <TagCollection
+      colorScheme={color}
       id={`${slug}-${key}`}
       slug={slug}
-      colorScheme={color}
       tags={givenTags}
     />
   );
 };
 
-interface IRecipeTags {
+type IRecipeTags = {
   slug: string;
   tags: string[];
 }
 
 const ProteinTags: React.FC<IRecipeTags> = ({ tags, slug }) => (
-  <Generic slug={slug} type={RecipeTagType.PROTEIN_TYPE} tags={tags} />
+  <Generic slug={slug} tags={tags} type={RecipeTagType.PROTEIN_TYPE} />
 );
 
 const MealTypeTags: React.FC<IRecipeTags> = ({ tags, slug }) => (
-  <Generic slug={slug} type={RecipeTagType.MEAL_TYPE} tags={tags} />
+  <Generic slug={slug} tags={tags} type={RecipeTagType.MEAL_TYPE} />
 );
 
 const MethodTags: React.FC<IRecipeTags> = ({ tags, slug }) => (
-  <Generic slug={slug} type={RecipeTagType.METHOD_TYPE} tags={tags} />
+  <Generic slug={slug} tags={tags} type={RecipeTagType.METHOD_TYPE} />
 );
 
 const HolidayTags: React.FC<IRecipeTags> = ({ tags, slug }) => (
-  <Generic slug={slug} type={RecipeTagType.HOLIDAY_TYPE} tags={tags} />
+  <Generic slug={slug} tags={tags} type={RecipeTagType.HOLIDAY_TYPE} />
 );
 
 export { ProteinTags, MealTypeTags, MethodTags, HolidayTags };

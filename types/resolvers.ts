@@ -76,7 +76,7 @@ export interface Sort {
 }
 
 export type RecipesWhereInput = {
-  where: {
+  where?: {
     title?: StringFilter;
     rating?: NumberFilter;
     tags?: ArrayFilter;
