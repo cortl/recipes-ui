@@ -35,7 +35,7 @@ type IGenericRecipeTag = {
   type: RecipeTagType;
   tags: string[];
   slug: string;
-}
+};
 
 const Generic: React.FC<IGenericRecipeTag> = ({ slug, type, tags }) => {
   const { contains, key, color } = MAPPING[type];
@@ -59,7 +59,7 @@ const Generic: React.FC<IGenericRecipeTag> = ({ slug, type, tags }) => {
 type IRecipeTags = {
   slug: string;
   tags: string[];
-}
+};
 
 const ProteinTags: React.FC<IRecipeTags> = ({ tags, slug }) => (
   <Generic slug={slug} tags={tags} type={RecipeTagType.PROTEIN_TYPE} />

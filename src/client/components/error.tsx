@@ -8,7 +8,7 @@ import {
 
 type IError = {
   message: string;
-}
+};
 
 const Error: React.FC<IError> = ({ message }) => (
   <Box mt={8}>

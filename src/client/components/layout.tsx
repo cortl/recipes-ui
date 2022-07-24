@@ -15,7 +15,7 @@ type ILayout = {
   image?: string | null;
   url?: string;
   children: React.ReactNode;
-}
+};
 
 const Layout: React.FC<ILayout> = ({
   title,

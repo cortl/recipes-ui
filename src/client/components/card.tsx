@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 type ICard = {
   children: ReactNode;
-}
+};
 
 const Card: React.FC<ICard> = ({ children }) => {
   const { colorMode } = useColorMode();

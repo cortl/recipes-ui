@@ -8,7 +8,7 @@ import {
 type IRecipeTags = {
   slug: string;
   tags: string[];
-}
+};
 
 const RecipeTags: React.FC<IRecipeTags> = ({ slug, tags }) => (
   <>

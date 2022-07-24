@@ -1,4 +1,4 @@
-import type { TagProps} from "@chakra-ui/react";
+import type { TagProps } from "@chakra-ui/react";
 import { Box, Link as CLink } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -8,7 +8,7 @@ type ITagCollection = TagProps & {
   id: string;
   slug?: string;
   tags: string[];
-}
+};
 
 const TagCollection: React.FC<ITagCollection> = ({
   tags,
@@ -17,7 +17,8 @@ const TagCollection: React.FC<ITagCollection> = ({
   ...rest
 }) => (
   <Box display="inline-block">
-    {tags.map((tag) => slug ? (
+    {tags.map((tag) =>
+      slug ? (
         <Link href={`/?filters=${tag}`} key={`${id}-${tag}`} passHref>
           <CLink>
             <Tag {...rest}>{tag}</Tag>
@@ -27,7 +28,8 @@ const TagCollection: React.FC<ITagCollection> = ({
         <Tag key={`${id}-${tag}`} {...rest}>
           {tag}
         </Tag>
-      ))}
+      )
+    )}
   </Box>
 );
 
