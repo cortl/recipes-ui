@@ -39,6 +39,7 @@ const recipesResolver = (
             return keep;
           }
 
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (!filterValue) {
             return keep;
           }
