@@ -31,6 +31,8 @@ const recipesResolver = (
 
   if (args.where) {
     results = results.filter((recipe) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+      // @ts-ignore
       const result = Object.entries(args.where).reduce(
         (keep, [filterKey, filterValue]) => {
           if (!keep) {

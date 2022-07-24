@@ -1,10 +1,10 @@
 import React from "react";
 
-const usePageBottom = () => {
+const usePageBottom = (): boolean => {
   const [bottom, setBottom] = React.useState(false);
 
   React.useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const isBottom =
         window.innerHeight + document.documentElement.scrollTop >=
         document.documentElement.offsetHeight - 50;

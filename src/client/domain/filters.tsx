@@ -9,9 +9,9 @@ import queryString from "query-string";
 import { useRouter } from "next/router";
 
 import { HOLIDAYS, MEAL_TYPES, METHODS, PROTEINS } from "../../constants/tags";
-import { useQueryFilters } from "../hooks/useQueryFilters";
+import { useQueryFilters } from "../hooks/use-query-filters";
 
-const removeFromArray = (arr: string[], str: string) => {
+const removeFromArray = (arr: string[], str: string): void => {
   const index = arr.indexOf(str);
 
   if (index > -1) {
@@ -21,7 +21,7 @@ const removeFromArray = (arr: string[], str: string) => {
 
 type IFilters = {
   onChange?: () => void;
-}
+};
 
 const FILTERS = [
   { name: "Protein", tags: PROTEINS },
@@ -59,7 +59,7 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
       });
     }
 
-    onChange && onChange();
+    onChange?.();
   };
 
   return (

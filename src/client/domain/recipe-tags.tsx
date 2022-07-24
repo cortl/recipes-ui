@@ -1,5 +1,3 @@
-import { Box, BoxProps, Flex, Wrap, WrapItem } from "@chakra-ui/react";
-
 import {
   HolidayTags,
   MealTypeTags,

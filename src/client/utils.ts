@@ -7,11 +7,4 @@ const capitalizeFirstLetter = (string: string): string => {
   return spl.map(capitalize).join(" ");
 };
 
-const getSitenameFromUrl = (source: string): string => {
-  const host = new URL(source).hostname;
-  const site = host.replace("www.", "");
-
-  return capitalizeFirstLetter(site.slice(0, Math.max(0, site.indexOf("."))));
-};
-
-export { getSitenameFromUrl, capitalizeFirstLetter };
+export { capitalizeFirstLetter };

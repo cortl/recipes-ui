@@ -5,16 +5,16 @@ import { RecipeCard } from "./recipe-card";
 
 type IResultsList = {
   recipes?: Recipe[];
-}
+};
 
 const responsiveBreakpoints = {
-  default: 3,
-  768: 2,
   480: 1,
+  768: 2,
+  default: 3,
 };
 
 const ResultsList: React.FC<IResultsList> = ({ recipes }) => {
-  if (recipes && recipes.length) {
+  if (recipes?.length) {
     return (
       <Masonry
         breakpointCols={responsiveBreakpoints}
@@ -34,13 +34,12 @@ const ResultsList: React.FC<IResultsList> = ({ recipes }) => {
       </Masonry>
     );
   }
- 
-    return (
-      <Center pt="5">
-        <Text>{"Looks like there isn't anything here... 😿"}</Text>
-      </Center>
-    );
-  
+
+  return (
+    <Center pt="5">
+      <Text>{"Looks like there isn't anything here... 😿"}</Text>
+    </Center>
+  );
 };
 
 export { ResultsList };

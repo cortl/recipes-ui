@@ -36,9 +36,7 @@ type Recipe = {
   [key: string]: unknown;
 };
 
-interface AsMap {
-  [key: string]: Recipe;
-}
+type AsMap = Record<string, Recipe>;
 
 declare module "@cortl/recipes" {
   declare const recipes: Recipe[];
@@ -46,6 +44,6 @@ declare module "@cortl/recipes" {
 
   export default {
     asArray: recipes,
-    asMap: asMap,
+    asMap,
   };
 }

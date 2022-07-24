@@ -25,14 +25,12 @@ const useRecipes = (
         archived: {
           is: false,
         },
+        tags: {
+          in: tags,
+        },
         title: search
           ? {
               like: search,
-            }
-          : undefined,
-        tags: tags
-          ? {
-              in: tags,
             }
           : undefined,
       },

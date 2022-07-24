@@ -10,24 +10,24 @@ enum RecipeTagType {
 
 const MAPPING = {
   [RecipeTagType.PROTEIN_TYPE]: {
+    color: "red",
     contains: PROTEINS,
     key: "protein",
-    color: "red",
   },
   [RecipeTagType.MEAL_TYPE]: {
+    color: "teal",
     contains: MEAL_TYPES,
     key: "mealtype",
-    color: "teal",
   },
   [RecipeTagType.METHOD_TYPE]: {
+    color: "purple",
     contains: METHODS,
     key: "method",
-    color: "purple",
   },
   [RecipeTagType.HOLIDAY_TYPE]: {
+    color: "yellow",
     contains: HOLIDAYS,
     key: "holiday",
-    color: "yellow",
   },
 };
 

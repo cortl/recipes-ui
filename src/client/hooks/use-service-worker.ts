@@ -22,3 +22,4 @@ const useServiceWorker = (): void => {
 };
 
 export { useServiceWorker };
+/* eslint-enable no-console */

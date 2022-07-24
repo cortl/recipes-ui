@@ -3,11 +3,11 @@ import { useEffect } from "react";
 
 import * as Analytics from "../analytics";
 
-const usePageChange = () => {
+const usePageChange = (): void => {
   const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url: string) => {
+    const handleRouteChange = (url: string): void => {
       Analytics.pageView(url);
     };
 
