@@ -7,21 +7,21 @@ import {
   LinkBox,
   Stack,
   Skeleton,
-  Center,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
 import { Card } from "../components/card";
+
 import { RecipeTags } from "./recipe-tags";
 import { TimeTag } from "./time-tag";
 
-interface IRecipeCard {
+type IRecipeCard = {
   title: string;
   slug: string;
   image: string | null;
   tags: string[];
   time: Recipe["time"];
-}
+};
 
 const RecipeCard: React.FC<IRecipeCard> = ({
   image,
@@ -29,31 +29,30 @@ const RecipeCard: React.FC<IRecipeCard> = ({
   slug,
   tags,
   time,
-}) => {
-  return (
-    <Card>
-      {image && (
-        <LinkBox>
-          <Image src={image} fallback={<Skeleton height={"40"} />} />
-          <Link href={`/${slug}`} passHref>
-            <LinkOverlay />
-          </Link>
-        </LinkBox>
-      )}
-      <Box p="6">
-        <RecipeTags slug={slug} tags={tags} />
-        <Stack mt={1}>
-          <TimeTag time={time} />
-        </Stack>
-        <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
-          <Link href={`/${slug}`}>
-            <CLink>
-              <Text isTruncated>{title}</Text>
-            </CLink>
-          </Link>
-        </Box>
+}) => (
+  <Card>
+    {image && (
+      <LinkBox>
+        <Image fallback={<Skeleton height="40" />} src={image} />
+        <Link href={`/${slug}`} passHref>
+          <LinkOverlay />
+        </Link>
+      </LinkBox>
+    )}
+    <Box p="6">
+      <RecipeTags slug={slug} tags={tags} />
+      <Stack mt={1}>
+        <TimeTag time={time} />
+      </Stack>
+      <Box as="h4" fontWeight="semibold" lineHeight="tight" mt="1">
+        <Link href={`/${slug}`} passHref>
+          <CLink>
+            <Text isTruncated>{title}</Text>
+          </CLink>
+        </Link>
       </Box>
-    </Card>
-  );
-};
+    </Box>
+  </Card>
+);
+
 export { RecipeCard };

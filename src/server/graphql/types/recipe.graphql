@@ -13,12 +13,17 @@ type Time {
   units: [TimeUnit!]!
 }
 
+type Source {
+  name: String!
+  url: String!
+}
+
 type Recipe {
   title: String!
   servings: Int!
   rating: Int!
   slug: String!
-  source: String!
+  source: Source!
   createdDate: String
   instructions: [String!]!
   notes: [String]!
@@ -27,4 +32,5 @@ type Recipe {
   tags: [String!]!
   time: [Time!]!
   image: String
+  related: [String!]
 }

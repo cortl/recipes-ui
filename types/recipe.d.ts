@@ -13,12 +13,17 @@ type Time = {
   units: TimeUnit[];
 };
 
+type Source = {
+  url: string;
+  name: string;
+};
+
 type Recipe = {
   title: string;
   servings: number;
   rating: number;
   slug: string;
-  source: string;
+  source: Source;
   createdDate: string;
   instructions: string[];
   notes: string[];
@@ -31,9 +36,7 @@ type Recipe = {
   [key: string]: unknown;
 };
 
-interface AsMap {
-  [key: string]: Recipe;
-}
+type AsMap = Record<string, Recipe>;
 
 declare module "@cortl/recipes" {
   declare const recipes: Recipe[];
@@ -41,6 +44,6 @@ declare module "@cortl/recipes" {
 
   export default {
     asArray: recipes,
-    asMap: asMap,
+    asMap,
   };
 }

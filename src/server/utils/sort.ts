@@ -1,15 +1,16 @@
 import { SortDirection } from "../../../types/resolvers";
 
-const byNumber = (a: number, b: number, direction: SortDirection) =>
+const byNumber = (a: number, b: number, direction: SortDirection): number =>
   direction === SortDirection.ASC ? a - b : b - a;
 
-const byString = (a: string, b: string, direction: SortDirection) => {
+const byString = (a: string, b: string, direction: SortDirection): number => {
   const upperA = a.toUpperCase();
   const upperB = b.toUpperCase();
 
   if (upperA < upperB) {
     return direction === SortDirection.ASC ? -1 : 1;
   }
+
   if (upperA > upperB) {
     return direction === SortDirection.ASC ? 1 : -1;
   }
@@ -18,15 +19,14 @@ const byString = (a: string, b: string, direction: SortDirection) => {
 };
 
 const sortByField =
-  (field: string, direction: SortDirection) => (a: any, b: any) => {
+  (field: string, direction: SortDirection) =>
+  (a: Record<string, unknown>, b: Record<string, unknown>): number => {
     const aField = a[field];
     const bField = b[field];
 
-    if (typeof aField === "number") {
-      return byNumber(aField, bField, direction);
-    } else {
-      return byString(aField, bField, direction);
-    }
+    return typeof aField === "number"
+      ? byNumber(aField, bField as number, direction)
+      : byString(aField as string, bField as string, direction);
   };
 
 export { sortByField };

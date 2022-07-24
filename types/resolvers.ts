@@ -43,53 +43,64 @@ enum Tag {
   GRILLING = "Grilling",
 }
 
-export interface Filter {
+type Filter = {
   exists: boolean;
-}
+};
 
-export interface BooleanFilter extends Filter {
+type BooleanFilter = Filter & {
   is: boolean;
-}
+};
 
-export interface StringFilter extends Filter {
+type StringFilter = Filter & {
   like: string;
-}
+};
 
-export interface ArrayFilter extends Filter {
+type ArrayFilter = Filter & {
   in: Tag[];
-}
+};
 
-export interface NumberFilter extends Filter {
+type NumberFilter = Filter & {
   gt: number;
   lt: number;
   eq: number;
-}
+};
 
-export enum SortDirection {
+enum SortDirection {
   ASC = "ASC",
   DESC = "DESC",
 }
 
-export interface Sort {
+type Sort = {
   field: string;
   direction: SortDirection;
-}
+};
 
-export type RecipesWhereInput = {
-  where: {
-    title?: StringFilter;
-    rating?: NumberFilter;
-    tags?: ArrayFilter;
-    image?: StringFilter;
-    archived?: BooleanFilter;
-
-    [key: string]: unknown;
+type RecipesWhereInput = {
+  where?: {
+    title?: StringFilter | undefined;
+    rating?: NumberFilter | undefined;
+    tags?: ArrayFilter | undefined;
+    image?: StringFilter | undefined;
+    archived?: BooleanFilter | undefined;
   };
   sort?: Sort;
   limit: number;
   offset: number;
 };
 
-export type RecipeInput = {
+type RecipeInput = {
   slug: string;
+};
+
+export { SortDirection };
+
+export type {
+  Filter,
+  BooleanFilter,
+  StringFilter,
+  ArrayFilter,
+  NumberFilter,
+  Sort,
+  RecipesWhereInput,
+  RecipeInput,
 };

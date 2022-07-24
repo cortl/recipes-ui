@@ -17,10 +17,10 @@ import { Layout } from "../src/client/components/layout";
 import { Error } from "../src/client/components/error";
 import { Loading } from "../src/client/components/loading";
 import { useRecipes } from "../src/client/recipe-hooks";
-import { useQueryFilters } from "../src/client/hooks/useQueryFilters";
+import { useQueryFilters } from "../src/client/hooks/use-query-filters";
 import { Filters } from "../src/client/domain/filters";
 import { ResultsList } from "../src/client/domain/results-list";
-import { usePageBottom } from "../src/client/hooks/usePageBottom";
+import { usePageBottom } from "../src/client/hooks/use-page-bottom";
 import { PageHeader } from "../src/client/components/page-header";
 
 const PAGE_SIZE = 12;

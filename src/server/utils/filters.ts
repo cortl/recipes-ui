@@ -1,25 +1,29 @@
-import {
+import type {
   ArrayFilter,
   BooleanFilter,
   Filter,
   NumberFilter,
 } from "../../../types/resolvers";
 
-const getKeyValue = <U extends keyof T, T extends object>(key: U, obj: T) =>
-  obj[key];
+// eslint-disable-next-line @typescript-eslint/no-use-before-define
+const getKeyValue = <U extends keyof T, T extends object>(
+  key: U,
+  obj: T
+): unknown => obj[key];
 
-const doesValueExist = (value: any | undefined | null, filter: Filter) => {
-  return filter.exists ? value != null : value == null;
-};
+const doesValueExist = (
+  value: unknown | null | undefined,
+  filter: Filter
+): boolean => (filter.exists ? value !== null : value === null);
 
 const filterBoolean = (
-  value: boolean | undefined | null,
+  value: boolean | null | undefined,
   filter: BooleanFilter
-) => {
+): boolean => {
   let keep = true;
 
   if (filter.hasOwnProperty("exists")) {
-    keep = keep && doesValueExist(value, filter);
+    keep = doesValueExist(value, filter);
   }
 
   if (filter.hasOwnProperty("is")) {
@@ -29,29 +33,31 @@ const filterBoolean = (
   return keep;
 };
 
-const filterArray = (value: any[], filter: ArrayFilter) => {
+const filterArray = (value: unknown[], filter: ArrayFilter): boolean => {
   let keep = true;
 
   if (filter.hasOwnProperty("exists")) {
-    keep = keep && doesValueExist(value, filter);
+    keep = doesValueExist(value, filter);
   }
 
   if (filter.hasOwnProperty("in")) {
     keep =
       keep &&
       filter.in.every((filterValue) =>
-        value.some((valueToCompare) => valueToCompare === filterValue)
+        value.includes(
+          (valueToCompare: unknown) => valueToCompare === filterValue
+        )
       );
   }
 
   return keep;
 };
 
-const filterNumber = (value: number, filter: NumberFilter) => {
+const filterNumber = (value: number, filter: NumberFilter): boolean => {
   let keep = true;
 
   if (filter.hasOwnProperty("exists")) {
-    keep = keep && doesValueExist(value, filter);
+    keep = doesValueExist(value, filter);
   }
 
   if (filter.hasOwnProperty("gt")) {

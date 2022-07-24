@@ -30,7 +30,7 @@ import type { ReactElement } from "react";
 import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
 import { RecipeTags } from "../src/client/domain/recipe-tags";
-import { capitalizeFirstLetter, getSitenameFromUrl } from "../src/client/utils";
+import { capitalizeFirstLetter } from "../src/client/utils";
 
 type IRecipePage = Recipe & {};
 
@@ -85,7 +85,7 @@ const Recipe: NextPage<IRecipePage> = ({
   source,
   notes,
 }) => {
-  const author = getSitenameFromUrl(source);
+  const { name: author, url: sourceUrl } = source;
   const { colorMode } = useColorMode();
   const borderColor =
     colorMode === "light" ? "blackAlpha.300" : "whiteAlpha.300";
@@ -110,7 +110,7 @@ const Recipe: NextPage<IRecipePage> = ({
               </Center>
               <Text size="small" textAlign="center">
                 {`Adapted from `}
-                <Link href={source}>{author}</Link>
+                <Link href={sourceUrl}>{author}</Link>
                 {createdDate ? ` on ${createdDate}` : ""}
               </Text>
               <SimpleGrid columns={[1, 1, 1, time.length]}>

@@ -2,7 +2,7 @@ import Recipes from "@cortl/recipes";
 import { UserInputError } from "apollo-server-micro";
 import Fuse from "fuse.js";
 
-import {
+import type {
   ArrayFilter,
   BooleanFilter,
   NumberFilter,
@@ -17,11 +17,12 @@ import {
 } from "../../utils/filters";
 import { sortByField } from "../../utils/sort";
 
-const archivedResolver = ({ archived }: Recipe) => {
-  return Boolean(archived);
-};
+const archivedResolver = ({ archived }: Recipe): boolean => Boolean(archived);
 
-const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
+const recipesResolver = (
+  _root: undefined,
+  args?: RecipesWhereInput
+): Recipe[] => {
   if (!args) {
     return Recipes.asArray;
   }
@@ -30,6 +31,8 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
 
   if (args.where) {
     results = results.filter((recipe) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+      // @ts-ignore
       const result = Object.entries(args.where).reduce(
         (keep, [filterKey, filterValue]) => {
           if (!keep) {
@@ -46,13 +49,14 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
           );
           let recipeMatchesCriteria = true;
 
-          if (typeof recipeField === "boolean" || recipeField == null) {
-            recipeMatchesCriteria =
-              recipeMatchesCriteria &&
-              filterBoolean(recipeField, filterValue as BooleanFilter);
+          if (typeof recipeField === "boolean" || recipeField === null) {
+            recipeMatchesCriteria = filterBoolean(
+              recipeField,
+              filterValue as BooleanFilter
+            );
           }
 
-          if (recipeField instanceof Array) {
+          if (Array.isArray(recipeField)) {
             recipeMatchesCriteria =
               recipeMatchesCriteria &&
               filterArray(recipeField, filterValue as ArrayFilter);
@@ -78,7 +82,7 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
       keys: ["title"],
     });
 
-    results = fuse.search(args.where.title?.like).map(({ item }) => item);
+    results = fuse.search(args.where.title.like).map(({ item }) => item);
   } else if (args.sort) {
     results.sort(sortByField(args.sort.field, args.sort.direction));
   }
@@ -88,17 +92,19 @@ const recipesResolver = (_root: undefined, args: RecipesWhereInput) => {
   return results.slice(offset, offset + limit);
 };
 
-const recipeResolver = (_root: undefined, args: RecipeInput) => {
-  const recipe = Recipes.asArray.find((recipe) => recipe.slug === args.slug);
+const recipeResolver = (_root: undefined, args: RecipeInput): Recipe => {
+  const recipe = Recipes.asArray.find(
+    (recipeToFilter) => recipeToFilter.slug === args.slug
+  );
 
   if (!recipe) {
-    throw new UserInputError(`${args} not found.`);
+    throw new UserInputError(`args not found.`);
   }
 
   return recipe;
 };
 
-const imageResolver = ({ image }: Recipe) => {
+const imageResolver = ({ image }: Recipe): string | null => {
   if (image) return `/api/recipes/images/${image}`;
 
   return null;

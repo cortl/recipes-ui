@@ -1,13 +1,12 @@
-import { Badge, BadgeProps } from "@chakra-ui/react";
+import type { BadgeProps } from "@chakra-ui/react";
+import { Badge } from "@chakra-ui/react";
 
-interface ITag extends BadgeProps {}
+type ITag = BadgeProps & {}
 
-const Tag: React.FC<ITag> = ({ children, ...rest }) => {
-  return (
-    <Badge borderRadius="full" px="2" mr="1" {...rest}>
+const Tag: React.FC<ITag> = ({ children, ...rest }) => (
+    <Badge borderRadius="full" mr="1" px="2" {...rest}>
       {children}
     </Badge>
   );
-};
 
 export { Tag };

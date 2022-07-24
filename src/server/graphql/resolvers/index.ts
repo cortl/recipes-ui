@@ -7,8 +7,8 @@ import {
 
 const resolvers = {
   Query: {
-    recipes: recipesResolver,
     recipe: recipeResolver,
+    recipes: recipesResolver,
   },
 
   Recipe: {
