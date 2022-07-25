@@ -5,12 +5,6 @@ import type {
   NumberFilter,
 } from "../../../types/resolvers";
 
-// eslint-disable-next-line @typescript-eslint/no-use-before-define
-const getKeyValue = <U extends keyof T, T extends object>(
-  key: U,
-  obj: T
-): unknown => obj[key];
-
 const doesValueExist = (
   value: unknown | null | undefined,
   filter: Filter
@@ -41,13 +35,11 @@ const filterArray = (value: unknown[], filter: ArrayFilter): boolean => {
   }
 
   if (filter.hasOwnProperty("in")) {
-    keep =
-      keep &&
-      filter.in.every((filterValue) =>
-        value.includes(
-          (valueToCompare: unknown) => valueToCompare === filterValue
-        )
-      );
+    const result = filter.in.every((filterValue) =>
+      value.includes(filterValue)
+    );
+
+    keep = keep && result;
   }
 
   return keep;
@@ -75,4 +67,4 @@ const filterNumber = (value: number, filter: NumberFilter): boolean => {
   return keep;
 };
 
-export { getKeyValue, filterBoolean, filterArray, filterNumber };
+export { filterBoolean, filterArray, filterNumber };

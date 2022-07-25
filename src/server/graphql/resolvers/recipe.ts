@@ -3,18 +3,10 @@ import { UserInputError } from "apollo-server-micro";
 import Fuse from "fuse.js";
 
 import type {
-  ArrayFilter,
-  BooleanFilter,
-  NumberFilter,
   RecipeInput,
   RecipesWhereInput,
 } from "../../../../types/resolvers";
-import {
-  getKeyValue,
-  filterBoolean,
-  filterArray,
-  filterNumber,
-} from "../../utils/filters";
+import { filterBoolean, filterArray, filterNumber } from "../../utils/filters";
 import { sortByField } from "../../utils/sort";
 
 const archivedResolver = ({ archived }: Recipe): boolean => Boolean(archived);
@@ -30,51 +22,39 @@ const recipesResolver = (
   let results = Recipes.asArray;
 
   if (args.where) {
+    const { where } = args;
+
     results = results.filter((recipe) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
-      // @ts-ignore
-      const result = Object.entries(args.where).reduce(
-        (keep, [filterKey, filterValue]) => {
-          if (!keep) {
-            return keep;
-          }
+      let keep = true;
 
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          if (!filterValue) {
-            return keep;
-          }
+      if (where.archived) {
+        const filter = where.archived;
+        const result = filterBoolean(recipe.archived, filter);
 
-          const recipeField = getKeyValue<keyof Recipe, Recipe>(
-            filterKey,
-            recipe
-          );
-          let recipeMatchesCriteria = true;
+        keep = result;
+      }
 
-          if (typeof recipeField === "boolean" || recipeField === null) {
-            recipeMatchesCriteria = filterBoolean(
-              recipeField,
-              filterValue as BooleanFilter
-            );
-          }
+      if (where.rating) {
+        const filter = where.rating;
+        const result = filterNumber(recipe.rating, filter);
 
-          if (Array.isArray(recipeField)) {
-            recipeMatchesCriteria =
-              recipeMatchesCriteria &&
-              filterArray(recipeField, filterValue as ArrayFilter);
-          }
+        keep = keep && result;
+      }
 
-          if (typeof recipeField === "number") {
-            recipeMatchesCriteria =
-              recipeMatchesCriteria &&
-              filterNumber(recipeField, filterValue as NumberFilter);
-          }
+      if (where.tags) {
+        const filter = where.tags;
+        const result = filterArray(recipe.tags, filter);
 
-          return recipeMatchesCriteria;
-        },
-        true
-      );
+        keep = keep && result;
+      }
 
-      return result;
+      // eslint-disable-next-line no-warning-comments
+      // TODO
+      // if (where.image) {
+      //   const filter = where.image
+      // }
+
+      return keep;
     });
   }
 
