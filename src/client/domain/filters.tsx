@@ -63,12 +63,12 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
   };
 
   return (
-    <>
+    <Stack direction={["column", "row"]} width="100%">
       {FILTERS.map(({ name, tags }) => (
         <FormControl as="fieldset" key={`${name}-filter-group`}>
           <FormLabel as="legend">{name}</FormLabel>
           <CheckboxGroup>
-            <Stack direction={["column", "column", "row"]} spacing={[1, 3, 5]}>
+            <Stack direction="column" spacing={[1, 3, 5]}>
               {tags.map((tagName) => (
                 <Checkbox
                   isChecked={filters.includes(tagName)}
@@ -82,7 +82,7 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
           </CheckboxGroup>
         </FormControl>
       ))}
-    </>
+    </Stack>
   );
 };
 
