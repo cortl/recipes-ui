@@ -32,14 +32,21 @@ import { PageHeader } from "../src/client/components/page-header";
 import { RecipeTags } from "../src/client/domain/recipe-tags";
 import { capitalizeFirstLetter } from "../src/client/utils";
 
-type IRecipePage = Recipe & {};
+type LinkedRecipe = {
+  slug: string;
+  title: string;
+};
 
-type IIngredientCollection = BoxProps & {
+type RecipePageProps = Recipe & {
+  linkedRecipes: LinkedRecipe[] | null;
+};
+
+type IngredientCollectionProps = BoxProps & {
   showLabel?: boolean;
   ingredient: Ingredient;
 };
 
-const IngredientCollection: React.FC<IIngredientCollection> = ({
+const IngredientCollection: React.FC<IngredientCollectionProps> = ({
   ingredient,
   showLabel,
   mb,
@@ -72,7 +79,7 @@ const buildTime = (time: Time): ReactElement => {
   );
 };
 
-const Recipe: NextPage<IRecipePage> = ({
+const Recipe: NextPage<RecipePageProps> = ({
   title,
   ingredients,
   instructions,
@@ -84,12 +91,14 @@ const Recipe: NextPage<IRecipePage> = ({
   createdDate,
   source,
   notes,
+  linkedRecipes,
 }) => {
   const { name: author, url: sourceUrl } = source;
   const { colorMode } = useColorMode();
   const borderColor =
     colorMode === "light" ? "blackAlpha.300" : "whiteAlpha.300";
-  const shouldDisplayMiscSection = Boolean(notes.length);
+  const shouldDisplayMiscSection =
+    Boolean(notes.length) || Boolean(linkedRecipes?.length);
   const flexProps: FlexProps = image
     ? {
         flexWrap: ["wrap", "wrap", "nowrap"],
@@ -165,11 +174,30 @@ const Recipe: NextPage<IRecipePage> = ({
             <Heading borderBottom="1px" borderColor={borderColor} size="xl">
               {"Misc."}
             </Heading>
-            <UnorderedList listStylePos="inside" spacing={5}>
-              {notes.map((note, i) => (
-                <ListItem key={`note-${i}`}>{note}</ListItem>
-              ))}
-            </UnorderedList>
+            {notes.length && (
+              <>
+                <Heading size="md">{"Notes"}</Heading>
+                <UnorderedList listStylePos="inside" spacing={5}>
+                  {notes.map((note, i) => (
+                    <ListItem key={`note-${i}`}>{note}</ListItem>
+                  ))}
+                </UnorderedList>
+              </>
+            )}
+            {linkedRecipes && (
+              <>
+                <Heading size="md">{"Related Recipes"}</Heading>
+                <UnorderedList listStylePos="inside">
+                  {linkedRecipes.map(
+                    ({ slug: relatedSlug, title: relatedTitle }) => (
+                      <ListItem key={`related-${relatedSlug}`}>
+                        <Link href={`/${relatedSlug}`}>{relatedTitle}</Link>
+                      </ListItem>
+                    )
+                  )}
+                </UnorderedList>
+              </>
+            )}
           </Stack>
         )}
       </Container>
@@ -183,17 +211,30 @@ type Params = {
   };
 };
 
-const getStaticProps = (context: Params): GetStaticPropsResult<IRecipePage> => {
+const getStaticProps = (
+  context: Params
+): GetStaticPropsResult<RecipePageProps> => {
   const {
     params: { slug },
   } = context;
 
-  const { image, ...recipe } = Recipes.asMap[slug];
+  const { image, related, ...recipe } = Recipes.asMap[slug];
+
+  const linkedRecipes = related?.map((relatedSlug) => {
+    const relatedRecipe = Recipes.asMap[relatedSlug];
+
+    return {
+      slug: relatedSlug,
+      title: relatedRecipe.title,
+    };
+  });
 
   return {
     props: {
       ...recipe,
       image: image ? `/api/recipes/images/${image}` : null,
+      linkedRecipes: linkedRecipes ?? null,
+      related: related ?? null,
     },
   };
 };

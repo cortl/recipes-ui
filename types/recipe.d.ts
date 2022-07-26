@@ -32,6 +32,7 @@ type Recipe = {
   tags: string[];
   time: Time[];
   image: string | null;
+  related?: string[] | null;
 
   [key: string]: unknown;
 };
