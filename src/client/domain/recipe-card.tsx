@@ -33,9 +33,10 @@ const RecipeCard: React.FC<IRecipeCard> = ({
   <Card>
     {image && (
       <LinkBox>
-        <Image fallback={<Skeleton height="40" />} src={image} />
         <Link href={`/${slug}`} passHref>
-          <LinkOverlay />
+          <LinkOverlay>
+            <Image fallback={<Skeleton height="40" />} src={image} />
+          </LinkOverlay>
         </Link>
       </LinkBox>
     )}
@@ -47,7 +48,7 @@ const RecipeCard: React.FC<IRecipeCard> = ({
       <Box as="h4" fontWeight="semibold" lineHeight="tight" mt="1">
         <Link href={`/${slug}`} passHref>
           <CLink>
-            <Text isTruncated>{title}</Text>
+            <Text noOfLines={1}>{title}</Text>
           </CLink>
         </Link>
       </Box>

@@ -13,7 +13,7 @@ const useRecipes = (
   offset: number,
   limit: number
 ): QueryResult<RecipeResult> =>
-  useQuery(GET_HOMEPAGE_RECIPES, {
+  useQuery<RecipeResult>(GET_HOMEPAGE_RECIPES, {
     variables: {
       limit,
       offset,

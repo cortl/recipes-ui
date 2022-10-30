@@ -41,7 +41,7 @@ const HomePage: NextPage = () => {
   );
 
   const resetAndFetch = useCallback(() => {
-    fetchMore({
+    void fetchMore({
       variables: { limit: PAGE_SIZE, offset: 0 },
     });
     setOffset(0);
@@ -49,7 +49,7 @@ const HomePage: NextPage = () => {
 
   useEffect(() => {
     if (data?.recipes && isBottom && offset <= data.recipes.length) {
-      fetchMore({
+      void fetchMore({
         variables: { limit: PAGE_SIZE, offset: offset + PAGE_SIZE },
       });
       setOffset(offset + PAGE_SIZE);
