@@ -44,7 +44,7 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
     }
 
     if (newFilters.length) {
-      router.push(
+      void router.push(
         `/?${queryString.stringify({
           filters: newFilters,
         })}`,
@@ -54,7 +54,7 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
         }
       );
     } else {
-      router.push("/", undefined, {
+      void router.push("/", undefined, {
         shallow: true,
       });
     }
