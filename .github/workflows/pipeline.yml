@@ -16,7 +16,7 @@ jobs:
           node-version: 16
       - name: npm install
         run: |
-          npm i
+          NODE_ENV="development" npm ci
       - name: Verify code
         run: |
           npm run verify
