@@ -18,7 +18,7 @@
     "@apollo/client": "^3.7.10",
     "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.5.2",
-    "@cortl/recipes": "^4.3.20",
+    "@cortl/recipes": "^4.3.21",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "apollo-server-micro": "^3.12.0",
