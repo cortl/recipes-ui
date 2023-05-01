@@ -1,7 +1,7 @@
-import fs from "fs";
+import fs from "node:fs";
 
-import { ApolloServer } from "apollo-server-micro";
-import type { NextApiRequest, NextApiResponse, PageConfig } from "next";
+import { createSchema, createYoga } from "graphql-yoga";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { buildSchema } from "graphql";
 
 import { resolvers } from "../../src/server/graphql/resolvers";
@@ -15,21 +15,20 @@ const typeDefs = buildSchema(
     .join("\n")
 );
 
-const apolloServer = new ApolloServer({ resolvers, typeDefs });
-const startServer = apolloServer.start();
-
-const handler = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
-  await startServer;
-  await apolloServer.createHandler({ path: "/api/graphql" })(req, res);
-};
-
-export const config: PageConfig = {
+export const config = {
   api: {
+    // Disable body parsing (required for file uploads)
     bodyParser: false,
   },
 };
 
-export default handler;
+export default createYoga<{
+  req: NextApiRequest;
+  res: NextApiResponse;
+}>({
+  graphqlEndpoint: "/api/graphql",
+  schema: createSchema({
+    resolvers,
+    typeDefs,
+  }),
+});

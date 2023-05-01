@@ -1,5 +1,5 @@
 import Recipes from "@cortl/recipes";
-import { UserInputError } from "apollo-server-micro";
+import { GraphQLError } from "graphql";
 import Fuse from "fuse.js";
 
 import type {
@@ -79,7 +79,7 @@ const recipeResolver = (_root: undefined, args: RecipeInput): Recipe => {
   );
 
   if (!recipe) {
-    throw new UserInputError(`args not found.`);
+    throw new GraphQLError(`args not found.`);
   }
 
   return recipe;
