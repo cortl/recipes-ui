@@ -184,7 +184,7 @@ const Recipe: NextPage<RecipePageProps> = ({
                 </UnorderedList>
               </>
             )}
-            {linkedRecipes && (
+            {linkedRecipes?.length && (
               <>
                 <Heading size="md">{"Related Recipes"}</Heading>
                 <UnorderedList listStylePos="inside">
