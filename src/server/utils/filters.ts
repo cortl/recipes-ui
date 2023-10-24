@@ -7,12 +7,12 @@ import type {
 
 const doesValueExist = (
   value: unknown | null | undefined,
-  filter: Filter
+  filter: Filter,
 ): boolean => (filter.exists ? value !== null : value === null);
 
 const filterBoolean = (
   value: boolean | null | undefined,
-  filter: BooleanFilter
+  filter: BooleanFilter,
 ): boolean => {
   let keep = true;
 
@@ -36,7 +36,7 @@ const filterArray = (value: unknown[], filter: ArrayFilter): boolean => {
 
   if (filter.hasOwnProperty("in")) {
     const result = filter.in.every((filterValue) =>
-      value.includes(filterValue)
+      value.includes(filterValue),
     );
 
     keep = keep && result;

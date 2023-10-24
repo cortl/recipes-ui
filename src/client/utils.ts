@@ -16,7 +16,7 @@ const byRating = (recipeA: Recipe, recipeB: Recipe): number =>
 
 const calculateAverageFromField = <T extends Object>(
   objects: T[],
-  field: string
+  field: string,
 ): number =>
   Math.round(
     (objects.reduce((total, obj) => {
@@ -27,7 +27,7 @@ const calculateAverageFromField = <T extends Object>(
       return total;
     }, 0) /
       objects.length) *
-      100
+      100,
   ) / 100;
 
 export { capitalizeFirstLetter, byRating, calculateAverageFromField };

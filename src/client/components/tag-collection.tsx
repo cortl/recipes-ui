@@ -28,7 +28,7 @@ const TagCollection: React.FC<ITagCollection> = ({
         <Tag key={`${id}-${tag}`} {...rest}>
           {tag}
         </Tag>
-      )
+      ),
     )}
   </Box>
 );

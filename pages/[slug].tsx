@@ -193,7 +193,7 @@ const Recipe: NextPage<RecipePageProps> = ({
                       <ListItem key={`related-${relatedSlug}`}>
                         <Link href={`/${relatedSlug}`}>{relatedTitle}</Link>
                       </ListItem>
-                    )
+                    ),
                   )}
                 </UnorderedList>
               </>
@@ -212,7 +212,7 @@ type Params = {
 };
 
 const getStaticProps = (
-  context: Params
+  context: Params,
 ): GetStaticPropsResult<RecipePageProps> => {
   const {
     params: { slug },

@@ -12,7 +12,7 @@ const typeDefs = buildSchema(
   fs
     .readdirSync(SCHEMA_PATH)
     .map((file) => fs.readFileSync(`${SCHEMA_PATH}/${file}`).toString())
-    .join("\n")
+    .join("\n"),
 );
 
 export const config = {

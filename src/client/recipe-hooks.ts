@@ -11,7 +11,7 @@ const useRecipes = (
   tags: string[],
   search: string,
   offset: number,
-  limit: number
+  limit: number,
 ): QueryResult<RecipeResult> =>
   useQuery<RecipeResult>(GET_HOMEPAGE_RECIPES, {
     variables: {

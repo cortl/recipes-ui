@@ -51,7 +51,7 @@ const Filters: React.FC<IFilters> = ({ onChange }) => {
         undefined,
         {
           shallow: true,
-        }
+        },
       );
     } else {
       void router.push("/", undefined, {

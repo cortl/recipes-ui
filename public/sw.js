@@ -6,7 +6,7 @@ self.addEventListener("install", (event) => {
     caches.open(CACHE_NAME).then(function (cache) {
       console.log("Opened cache");
       return cache.addAll(urlsToCache);
-    })
+    }),
   );
 });
 
@@ -17,7 +17,7 @@ self.addEventListener("fetch", (event) => {
         return response;
       }
       return fetch(event.request);
-    })
+    }),
   );
 });
 
@@ -29,8 +29,8 @@ self.addEventListener("activate", (event) => {
           if (urlsToCache.indexOf(cacheName) === -1) {
             return caches.delete(cacheName);
           }
-        })
+        }),
       );
-    })
+    }),
   );
 });

@@ -13,7 +13,7 @@ const archivedResolver = ({ archived }: Recipe): boolean => Boolean(archived);
 
 const recipesResolver = (
   _root: undefined,
-  args?: RecipesWhereInput
+  args?: RecipesWhereInput,
 ): Recipe[] => {
   if (!args) {
     return Recipes.asArray;
@@ -75,7 +75,7 @@ const recipesResolver = (
 
 const recipeResolver = (_root: undefined, args: RecipeInput): Recipe => {
   const recipe = Recipes.asArray.find(
-    (recipeToFilter) => recipeToFilter.slug === args.slug
+    (recipeToFilter) => recipeToFilter.slug === args.slug,
   );
 
   if (!recipe) {

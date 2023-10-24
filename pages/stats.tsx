@@ -131,10 +131,10 @@ const getStaticProps = (): GetStaticPropsResult<StatsPageProps> => {
       return {
         averageRating: calculateAverageFromField<Recipe>(
           recipesInYear,
-          "rating"
+          "rating",
         ),
         numberOfTopRatings: recipesInYear.filter(
-          (recipe) => recipe.rating === 10
+          (recipe) => recipe.rating === 10,
         ).length,
         topRecipes: recipesInYear.sort(byRating).slice(0, 3),
         totalRecipesMade: recipesInYear.length,

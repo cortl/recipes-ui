@@ -37,7 +37,7 @@ const HomePage: NextPage = () => {
     filters,
     useableSearch,
     offset,
-    PAGE_SIZE
+    PAGE_SIZE,
   );
 
   const resetAndFetch = useCallback(() => {
@@ -63,7 +63,7 @@ const HomePage: NextPage = () => {
         setUseableSearch(search);
       }
     },
-    [resetAndFetch, setUseableSearch, search]
+    [resetAndFetch, setUseableSearch, search],
   );
 
   const content = error ? (

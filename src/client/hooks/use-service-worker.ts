@@ -9,12 +9,12 @@ const useServiceWorker = (): void => {
           function (registration) {
             console.log(
               "Service Worker registration successful with scope:",
-              registration.scope
+              registration.scope,
             );
           },
           function (error) {
             console.log("Service Worker registration failed:", error);
-          }
+          },
         );
       });
     }
