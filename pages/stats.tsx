@@ -106,7 +106,6 @@ const StatsPage: NextPage<StatsPageProps> = ({ years }) => {
 const mapRecipesToYear = (recipes: Recipe[]): Record<number, Recipe[]> =>
   recipes
     .filter((recipe) => recipe.createdDate)
-    // eslint-disable-next-line unicorn/prefer-object-from-entries
     .reduce<Record<number, Recipe[]>>((years, recipe) => {
       const year = new Date(recipe.createdDate).getFullYear();
 

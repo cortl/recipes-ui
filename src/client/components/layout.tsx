@@ -10,11 +10,11 @@ import React from "react";
 import styles from "../../../styles/Home.module.css";
 
 type ILayout = {
-  title: string;
-  description?: string;
-  image?: string | null;
-  url?: string;
-  children: React.ReactNode;
+  readonly title: string;
+  readonly description?: string;
+  readonly image?: string | null;
+  readonly url?: string;
+  readonly children: React.ReactNode;
 };
 
 const Layout: React.FC<ILayout> = ({
