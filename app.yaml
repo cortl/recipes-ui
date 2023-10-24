@@ -1,4 +1,4 @@
-runtime: nodejs16
+runtime: nodejs18
 handlers:
   - url: /sw\.js
     static_files: sw.js

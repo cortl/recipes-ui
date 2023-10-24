@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: "npm"
-          node-version: 16
+          node-version: 18
       - name: npm install
         run: |
           NODE_ENV="development" npm ci
