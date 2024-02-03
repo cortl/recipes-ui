@@ -1,11 +1,11 @@
 type StatisticYear {
-    title: String!
-    totalRecipesMade: Int!
-    averageRating: Float!
-    numberOfTopRatings: Int!
-    topRecipes: [Recipe!]!
+  title: String!
+  totalRecipesMade: Int!
+  averageRating: Float!
+  numberOfTopRatings: Int!
+  topRecipes: [Recipe!]!
 }
 
 type Statistics {
-    years: [StatisticYear!]!
+  years: [StatisticYear!]!
 }
