@@ -37,14 +37,4 @@ type Recipe = {
   [key: string]: unknown;
 };
 
-type AsMap = Record<string, Recipe>;
-
-declare module "@cortl/recipes" {
-  declare const recipes: Recipe[];
-  declare const asMap: AsMap;
-
-  export default {
-    asArray: recipes,
-    asMap,
-  };
-}
+export type { Recipe, Ingredient, TimeUnit, Time, Source };

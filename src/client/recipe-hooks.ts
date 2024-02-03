@@ -1,6 +1,8 @@
 import type { QueryResult } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 
+import type { Recipe } from "../../types/recipe";
+
 import { GET_HOMEPAGE_RECIPES } from "./queries";
 
 type RecipeResult = {

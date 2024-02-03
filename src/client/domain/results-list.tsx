@@ -1,6 +1,8 @@
 import Masonry from "react-masonry-css";
 import { Center, Text } from "@chakra-ui/react";
 
+import type { Recipe } from "../../../types/recipe";
+
 import { RecipeCard } from "./recipe-card";
 
 type IResultsList = {

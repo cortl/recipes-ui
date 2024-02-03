@@ -24,4 +24,57 @@ const GET_HOMEPAGE_RECIPES = gql`
   }
 `;
 
-export { GET_HOMEPAGE_RECIPES };
+const GET_RECIPE_QUERY = gql`
+  query GetRecipe($slug: String!) {
+    recipe(slug: $slug) {
+      title
+      title
+      servings
+      rating
+      slug
+      source {
+        url
+        name
+      }
+      createdDate
+      instructions
+      notes
+      archived
+      ingredients {
+        category
+        items
+      }
+      tags
+      time {
+        label
+        units {
+          label
+          measurement
+        }
+      }
+      image
+      relatedRecipes {
+        title
+        slug
+      }
+    }
+  }
+`;
+
+const GET_STATISTICS = gql`
+  query GetStatistics {
+    statistics {
+      years {
+        title
+        totalRecipesMade
+        averageRating
+        numberOfTopRatings
+        topRecipes {
+          title
+        }
+      }
+    }
+  }
+`;
+
+export { GET_HOMEPAGE_RECIPES, GET_RECIPE_QUERY, GET_STATISTICS };

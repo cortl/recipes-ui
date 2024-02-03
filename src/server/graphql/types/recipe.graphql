@@ -33,4 +33,5 @@ type Recipe {
   time: [Time!]!
   image: String
   related: [String!]
+  relatedRecipes: [Recipe!]!
 }

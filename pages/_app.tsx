@@ -6,6 +6,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../src/client/theme";
 import { usePageChange } from "../src/client/hooks/use-page-change";
 import { useServiceWorker } from "../src/client/hooks/use-service-worker";
+import type { Recipe } from "../types/recipe";
 import "../styles/globals.css";
 
 const client = new ApolloClient({

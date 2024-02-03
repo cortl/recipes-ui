@@ -1,3 +1,4 @@
+import type { Recipe } from "../../../types/recipe";
 import { TagCollection } from "../components/tag-collection";
 
 type ITimeTag = {

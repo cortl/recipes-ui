@@ -9,4 +9,5 @@ input RecipesWhere {
 type Query {
   recipes(where: RecipesWhere, sort: Sort, limit: Int!, offset: Int!): [Recipe]
   recipe(slug: String!): Recipe
+  statistics: Statistics!
 }

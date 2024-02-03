@@ -1,6 +1,6 @@
 import process from "process";
 
-import type { GetStaticPropsResult, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import {
   Box,
@@ -15,26 +15,19 @@ import {
   Link as CLink,
   useColorMode,
 } from "@chakra-ui/react";
-import Recipes from "@cortl/recipes";
 
 import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
-import { byRating, calculateAverageFromField } from "../src/client/utils";
-
-type YearStats = {
-  year: string;
-  totalRecipesMade: number;
-  averageRating: number;
-  numberOfTopRatings: number;
-  topRecipes: Recipe[];
-};
+import type { Year } from "../types/statistics";
+import { GET_STATISTICS } from "../src/client/queries";
+import { createApolloClient } from "../src/client/apollo-client";
 
 type StatsPageProps = {
-  years: YearStats[];
+  years: Year[];
 };
 
 type YearlyStatsProps = {
-  year: YearStats;
+  year: Year;
 };
 
 const YearlyStats: React.FC<YearlyStatsProps> = ({ year }) => {
@@ -54,7 +47,7 @@ const YearlyStats: React.FC<YearlyStatsProps> = ({ year }) => {
       mr="auto"
       padding="4"
     >
-      <Heading as="h2">{year.year}</Heading>
+      <Heading as="h2">{year.title}</Heading>
       <StatGroup>
         <Stat>
           <StatLabel>{"Total recipes made"}</StatLabel>
@@ -96,59 +89,40 @@ const StatsPage: NextPage<StatsPageProps> = ({ years }) => {
 
       <Container fontSize="lg" maxW="container.xl">
         {years.map((year) => (
-          <YearlyStats key={year.year} year={year} />
+          <YearlyStats key={year.title} year={year} />
         ))}
       </Container>
     </Layout>
   );
 };
 
-const mapRecipesToYear = (recipes: Recipe[]): Record<number, Recipe[]> =>
-  recipes
-    .filter((recipe) => recipe.createdDate)
-    .reduce<Record<number, Recipe[]>>((years, recipe) => {
-      const year = new Date(recipe.createdDate).getFullYear();
-
-      if (year in years) {
-        years[year].push(recipe);
-      } else {
-        // eslint-disable-next-line no-param-reassign
-        years[year] = [recipe];
-      }
-
-      return years;
-    }, {});
-
-const getStaticProps = (): GetStaticPropsResult<StatsPageProps> => {
-  const recipesByYear = mapRecipesToYear(Recipes.asArray);
-
-  const years = Object.keys(recipesByYear)
-    .sort()
-    .reverse()
-    .map((year) => {
-      const recipesInYear = recipesByYear[Number.parseInt(year)];
-
-      return {
-        averageRating: calculateAverageFromField<Recipe>(
-          recipesInYear,
-          "rating",
-        ),
-        numberOfTopRatings: recipesInYear.filter(
-          (recipe) => recipe.rating === 10,
-        ).length,
-        topRecipes: recipesInYear.sort(byRating).slice(0, 3),
-        totalRecipesMade: recipesInYear.length,
-        year,
-      };
-    });
-
-  return {
-    props: {
-      years,
-    },
+type StatisticsResponse = {
+  statistics: {
+    years: Year[];
   };
 };
 
-export { getStaticProps };
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const getServerSideProps = (async (context) => {
+  const { req } = context;
+
+  const protocol = req.headers["x-forwarded-proto"] ?? "http";
+  const host = req.headers.host;
+  const graphqlUrl = `${protocol}://${host}/api/graphql`;
+
+  const client = createApolloClient(graphqlUrl);
+
+  const { data } = await client.query<StatisticsResponse>({
+    query: GET_STATISTICS,
+  });
+
+  return {
+    props: {
+      years: data.statistics.years,
+    },
+  };
+}) satisfies GetServerSideProps<StatsPageProps>;
+
+export { getServerSideProps };
 
 export default StatsPage;

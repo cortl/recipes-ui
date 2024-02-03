@@ -1,25 +1,28 @@
-import Recipes from "@cortl/recipes";
 import { GraphQLError } from "graphql";
 import Fuse from "fuse.js";
 
+import * as RecipeRepository from "../../repository/recipes";
 import type {
   RecipeInput,
   RecipesWhereInput,
 } from "../../../../types/resolvers";
 import { filterBoolean, filterArray, filterNumber } from "../../utils/filters";
 import { sortByField } from "../../utils/sort";
+import type { Recipe } from "../../../../types/recipe";
 
 const archivedResolver = ({ archived }: Recipe): boolean => Boolean(archived);
 
-const recipesResolver = (
+const recipesResolver = async (
   _root: undefined,
   args?: RecipesWhereInput,
-): Recipe[] => {
+): Promise<Recipe[]> => {
+  const recipes = await RecipeRepository.getRecipes();
+
   if (!args) {
-    return Recipes.asArray;
+    return recipes;
   }
 
-  let results = Recipes.asArray;
+  let results = recipes;
 
   if (args.where) {
     const { where } = args;
@@ -67,10 +70,11 @@ const recipesResolver = (
   return results.slice(offset, offset + limit);
 };
 
-const recipeResolver = (_root: undefined, args: RecipeInput): Recipe => {
-  const recipe = Recipes.asArray.find(
-    (recipeToFilter) => recipeToFilter.slug === args.slug,
-  );
+const recipeResolver = async (
+  _root: undefined,
+  args: RecipeInput,
+): Promise<Recipe> => {
+  const recipe = await RecipeRepository.getRecipe(args.slug);
 
   if (!recipe) {
     throw new GraphQLError(`args not found.`);
@@ -86,4 +90,28 @@ const imageResolver = ({ image }: Recipe): string | null => {
   return null;
 };
 
-export { archivedResolver, recipeResolver, imageResolver, recipesResolver };
+const relatedRecipesResolver = async ({
+  related,
+}: Recipe): Promise<Recipe[]> => {
+  if (!related) {
+    return [];
+  }
+
+  if (related.length === 0) {
+    return [];
+  }
+
+  const relatedRecipes = await Promise.all(
+    related.map(async (slug) => RecipeRepository.getRecipe(slug)),
+  );
+
+  return relatedRecipes.filter(Boolean) as Recipe[];
+};
+
+export {
+  archivedResolver,
+  recipeResolver,
+  imageResolver,
+  recipesResolver,
+  relatedRecipesResolver,
+};

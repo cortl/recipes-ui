@@ -1,11 +1,6 @@
 import process from "process";
 
-import type {
-  GetStaticPathsResult,
-  GetStaticPropsResult,
-  NextPage,
-} from "next";
-import Recipes from "@cortl/recipes";
+import type { NextPage, GetServerSideProps } from "next";
 import type { BoxProps, FlexProps } from "@chakra-ui/react";
 import {
   Container,
@@ -27,10 +22,13 @@ import {
 } from "@chakra-ui/react";
 import type { ReactElement } from "react";
 
+import { createApolloClient } from "../src/client/apollo-client";
 import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
 import { RecipeTags } from "../src/client/domain/recipe-tags";
 import { capitalizeFirstLetter } from "../src/client/utils";
+import type { Ingredient, Recipe, Time } from "../types/recipe";
+import { GET_RECIPE_QUERY } from "../src/client/queries";
 
 type LinkedRecipe = {
   slug: string;
@@ -38,7 +36,7 @@ type LinkedRecipe = {
 };
 
 type RecipePageProps = Recipe & {
-  linkedRecipes: LinkedRecipe[] | null;
+  relatedRecipes: LinkedRecipe[];
 };
 
 type IngredientCollectionProps = BoxProps & {
@@ -79,7 +77,7 @@ const buildTime = (time: Time): ReactElement => {
   );
 };
 
-const Recipe: NextPage<RecipePageProps> = ({
+const RecipePage: NextPage<RecipePageProps> = ({
   title,
   ingredients,
   instructions,
@@ -91,14 +89,14 @@ const Recipe: NextPage<RecipePageProps> = ({
   createdDate,
   source,
   notes,
-  linkedRecipes,
+  relatedRecipes,
 }) => {
   const { name: author, url: sourceUrl } = source;
   const { colorMode } = useColorMode();
   const borderColor =
     colorMode === "light" ? "blackAlpha.300" : "whiteAlpha.300";
   const shouldDisplayMiscSection =
-    Boolean(notes.length) || Boolean(linkedRecipes?.length);
+    Boolean(notes.length) || Boolean(relatedRecipes.length);
   const flexProps: FlexProps = image
     ? {
         flexWrap: ["wrap", "wrap", "nowrap"],
@@ -184,11 +182,11 @@ const Recipe: NextPage<RecipePageProps> = ({
                 </UnorderedList>
               </>
             )}
-            {linkedRecipes?.length && (
+            {relatedRecipes.length && (
               <>
                 <Heading size="md">{"Related Recipes"}</Heading>
                 <UnorderedList listStylePos="inside">
-                  {linkedRecipes.map(
+                  {relatedRecipes.map(
                     ({ slug: relatedSlug, title: relatedTitle }) => (
                       <ListItem key={`related-${relatedSlug}`}>
                         <Link href={`/${relatedSlug}`}>{relatedTitle}</Link>
@@ -205,53 +203,55 @@ const Recipe: NextPage<RecipePageProps> = ({
   );
 };
 
-type Params = {
-  params: {
-    slug: string;
-  };
+type RecipeResponse = {
+  recipe: Recipe | null;
 };
 
-const getStaticProps = (
-  context: Params,
-): GetStaticPropsResult<RecipePageProps> => {
-  const {
-    params: { slug },
-  } = context;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const getServerSideProps = (async (context) => {
+  const { req, params } = context;
+  const { slug } = params ?? {};
 
-  const { image, related, ...recipe } = Recipes.asMap[slug];
+  const protocol = req.headers["x-forwarded-proto"] ?? "http";
+  const host = req.headers.host;
+  const graphqlUrl = `${protocol}://${host}/api/graphql`;
 
-  const linkedRecipes = related?.map((relatedSlug) => {
-    const relatedRecipe = Recipes.asMap[relatedSlug];
+  if (typeof slug !== "string") {
+    return {
+      notFound: true,
+    };
+  }
+
+  const client = createApolloClient(graphqlUrl);
+
+  try {
+    const { data } = await client.query<RecipeResponse>({
+      errorPolicy: "all",
+      query: GET_RECIPE_QUERY,
+      variables: { slug },
+    });
+
+    if (!data.recipe) {
+      return {
+        notFound: true,
+      };
+    }
 
     return {
-      slug: relatedSlug,
-      title: relatedRecipe.title,
+      props: {
+        ...data.recipe,
+      },
     };
-  });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error("Error fetching recipe", error);
 
-  return {
-    props: {
-      ...recipe,
-      image: image
-        ? `https://storage.googleapis.com/cortl-recipe-images/${image}`
-        : null,
-      linkedRecipes: linkedRecipes ?? null,
-      related: related ?? null,
-    },
-  };
-};
+    return {
+      notFound: true,
+    };
+  }
+}) satisfies GetServerSideProps<Recipe>;
 
-const getStaticPaths = (): GetStaticPathsResult => {
-  const slugs = Recipes.asArray.map(({ slug }) => ({
-    params: { slug },
-  }));
+export { getServerSideProps };
 
-  return {
-    fallback: false,
-    paths: slugs,
-  };
-};
-
-export { getStaticProps, getStaticPaths };
-
-export default Recipe;
+export default RecipePage;
