@@ -232,7 +232,7 @@ const getStaticProps = (
   return {
     props: {
       ...recipe,
-      image: image ? `/api/recipes/images/${image}` : null,
+      image: image ? `https://storage.googleapis.com/cortl-recipe-images/${image}` : null,
       linkedRecipes: linkedRecipes ?? null,
       related: related ?? null,
     },

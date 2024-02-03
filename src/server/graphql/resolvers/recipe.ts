@@ -48,12 +48,6 @@ const recipesResolver = (
         keep = keep && result;
       }
 
-      // eslint-disable-next-line no-warning-comments
-      // TODO
-      // if (where.image) {
-      //   const filter = where.image
-      // }
-
       return keep;
     });
   }
@@ -86,7 +80,7 @@ const recipeResolver = (_root: undefined, args: RecipeInput): Recipe => {
 };
 
 const imageResolver = ({ image }: Recipe): string | null => {
-  if (image) return `/api/recipes/images/${image}`;
+  if (image) return `https://storage.googleapis.com/cortl-recipe-images/${image}`;
 
   return null;
 };
