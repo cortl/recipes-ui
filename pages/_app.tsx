@@ -4,7 +4,6 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import { theme } from "../src/client/theme";
-import { usePageChange } from "../src/client/hooks/use-page-change";
 import { useServiceWorker } from "../src/client/hooks/use-service-worker";
 import type { Recipe } from "../types/recipe";
 import "../styles/globals.css";
@@ -27,8 +26,7 @@ const client = new ApolloClient({
   uri: "/api/graphql",
 });
 
-const MyApp = ({ Component, pageProps }: AppProps): ReactNode => {
-  usePageChange();
+const App = ({ Component, pageProps }: AppProps): ReactNode => {
   useServiceWorker();
 
   return (
@@ -40,4 +38,4 @@ const MyApp = ({ Component, pageProps }: AppProps): ReactNode => {
   );
 };
 
-export default MyApp;
+export default App;

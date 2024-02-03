@@ -1,5 +1,6 @@
 import process from "node:process";
 
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { ColorModeScript } from "@chakra-ui/react";
 import { Html, Head, Main, NextScript } from "next/document";
 import type { ReactNode } from "react";
@@ -9,23 +10,6 @@ import { theme } from "../src/client/theme";
 const Document = (): ReactNode => (
   <Html>
     <Head>
-      {/* Global Site Tag (gtag.js) - Google Analytics */}
-      <script
-        async
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-      />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
-              page_path: window.location.pathname,
-            });
-          `,
-        }}
-      />
       <link
         href="/apple-touch-icon.png"
         rel="apple-touch-icon"
@@ -50,6 +34,7 @@ const Document = (): ReactNode => (
       <Main />
       <NextScript />
     </body>
+    <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? ""} />
   </Html>
 );
 
