@@ -80,7 +80,8 @@ const recipeResolver = (_root: undefined, args: RecipeInput): Recipe => {
 };
 
 const imageResolver = ({ image }: Recipe): string | null => {
-  if (image) return `https://storage.googleapis.com/cortl-recipe-images/${image}`;
+  if (image)
+    return `https://storage.googleapis.com/cortl-recipe-images/${image}`;
 
   return null;
 };
