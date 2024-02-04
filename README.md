@@ -4,12 +4,6 @@ This project is used to host my collection of [recipes](https://github.com/cortl
 
 ## Getting Started 🚀
 
-Create a file `.env.local` and put this in it, this is for Google Analytics to pick up page url changes
-
-```
-NEXT_PUBLIC_GOOGLE_ANALYTICS=YOUR_GOOGLE_ANALYTICS_ID
-```
-
 ### Local Development
 
 1. `nvm use`
