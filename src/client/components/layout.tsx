@@ -88,7 +88,7 @@ const Layout: React.FC<ILayout> = ({
           </a>
         </Text>
       </footer>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? ""} />
+      <GoogleAnalytics gaId="G-9CMV1B40XX" />
     </>
   );
 };
