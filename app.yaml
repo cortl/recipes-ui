@@ -6,5 +6,5 @@ handlers:
     expiration: 0m
 
 env_variables:
-  NEXT_PUBLIC_GOOGLE_ANALYTICS: ''
-  NEXT_PUBLIC_BASE_URL: ''
+  NEXT_PUBLIC_GOOGLE_ANALYTICS: ""
+  NEXT_PUBLIC_BASE_URL: ""
