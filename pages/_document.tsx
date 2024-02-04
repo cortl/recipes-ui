@@ -1,6 +1,3 @@
-import process from "node:process";
-
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { ColorModeScript } from "@chakra-ui/react";
 import { Html, Head, Main, NextScript } from "next/document";
 import type { ReactNode } from "react";
@@ -34,7 +31,6 @@ const Document = (): ReactNode => (
       <Main />
       <NextScript />
     </body>
-    <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? ""} />
   </Html>
 );
 

@@ -6,6 +6,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import styles from "../../../styles/Home.module.css";
 
@@ -87,6 +88,7 @@ const Layout: React.FC<ILayout> = ({
           </a>
         </Text>
       </footer>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? ""} />
     </>
   );
 };
