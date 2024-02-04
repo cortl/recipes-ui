@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - uses: actions/setup-node@v2
         with:
           cache: "npm"
@@ -47,6 +47,10 @@ jobs:
         with:
           name: build
           path: .next
+      - name: Setup GCloud and Deploy
+        run: |
+          sed -i 's/NEXT_PUBLIC_GOOGLE_ANALYTICS: ""/NEXT_PUBLIC_GOOGLE_ANALYTICS: "${{ secrets.GOOGLE_ANALYTICS_ID }}"/' app.yaml
+          sed -i 's/NEXT_PUBLIC_BASE_URL: ""/NEXT_PUBLIC_BASE_URL: "https://recipes.cortlan.dev"/' app.yaml
       - name: "Google Auth"
         uses: "google-github-actions/auth@v0"
         with:
