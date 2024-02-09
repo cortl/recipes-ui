@@ -6,8 +6,8 @@ const byRating = (recipeA: Recipe, recipeB: Recipe): number =>
   recipeB.rating > recipeA.rating
     ? 1
     : recipeA.rating > recipeB.rating
-    ? -1
-    : 0;
+      ? -1
+      : 0;
 
 const calculateAverageFromField = <T extends Object>(
   objects: T[],
