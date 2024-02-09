@@ -1,6 +1,6 @@
 import * as RecipeRepository from "../../repository/recipes";
-import type { Recipe } from "../../../../types/recipe";
-import type { Year } from "../../../../types/statistics";
+import type { Recipe } from "../../../types/recipe";
+import type { Year } from "../../../types/statistics";
 
 const byRating = (recipeA: Recipe, recipeB: Recipe): number =>
   recipeB.rating > recipeA.rating

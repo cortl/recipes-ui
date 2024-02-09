@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 
 import { Card } from "../components/card";
-import type { Recipe } from "../../../types/recipe";
+import type { Recipe } from "../../types/recipe";
 
 import { RecipeTags } from "./recipe-tags";
 import { TimeTag } from "./time-tag";

@@ -3,7 +3,7 @@ import type {
   BooleanFilter,
   Filter,
   NumberFilter,
-} from "../../../types/resolvers";
+} from "../../types/resolvers";
 
 const doesValueExist = (
   value: unknown | null | undefined,

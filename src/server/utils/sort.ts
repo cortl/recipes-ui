@@ -1,4 +1,4 @@
-import { SortDirection } from "../../../types/resolvers";
+import { SortDirection } from "../../types/resolvers";
 
 const byNumber = (a: number, b: number, direction: SortDirection): number =>
   direction === SortDirection.ASC ? a - b : b - a;

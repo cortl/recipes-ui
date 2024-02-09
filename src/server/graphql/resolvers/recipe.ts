@@ -5,10 +5,10 @@ import * as RecipeRepository from "../../repository/recipes";
 import type {
   RecipeInput,
   RecipesWhereInput,
-} from "../../../../types/resolvers";
+} from "../../../types/resolvers";
 import { filterBoolean, filterArray, filterNumber } from "../../utils/filters";
 import { sortByField } from "../../utils/sort";
-import type { Recipe } from "../../../../types/recipe";
+import type { Recipe } from "../../../types/recipe";
 
 const archivedResolver = ({ archived }: Recipe): boolean => Boolean(archived);
 

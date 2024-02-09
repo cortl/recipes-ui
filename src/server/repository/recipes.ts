@@ -1,6 +1,6 @@
 import { Storage } from "@google-cloud/storage";
 
-import type { Recipe } from "../../../types/recipe";
+import type { Recipe } from "../../types/recipe";
 
 const RECIPE_BUCKET = "cortl-recipes-json";
 

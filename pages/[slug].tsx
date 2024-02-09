@@ -27,7 +27,7 @@ import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
 import { RecipeTags } from "../src/client/domain/recipe-tags";
 import { capitalizeFirstLetter } from "../src/client/utils";
-import type { Ingredient, Recipe, Time } from "../types/recipe";
+import type { Ingredient, Recipe, Time } from "../src/types/recipe";
 import { GET_RECIPE_QUERY } from "../src/client/queries";
 
 type LinkedRecipe = {

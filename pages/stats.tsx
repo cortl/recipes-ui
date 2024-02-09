@@ -18,7 +18,7 @@ import {
 
 import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
-import type { Year } from "../types/statistics";
+import type { Year } from "../src/types/statistics";
 import { GET_STATISTICS } from "../src/client/queries";
 import { createApolloClient } from "../src/client/apollo-client";
 
