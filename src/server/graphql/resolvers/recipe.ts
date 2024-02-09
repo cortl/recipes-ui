@@ -2,10 +2,7 @@ import { GraphQLError } from "graphql";
 import Fuse from "fuse.js";
 
 import * as RecipeRepository from "../../repository/recipes";
-import type {
-  RecipeInput,
-  RecipesWhereInput,
-} from "../../../types/resolvers";
+import type { RecipeInput, RecipesWhereInput } from "../../../types/resolvers";
 import { filterBoolean, filterArray, filterNumber } from "../../utils/filters";
 import { sortByField } from "../../utils/sort";
 import type { Recipe } from "../../../types/recipe";
