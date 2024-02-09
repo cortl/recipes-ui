@@ -11,7 +11,11 @@ const GET_HOMEPAGE_RECIPES = gql`
       @connection(key: "recipes", filter: ["where"]) {
       title
       slug
-      image
+      image {
+        url
+        height
+        width
+      }
       tags
       time {
         label
@@ -52,7 +56,11 @@ const GET_RECIPE_QUERY = gql`
           measurement
         }
       }
-      image
+      image {
+        url
+        height
+        width
+      }
       relatedRecipes {
         title
         slug

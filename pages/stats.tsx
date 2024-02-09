@@ -1,7 +1,6 @@
 import process from "process";
 
 import type { GetServerSideProps, NextPage } from "next";
-import Link from "next/link";
 import {
   Box,
   Container,
@@ -12,9 +11,9 @@ import {
   StatGroup,
   OrderedList,
   ListItem,
-  Link as CLink,
   useColorMode,
 } from "@chakra-ui/react";
+import { Link } from "@chakra-ui/next-js";
 
 import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
@@ -69,9 +68,8 @@ const YearlyStats: React.FC<YearlyStatsProps> = ({ year }) => {
         <OrderedList>
           {year.topRecipes.map((recipe) => (
             <ListItem key={`top-${recipe.slug}`}>
-              <Link href={`/${recipe.slug}`} passHref>
-                <CLink>{recipe.title}</CLink>
-              </Link>
+              {/* TODO: this is busted */}
+              <Link href={`/${recipe.slug}`}>{recipe.title}</Link>
             </ListItem>
           ))}
         </OrderedList>

@@ -1,12 +1,12 @@
 import type { QueryResult } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 
-import type { Recipe } from "../types/recipe";
+import type { GraphQLRecipe } from "../types/graphql";
 
 import { GET_HOMEPAGE_RECIPES } from "./queries";
 
 type RecipeResult = {
-  recipes: Recipe[];
+  recipes: GraphQLRecipe[];
 };
 
 const useRecipes = (

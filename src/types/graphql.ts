@@ -1,3 +1,5 @@
+import type { Recipe } from "./recipe";
+
 enum Tag {
   PREP = "Prep",
   COOK = "Cook",
@@ -92,6 +94,16 @@ type RecipeInput = {
   slug: string;
 };
 
+type Image = {
+  url: string;
+  width: number;
+  height: number;
+};
+
+type GraphQLRecipe = Recipe & {
+  image: Image | null;
+};
+
 export { SortDirection };
 
 export type {
@@ -103,4 +115,6 @@ export type {
   Sort,
   RecipesWhereInput,
   RecipeInput,
+  GraphQLRecipe,
+  Image,
 };

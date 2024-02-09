@@ -1,17 +1,9 @@
-import {
-  Box,
-  Image,
-  Text,
-  Link as CLink,
-  LinkOverlay,
-  LinkBox,
-  Stack,
-  Skeleton,
-} from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Text, LinkOverlay, LinkBox, Stack } from "@chakra-ui/react";
+import { Link } from "@chakra-ui/next-js";
+import Image from "next/image";
 
 import { Card } from "../components/card";
-import type { Recipe } from "../../types/recipe";
+import type { GraphQLRecipe, Image as ImageType } from "../../types/graphql";
 
 import { RecipeTags } from "./recipe-tags";
 import { TimeTag } from "./time-tag";
@@ -19,9 +11,9 @@ import { TimeTag } from "./time-tag";
 type IRecipeCard = {
   title: string;
   slug: string;
-  image: string | null;
+  image: ImageType | null;
   tags: string[];
-  time: Recipe["time"];
+  time: GraphQLRecipe["time"];
 };
 
 const RecipeCard: React.FC<IRecipeCard> = ({
@@ -34,9 +26,14 @@ const RecipeCard: React.FC<IRecipeCard> = ({
   <Card>
     {image && (
       <LinkBox>
-        <Link href={`/${slug}`} passHref>
+        <Link href={`/${slug}`}>
           <LinkOverlay>
-            <Image fallback={<Skeleton height="40" />} src={image} />
+            <Image
+              alt={`Image of ${title} recipe`}
+              height={image.height}
+              src={image.url}
+              width={image.width}
+            />
           </LinkOverlay>
         </Link>
       </LinkBox>
@@ -47,10 +44,8 @@ const RecipeCard: React.FC<IRecipeCard> = ({
         <TimeTag time={time} />
       </Stack>
       <Box as="h4" fontWeight="semibold" lineHeight="tight" mt="1">
-        <Link href={`/${slug}`} passHref>
-          <CLink>
-            <Text noOfLines={1}>{title}</Text>
-          </CLink>
+        <Link href={`/${slug}`}>
+          <Text noOfLines={1}>{title}</Text>
         </Link>
       </Box>
     </Box>

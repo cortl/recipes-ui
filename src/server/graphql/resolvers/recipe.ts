@@ -1,8 +1,14 @@
 import { GraphQLError } from "graphql";
 import Fuse from "fuse.js";
+import sharp from "sharp";
+import fetch from "node-fetch";
 
 import * as RecipeRepository from "../../repository/recipes";
-import type { RecipeInput, RecipesWhereInput } from "../../../types/resolvers";
+import type {
+  Image,
+  RecipeInput,
+  RecipesWhereInput,
+} from "../../../types/graphql";
 import { filterBoolean, filterArray, filterNumber } from "../../utils/filters";
 import { sortByField } from "../../utils/sort";
 import type { Recipe } from "../../../types/recipe";
@@ -80,9 +86,39 @@ const recipeResolver = async (
   return recipe;
 };
 
-const imageResolver = ({ image }: Recipe): string | null => {
-  if (image)
-    return `https://storage.googleapis.com/cortl-recipe-images/${image}`;
+const imageResolver = async ({ image }: Recipe): Promise<Image | null> => {
+  if (image) {
+    try {
+      const imageUrl = `https://storage.googleapis.com/cortl-recipe-images/${image}`;
+      const response = await fetch(imageUrl);
+
+      if (!response.ok) {
+        return null;
+      }
+
+      const buffer = await response.arrayBuffer();
+      const metadata = await sharp(buffer).metadata();
+
+      if (!metadata.width) {
+        return null;
+      }
+
+      if (!metadata.height) {
+        return null;
+      }
+
+      return {
+        height: metadata.height,
+        url: imageUrl,
+        width: metadata.width,
+      };
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+
+      return null;
+    }
+  }
 
   return null;
 };

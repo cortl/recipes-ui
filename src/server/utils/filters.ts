@@ -3,7 +3,7 @@ import type {
   BooleanFilter,
   Filter,
   NumberFilter,
-} from "../../types/resolvers";
+} from "../../types/graphql";
 
 const doesValueExist = (
   value: unknown | null | undefined,

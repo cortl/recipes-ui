@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["localhost", "recipes.cortlan.dev"],
+    domains: ["localhost", "recipes.cortlan.dev", "storage.googleapis.com"],
   },
 };

@@ -18,6 +18,12 @@ type Source {
   url: String!
 }
 
+type Image {
+  url: String!
+  height: Int!
+  width: Int!
+}
+
 type Recipe {
   title: String!
   servings: Int!
@@ -31,7 +37,7 @@ type Recipe {
   ingredients: [IngredientCategory!]!
   tags: [String!]!
   time: [Time!]!
-  image: String
+  image: Image
   related: [String!]
   relatedRecipes: [Recipe!]!
 }

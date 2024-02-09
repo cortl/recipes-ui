@@ -1,9 +1,9 @@
 import process from "process";
 
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Box, Link as CLink, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
+import { Link } from "@chakra-ui/next-js";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -69,10 +69,8 @@ const Layout: React.FC<ILayout> = ({
       </Head>
       {!isHomePage && (
         <Box ml={5} mt={5}>
-          <Link href="/" passHref>
-            <CLink>
-              <ArrowBackIcon h={6} w={6} />
-            </CLink>
+          <Link href="/">
+            <ArrowBackIcon h={6} w={6} />
           </Link>
         </Box>
       )}

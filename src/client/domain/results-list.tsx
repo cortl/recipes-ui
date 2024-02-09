@@ -1,12 +1,12 @@
 import Masonry from "react-masonry-css";
 import { Center, Text } from "@chakra-ui/react";
 
-import type { Recipe } from "../../types/recipe";
+import type { GraphQLRecipe } from "../../types/graphql";
 
 import { RecipeCard } from "./recipe-card";
 
 type IResultsList = {
-  recipes?: Recipe[];
+  recipes?: GraphQLRecipe[];
 };
 
 const responsiveBreakpoints = {

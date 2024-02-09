@@ -13,13 +13,13 @@ import {
   SimpleGrid,
   GridItem,
   Flex,
-  Link,
   Spacer,
   Box,
-  Img,
   Center,
   useColorMode,
 } from "@chakra-ui/react";
+import { Link } from "@chakra-ui/next-js";
+import Image from "next/image";
 import type { ReactElement } from "react";
 
 import { createApolloClient } from "../src/client/apollo-client";
@@ -27,7 +27,8 @@ import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
 import { RecipeTags } from "../src/client/domain/recipe-tags";
 import { capitalizeFirstLetter } from "../src/client/utils";
-import type { Ingredient, Recipe, Time } from "../src/types/recipe";
+import type { Ingredient, Time } from "../src/types/recipe";
+import type { GraphQLRecipe } from "../src/types/graphql";
 import { GET_RECIPE_QUERY } from "../src/client/queries";
 
 type LinkedRecipe = {
@@ -35,7 +36,7 @@ type LinkedRecipe = {
   title: string;
 };
 
-type RecipePageProps = Recipe & {
+type RecipePageProps = GraphQLRecipe & {
   relatedRecipes: LinkedRecipe[];
 };
 
@@ -126,7 +127,14 @@ const RecipePage: NextPage<RecipePageProps> = ({
             </Stack>
           </Box>
           <Box maxW="lg" ml="auto" mr="auto" pb={5} pl={[0, 0, 5]} pt={5}>
-            {image && <Img src={image} />}
+            {image && (
+              <Image
+                alt={`Cover image for ${title} recipe`}
+                height={image.height}
+                src={image.url}
+                width={image.width}
+              />
+            )}
           </Box>
         </Flex>
 
@@ -204,7 +212,7 @@ const RecipePage: NextPage<RecipePageProps> = ({
 };
 
 type RecipeResponse = {
-  recipe: Recipe | null;
+  recipe: GraphQLRecipe | null;
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -250,7 +258,7 @@ const getServerSideProps = (async (context) => {
       notFound: true,
     };
   }
-}) satisfies GetServerSideProps<Recipe>;
+}) satisfies GetServerSideProps<GraphQLRecipe>;
 
 export { getServerSideProps };
 
