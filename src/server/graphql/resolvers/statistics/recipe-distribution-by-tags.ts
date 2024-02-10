@@ -1,41 +1,65 @@
-import type { RecipeDistributionByTags } from "../../../../types/statistics";
+import type {
+  RecipeTagDistributionByYears,
+  TagDistributionYear,
+} from "../../../../types/statistics";
 import { getAllPossibleTags } from "../../../utils/recipe-utils";
+import type { Recipe } from "../../../../types/recipe";
 
 import type { StatisticsResolver } from ".";
 
+const reduceRecipesToDistribution = (
+  tags: string[],
+  recipes: Recipe[],
+): { tag: string; count: number }[] =>
+  tags.map((tag) => {
+    const count = recipes.filter((recipe) => recipe.tags.includes(tag)).length;
+
+    return {
+      count,
+      tag,
+    };
+  });
+
 const getRecipeDistributionByTagsResolver: StatisticsResolver<
-  RecipeDistributionByTags
+  RecipeTagDistributionByYears
 > = (parent) => {
-  const { recipes } = parent;
+  const { recipes, recipesByYear } = parent;
 
   const tags = getAllPossibleTags(recipes);
 
-  const distributions = tags
-    .map((tag) => {
-      const count = recipes.filter((recipe) =>
-        recipe.tags.includes(tag),
-      ).length;
+  const distributionsFromAllTime = reduceRecipesToDistribution(
+    tags,
+    recipes,
+  ).sort((a, b) => b.count - a.count);
 
-      return {
-        count,
-        tag,
-      };
-    })
-    .sort((a, b) => b.count - a.count);
+  const topFiveTagDistributions = distributionsFromAllTime
+    .slice(0, 5)
+    .map((distribution) => distribution.tag);
 
-  const topFive = distributions.slice(0, 5);
-  const other = distributions.slice(5);
-  const otherDistribution = other.reduce(
-    (acc, distribution) => {
-      // eslint-disable-next-line no-param-reassign
-      acc.count += distribution.count;
+  const years: TagDistributionYear[] = Object.keys(recipesByYear).map(
+    (year) => {
+      const recipesInYear = recipesByYear[Number.parseInt(year)];
 
-      return acc;
+      const distributions = reduceRecipesToDistribution(
+        topFiveTagDistributions,
+        recipesInYear,
+      );
+
+      const totalForYear = distributions.reduce(
+        (acc, distribution) => acc + distribution.count,
+        0,
+      );
+
+      const distributionsWithPercent = distributions.map((distribution) => ({
+        ...distribution,
+        percentOfTotal: Math.round((distribution.count / totalForYear) * 100),
+      }));
+
+      return { distributions: distributionsWithPercent, year };
     },
-    { count: 0, tag: "Other" },
   );
 
-  return [...topFive, otherDistribution];
+  return { tags: topFiveTagDistributions, years };
 };
 
 export { getRecipeDistributionByTagsResolver };

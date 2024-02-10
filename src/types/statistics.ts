@@ -11,6 +11,7 @@ type Year = {
 type TagDistribution = {
   tag: string;
   count: number;
+  percentOfTotal: number;
 };
 
 type TagRating = {
@@ -23,6 +24,16 @@ type SourceDistribution = {
   count: number;
 };
 
+type TagDistributionYear = {
+  year: string;
+  distributions: TagDistribution[];
+};
+
+type RecipeTagDistributionByYears = {
+  tags: string[];
+  years: TagDistributionYear[];
+};
+
 type RecipeDistributionByTags = TagDistribution[];
 
 type AverageRatingByTags = TagRating[];
@@ -30,9 +41,11 @@ type AverageRatingByTags = TagRating[];
 type SourceDistributions = SourceDistribution[];
 
 export type {
+  RecipeTagDistributionByYears,
+  TagDistributionYear,
   Year,
   RecipeDistributionByTags,
   TagDistribution,
   AverageRatingByTags,
-  SourceDistributions
+  SourceDistributions,
 };

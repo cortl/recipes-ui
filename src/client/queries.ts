@@ -83,9 +83,16 @@ const GET_STATISTICS = gql`
           slug
         }
       }
-      recipeDistributionByTags {
-        tag
-        count
+      recipeTagDistributionByYears {
+        tags
+			  years {
+          year
+          distributions {
+            tag
+            count
+            percentOfTotal
+          }
+        }
       }
     }
   }

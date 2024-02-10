@@ -9,6 +9,7 @@ type StatisticYear {
 type TagDistribution {
   tag: String!
   count: Int!
+  percentOfTotal: Float!
 }
 
 type TagAverage {
@@ -21,10 +22,20 @@ type SourceDistribution {
   count: Int!
 }
 
+type TagDistributionYear {
+  year: String!
+  distributions: [TagDistribution!]!
+}
+
+type RecipeTagDistributionByYears {
+  tags: [String!]!
+  years: [TagDistributionYear!]!
+}
+
 type Statistics {
   totalRecipesCount: Int!
   years: [StatisticYear!]!
-  recipeDistributionByTags: [TagDistribution!]!
+  recipeTagDistributionByYears: RecipeTagDistributionByYears
   averageRatingByTags: [TagAverage!]!
   sourceDistribution: [SourceDistribution!]!
 }

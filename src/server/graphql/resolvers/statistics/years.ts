@@ -1,6 +1,7 @@
-import * as RecipeRepository from "../../../repository/recipes";
 import type { Recipe } from "../../../../types/recipe";
 import type { Year } from "../../../../types/statistics";
+import { reduceRecipesByYear } from "../../../utils/recipe-utils";
+
 import type { StatisticsResolver } from ".";
 
 const byRating = (recipeA: Recipe, recipeB: Recipe): number =>
@@ -26,25 +27,9 @@ const calculateAverageFromField = <T extends Object>(
       100,
   ) / 100;
 
-const mapRecipesToYear = (recipes: Recipe[]): Record<number, Recipe[]> =>
-  recipes
-    .filter((recipe) => recipe.createdDate)
-    .reduce<Record<number, Recipe[]>>((years, recipe) => {
-      const year = new Date(recipe.createdDate).getFullYear();
-
-      if (year in years) {
-        years[year].push(recipe);
-      } else {
-        // eslint-disable-next-line no-param-reassign
-        years[year] = [recipe];
-      }
-
-      return years;
-    }, {});
-
 const yearsResolver: StatisticsResolver<Year[]> = (parent) => {
   const { recipes } = parent;
-  const recipesByYear = mapRecipesToYear(recipes);
+  const recipesByYear = reduceRecipesByYear(recipes);
 
   const years = Object.keys(recipesByYear)
     .sort()

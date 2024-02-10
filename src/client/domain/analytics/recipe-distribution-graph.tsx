@@ -2,48 +2,63 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
+import type { ApexOptions } from "apexcharts";
 
-import type { RecipeDistributionByTags } from "../../../types/statistics";
+import type { RecipeTagDistributionByYears } from "../../../types/statistics";
 
 const Chart = dynamic(async () => import("react-apexcharts"), { ssr: false });
 
 type RecipeDistributionGraphProps = {
-  readonly distributions: RecipeDistributionByTags;
+  readonly distributions: RecipeTagDistributionByYears;
 };
 
 const RecipeDistributionGraph: React.FC<RecipeDistributionGraphProps> = ({
   distributions,
 }) => {
-  const [labels, series] = React.useMemo(() => {
-    const total = distributions.reduce((acc, distribution) => {
-      // eslint-disable-next-line no-param-reassign
-      acc += distribution.count;
+  const series = React.useMemo(() => {
+    const { tags, years } = distributions;
 
-      return acc;
-    }, 0);
+    return tags.map((tag) => {
+      const data: number[] = years.map((year) => {
+        const distribution = year.distributions.find((d) => d.tag === tag) ?? {
+          percentOfTotal: 0,
+        };
 
-    const labelsValues = distributions
-      .slice(0, 5)
-      .map((distribution) => distribution.tag);
-    const seriesValues = distributions
-      .slice(0, 5)
-      .map((distribution) => distribution.count);
+        return distribution.percentOfTotal;
+      });
 
-    return [labelsValues, seriesValues];
+      return {
+        data,
+        name: tag,
+      };
+    });
   }, [distributions]);
 
-  const options = {
+  const options: ApexOptions = {
     chart: {
-      type: "donut",
+      stacked: true,
+      stackType: "100%",
+      toolbar: {
+        show: false,
+      },
+      type: "bar",
     },
-    labels,
+    plotOptions: {
+      bar: {
+        horizontal: true,
+      },
+    },
+    series,
+    stroke: {
+      colors: ["#fff"],
+      width: 1,
+    },
+    xaxis: {
+      categories: distributions.years.map((year) => year.year),
+    },
   };
 
-  return (
-    <div className="donut">
-      <Chart options={options} series={series} type="bar" width="500" />
-    </div>
-  );
+  return <Chart options={options} series={series} type="bar" width="100%" />;
 };
 
 export { RecipeDistributionGraph };

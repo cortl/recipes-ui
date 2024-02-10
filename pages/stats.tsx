@@ -13,18 +13,21 @@ import {
   ListItem,
   useColorMode,
 } from "@chakra-ui/react";
-import { Link } from "@chakra-ui/next-js";
+import { Link, Card } from "@chakra-ui/next-js";
 
 import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
-import type { RecipeDistributionByTags, Year } from "../src/types/statistics";
+import type {
+  RecipeTagDistributionByYears,
+  Year,
+} from "../src/types/statistics";
 import { GET_STATISTICS } from "../src/client/queries";
 import { createApolloClient } from "../src/client/apollo-client";
 import { RecipeDistributionGraph } from "../src/client/domain/analytics/recipe-distribution-graph";
 
 type StatsPageProps = {
   years: Year[];
-  recipeDistributionByTags: RecipeDistributionByTags;
+  recipeDistributionByTags: RecipeTagDistributionByYears;
 };
 
 type YearlyStatsProps = {
@@ -102,7 +105,7 @@ const StatsPage: NextPage<StatsPageProps> = ({
 type StatisticsResponse = {
   statistics: {
     years: Year[];
-    recipeDistributionByTags: RecipeDistributionByTags;
+    recipeTagDistributionByYears: RecipeTagDistributionByYears;
   };
 };
 
@@ -122,7 +125,7 @@ const getServerSideProps = (async (context) => {
 
   return {
     props: {
-      recipeDistributionByTags: data.statistics.recipeDistributionByTags,
+      recipeDistributionByTags: data.statistics.recipeTagDistributionByYears,
       years: data.statistics.years,
     },
   };
