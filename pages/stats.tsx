@@ -17,12 +17,14 @@ import { Link } from "@chakra-ui/next-js";
 
 import { Layout } from "../src/client/components/layout";
 import { PageHeader } from "../src/client/components/page-header";
-import type { Year } from "../src/types/statistics";
+import type { RecipeDistributionByTags, Year } from "../src/types/statistics";
 import { GET_STATISTICS } from "../src/client/queries";
 import { createApolloClient } from "../src/client/apollo-client";
+import { RecipeDistributionGraph } from "../src/client/domain/analytics/recipe-distribution-graph";
 
 type StatsPageProps = {
   years: Year[];
+  recipeDistributionByTags: RecipeDistributionByTags;
 };
 
 type YearlyStatsProps = {
@@ -68,7 +70,6 @@ const YearlyStats: React.FC<YearlyStatsProps> = ({ year }) => {
         <OrderedList>
           {year.topRecipes.map((recipe) => (
             <ListItem key={`top-${recipe.slug}`}>
-              {/* TODO: this is busted */}
               <Link href={`/${recipe.slug}`}>{recipe.title}</Link>
             </ListItem>
           ))}
@@ -78,7 +79,10 @@ const YearlyStats: React.FC<YearlyStatsProps> = ({ year }) => {
   );
 };
 
-const StatsPage: NextPage<StatsPageProps> = ({ years }) => {
+const StatsPage: NextPage<StatsPageProps> = ({
+  years,
+  recipeDistributionByTags,
+}) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   return (
@@ -86,6 +90,7 @@ const StatsPage: NextPage<StatsPageProps> = ({ years }) => {
       <PageHeader text="Statistics" />
 
       <Container fontSize="lg" maxW="container.xl">
+        <RecipeDistributionGraph distributions={recipeDistributionByTags} />
         {years.map((year) => (
           <YearlyStats key={year.title} year={year} />
         ))}
@@ -97,6 +102,7 @@ const StatsPage: NextPage<StatsPageProps> = ({ years }) => {
 type StatisticsResponse = {
   statistics: {
     years: Year[];
+    recipeDistributionByTags: RecipeDistributionByTags;
   };
 };
 
@@ -116,6 +122,7 @@ const getServerSideProps = (async (context) => {
 
   return {
     props: {
+      recipeDistributionByTags: data.statistics.recipeDistributionByTags,
       years: data.statistics.years,
     },
   };

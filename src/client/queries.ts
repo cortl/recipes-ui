@@ -72,6 +72,7 @@ const GET_RECIPE_QUERY = gql`
 const GET_STATISTICS = gql`
   query GetStatistics {
     statistics {
+      totalRecipesCount
       years {
         title
         totalRecipesMade
@@ -79,7 +80,12 @@ const GET_STATISTICS = gql`
         numberOfTopRatings
         topRecipes {
           title
+          slug
         }
+      }
+      recipeDistributionByTags {
+        tag
+        count
       }
     }
   }

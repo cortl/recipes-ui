@@ -6,6 +6,25 @@ type StatisticYear {
   topRecipes: [Recipe!]!
 }
 
+type TagDistribution {
+  tag: String!
+  count: Int!
+}
+
+type TagAverage {
+  tag: String!
+  averageRating: Float!
+}
+
+type SourceDistribution {
+  source: String!
+  count: Int!
+}
+
 type Statistics {
+  totalRecipesCount: Int!
   years: [StatisticYear!]!
+  recipeDistributionByTags: [TagDistribution!]!
+  averageRatingByTags: [TagAverage!]!
+  sourceDistribution: [SourceDistribution!]!
 }

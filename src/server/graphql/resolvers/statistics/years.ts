@@ -1,6 +1,7 @@
-import * as RecipeRepository from "../../repository/recipes";
-import type { Recipe } from "../../../types/recipe";
-import type { Year } from "../../../types/statistics";
+import * as RecipeRepository from "../../../repository/recipes";
+import type { Recipe } from "../../../../types/recipe";
+import type { Year } from "../../../../types/statistics";
+import type { StatisticsResolver } from ".";
 
 const byRating = (recipeA: Recipe, recipeB: Recipe): number =>
   recipeB.rating > recipeA.rating
@@ -41,12 +42,8 @@ const mapRecipesToYear = (recipes: Recipe[]): Record<number, Recipe[]> =>
       return years;
     }, {});
 
-type StatisticsQuery = {
-  years: Year[];
-};
-
-const statisticsResolver = async (): Promise<StatisticsQuery> => {
-  const recipes = await RecipeRepository.getRecipes();
+const yearsResolver: StatisticsResolver<Year[]> = (parent) => {
+  const { recipes } = parent;
   const recipesByYear = mapRecipesToYear(recipes);
 
   const years = Object.keys(recipesByYear)
@@ -71,11 +68,7 @@ const statisticsResolver = async (): Promise<StatisticsQuery> => {
       return yearMapped;
     });
 
-  const response: StatisticsQuery = {
-    years,
-  };
-
-  return response;
+  return years;
 };
 
-export { statisticsResolver };
+export { yearsResolver };
