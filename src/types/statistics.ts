@@ -1,51 +1,38 @@
 import type { Recipe } from "./recipe";
 
-type Year = {
+type TagDistribution = {
+  tag: string;
+  count: number;
+};
+
+type MonthlyBreakdown = {
+  title: string
+  totalRecipesMade: number;
+  averageRating: number;
+}
+
+type YearStatistic = {
   title: string;
   totalRecipesMade: number;
   averageRating: number;
   numberOfTopRatings: number;
+  favoriteTag: string
+  tagDistribution: TagDistribution[];
+  monthlyBreakdown: MonthlyBreakdown[];
   topRecipes: Recipe[];
 };
 
-type TagDistribution = {
-  tag: string;
-  count: number;
-  percentOfTotal: number;
-};
-
-type TagRating = {
-  tag: string;
+type Statistics = {
+  totalRecipesMade: number;
   averageRating: number;
-};
-
-type SourceDistribution = {
-  source: string;
-  count: number;
-};
-
-type TagDistributionYear = {
-  year: string;
-  distributions: TagDistribution[];
-};
-
-type RecipeTagDistributionByYears = {
-  tags: string[];
-  years: TagDistributionYear[];
-};
-
-type RecipeDistributionByTags = TagDistribution[];
-
-type AverageRatingByTags = TagRating[];
-
-type SourceDistributions = SourceDistribution[];
+  numberOfTopRatings: number;
+  favoriteTag: string;
+  years: YearStatistic[];
+}
 
 export type {
-  RecipeTagDistributionByYears,
-  TagDistributionYear,
-  Year,
-  RecipeDistributionByTags,
   TagDistribution,
-  AverageRatingByTags,
-  SourceDistributions,
+  MonthlyBreakdown,
+  YearStatistic,
+  Statistics,
 };

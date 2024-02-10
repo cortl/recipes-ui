@@ -5,9 +5,16 @@ import {
   recipesResolver,
   relatedRecipesResolver,
 } from "./recipe";
-import { statisticsResolver, allStatisticsResolver } from "./statistics";
+import {
+  statisticsResolver,
+  allStatisticsResolver,
+  yearStatisticResolver,
+  monthlyBreakdownResolver,
+} from "./statistics";
 
 const resolvers = {
+  MonthlyBreakdown: monthlyBreakdownResolver,
+
   Query: {
     recipe: recipeResolver,
     recipes: recipesResolver,
@@ -21,6 +28,8 @@ const resolvers = {
   },
 
   Statistics: statisticsResolver,
+
+  YearStatistic: yearStatisticResolver,
 };
 
 export { resolvers };

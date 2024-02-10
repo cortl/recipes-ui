@@ -1,41 +1,29 @@
-type StatisticYear {
+type TagDistribution {
+  tag: String!
+  count: Int!
+}
+
+type MonthlyBreakdown {
+  title: String!
+  totalRecipesMade: Int!
+  averageRating: Float
+}
+
+type YearStatistic {
   title: String!
   totalRecipesMade: Int!
   averageRating: Float!
   numberOfTopRatings: Int!
+  favoriteTag: String!
+  tagDistribution: [TagDistribution!]!
+  monthlyBreakdown: [MonthlyBreakdown!]! #TODO
   topRecipes: [Recipe!]!
 }
 
-type TagDistribution {
-  tag: String!
-  count: Int!
-  percentOfTotal: Float!
-}
-
-type TagAverage {
-  tag: String!
-  averageRating: Float!
-}
-
-type SourceDistribution {
-  source: String!
-  count: Int!
-}
-
-type TagDistributionYear {
-  year: String!
-  distributions: [TagDistribution!]!
-}
-
-type RecipeTagDistributionByYears {
-  tags: [String!]!
-  years: [TagDistributionYear!]!
-}
-
 type Statistics {
-  totalRecipesCount: Int!
-  years: [StatisticYear!]!
-  recipeTagDistributionByYears: RecipeTagDistributionByYears
-  averageRatingByTags: [TagAverage!]!
-  sourceDistribution: [SourceDistribution!]!
+  totalRecipesMade: Int!
+  averageRating: Float!
+  numberOfTopRatings: Int!
+  favoriteTag: String!
+  years: [YearStatistic!]!
 }
