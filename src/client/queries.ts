@@ -91,7 +91,10 @@ const GET_STATISTICS = gql`
         topRecipes {
           title
           slug
-          tags
+          holidays
+          methods
+          proteins
+          mealTypes
           time {
             label
             units {
