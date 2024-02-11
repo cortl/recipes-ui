@@ -2,10 +2,9 @@ import process from "process";
 
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { SlGraph } from "react-icons/sl";
+import type { ChakraComponent, ComponentWithAs } from "@chakra-ui/react";
 import {
-  Box,
   Flex,
-  Icon,
   LinkBox,
   LinkOverlay,
   Spacer,
@@ -18,13 +17,14 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import type { IconType } from "react-icons";
 
 import styles from "../../../styles/Home.module.css";
 
 const GraphIcon = chakra(SlGraph);
 
 type NavigationTabProps = {
-  readonly LinkIcon: React.FC;
+  readonly LinkIcon: ChakraComponent<IconType> | ComponentWithAs<"svg">;
   readonly text: string;
   readonly href: string;
 };
@@ -44,7 +44,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
   return (
     <LinkBox as={VStack}>
       <LinkIcon h={6} w={6} />
-      <LinkOverlay href={href}>
+      <LinkOverlay as={Link} href={href}>
         <Text fontSize="sm">{text}</Text>
       </LinkOverlay>
     </LinkBox>
@@ -67,9 +67,8 @@ const Layout: React.FC<ILayout> = ({
   children,
 }) => {
   const router = useRouter();
-  const isHomePage = router.pathname === "/";
-  const isStatsPage = router.pathname === "/stats";
-  const useableTitle = isHomePage ? title : `${title} | Recipe Book`;
+  const isOffRecipePage = router.pathname !== "/[slug]";
+  const useableTitle = isOffRecipePage ? title : `${title} | Recipe Book`;
 
   return (
     <>
