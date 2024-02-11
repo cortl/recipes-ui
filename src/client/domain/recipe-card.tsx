@@ -26,16 +26,14 @@ const RecipeCard: React.FC<IRecipeCard> = ({
   <Card>
     {image && (
       <LinkBox>
-        <Link href={`/${slug}`}>
-          <LinkOverlay>
-            <Image
-              alt={`Image of ${title} recipe`}
-              height={image.height}
-              src={image.url}
-              width={image.width}
-            />
-          </LinkOverlay>
-        </Link>
+        <LinkOverlay as={Link} href={`/${slug}`}>
+          <Image
+            alt={`Image of ${title} recipe`}
+            height={image.height}
+            src={image.url}
+            width={image.width}
+          />
+        </LinkOverlay>
       </LinkBox>
     )}
     <Box p="6">
