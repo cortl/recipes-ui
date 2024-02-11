@@ -1,7 +1,18 @@
 import process from "process";
 
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Box, Text } from "@chakra-ui/react";
+import { SlGraph } from "react-icons/sl";
+import {
+  Box,
+  Flex,
+  Icon,
+  LinkBox,
+  LinkOverlay,
+  Spacer,
+  Text,
+  VStack,
+  chakra,
+} from "@chakra-ui/react";
 import { Link } from "@chakra-ui/next-js";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -9,6 +20,36 @@ import React from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import styles from "../../../styles/Home.module.css";
+
+const GraphIcon = chakra(SlGraph);
+
+type NavigationTabProps = {
+  readonly LinkIcon: React.FC;
+  readonly text: string;
+  readonly href: string;
+};
+
+const NavigationTab: React.FC<NavigationTabProps> = ({
+  LinkIcon,
+  text,
+  href,
+}) => {
+  const router = useRouter();
+
+  const isOnPage = router.pathname === href;
+
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  if (isOnPage) return <></>;
+
+  return (
+    <LinkBox as={VStack}>
+      <LinkIcon h={6} w={6} />
+      <LinkOverlay href={href}>
+        <Text fontSize="sm">{text}</Text>
+      </LinkOverlay>
+    </LinkBox>
+  );
+};
 
 type ILayout = {
   readonly title: string;
@@ -27,6 +68,7 @@ const Layout: React.FC<ILayout> = ({
 }) => {
   const router = useRouter();
   const isHomePage = router.pathname === "/";
+  const isStatsPage = router.pathname === "/stats";
   const useableTitle = isHomePage ? title : `${title} | Recipe Book`;
 
   return (
@@ -67,13 +109,11 @@ const Layout: React.FC<ILayout> = ({
         )}
         <link href="/favicon.ico" rel="icon" />
       </Head>
-      {!isHomePage && (
-        <Box ml={5} mt={5}>
-          <Link href="/">
-            <ArrowBackIcon h={6} w={6} />
-          </Link>
-        </Box>
-      )}
+      <Flex ml={5} mr={5} mt={5}>
+        <NavigationTab LinkIcon={ArrowBackIcon} href="/" text="Back" />
+        <Spacer />
+        <NavigationTab LinkIcon={GraphIcon} href="/stats" text="Stats" />
+      </Flex>
       <main>{children}</main>
       <footer className={styles.footer}>
         <Text fontSize="lg">
