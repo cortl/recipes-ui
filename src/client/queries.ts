@@ -72,26 +72,41 @@ const GET_RECIPE_QUERY = gql`
 const GET_STATISTICS = gql`
   query GetStatistics {
     statistics {
-      totalRecipesCount
+      averageRating
+      numberOfTopRatings
+      totalRecipesMade
+      favoriteTag
       years {
         title
         totalRecipesMade
         averageRating
         numberOfTopRatings
+        favoriteTag
         topRecipes {
           title
           slug
-        }
-      }
-      recipeTagDistributionByYears {
-        tags
-			  years {
-          year
-          distributions {
-            tag
-            count
-            percentOfTotal
+          tags
+          time {
+            label
+            units {
+              label
+              measurement
+            }
           }
+          image {
+            url
+            height
+            width
+          }
+        }
+        tagDistribution {
+          tag
+          count
+        }
+        monthlyBreakdown {
+          title
+          totalRecipesMade
+          averageRating
         }
       }
     }

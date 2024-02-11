@@ -4,10 +4,7 @@ import {
   getAllPossibleTags,
   reduceRecipesByYear,
 } from "../../../utils/recipe-utils";
-import type {
-  MonthlyBreakdown,
-  YearStatistic,
-} from "../../../../types/statistics";
+import type { YearStatistic } from "../../../../types/statistics";
 
 import { getRecipeTagDistributionResolver } from "./recipe-distribution-by-tags";
 

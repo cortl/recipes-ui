@@ -8,6 +8,7 @@ enum RecipeTagType {
   HOLIDAY_TYPE = "holiday",
 }
 
+// TODO: this is duplicated between here are colors.ts
 const MAPPING = {
   [RecipeTagType.PROTEIN_TYPE]: {
     color: "red",
