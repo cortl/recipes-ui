@@ -11,25 +11,21 @@ const MAPPING = {
   [RecipeTagType.PROTEIN_TYPE]: {
     color: "red",
     colorHex: "#E53E3E",
-    contains: PROTEINS,
     key: "protein",
   },
   [RecipeTagType.MEAL_TYPE]: {
     color: "teal",
     colorHex: "#38B2AC",
-    contains: MEAL_TYPES,
     key: "mealtype",
   },
   [RecipeTagType.METHOD_TYPE]: {
     color: "purple",
     colorHex: "#9F7AEA",
-    contains: METHODS,
     key: "method",
   },
   [RecipeTagType.HOLIDAY_TYPE]: {
     color: "yellow",
     colorHex: "F6E05E",
-    contains: HOLIDAYS,
     key: "holiday",
   },
 };
@@ -59,7 +55,6 @@ const getColorForTagType = (tagType: RecipeTagType): string => {
 };
 
 type UseTagTypeForColorMappingReturn = {
-  contains: string[];
   key: string;
   color: Color;
 };
@@ -69,9 +64,9 @@ type UseTagTypeColorMappingFn = (
 ) => UseTagTypeForColorMappingReturn;
 
 const useTagTypeColorMapping: UseTagTypeColorMappingFn = (tagType) => {
-  const { contains, key, color } = MAPPING[tagType];
+  const { key, color } = MAPPING[tagType];
 
-  return { color: color as unknown as Color, contains, key };
+  return { color: color as unknown as Color, key };
 };
 
 export {

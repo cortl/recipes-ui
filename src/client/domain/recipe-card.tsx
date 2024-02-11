@@ -3,24 +3,21 @@ import { Link } from "@chakra-ui/next-js";
 import Image from "next/image";
 
 import { Card } from "../components/card";
-import type { GraphQLRecipe, Image as ImageType } from "../../types/graphql";
+import type { GraphQLRecipe } from "../../types/graphql";
 
 import { RecipeTags } from "./recipe-tags";
 import { TimeTag } from "./time-tag";
 
-type IRecipeCard = {
-  title: string;
-  slug: string;
-  image: ImageType | null;
-  tags: string[];
-  time: GraphQLRecipe["time"];
-};
+type IRecipeCard = GraphQLRecipe
 
 const RecipeCard: React.FC<IRecipeCard> = ({
   image,
   title,
   slug,
-  tags,
+  holidays,
+  methods,
+  proteins,
+  mealTypes,
   time,
 }) => (
   <Card>
@@ -37,7 +34,7 @@ const RecipeCard: React.FC<IRecipeCard> = ({
       </LinkBox>
     )}
     <Box p="6">
-      <RecipeTags slug={slug} tags={tags} />
+      <RecipeTags holidays={holidays} mealTypes={mealTypes} methods={methods} proteins={proteins} slug={slug} />
       <Stack mt={1}>
         <TimeTag time={time} />
       </Stack>

@@ -11,6 +11,12 @@ import {
   yearStatisticResolver,
   monthlyBreakdownResolver,
 } from "./statistics";
+import {
+  holidaysResolver,
+  mealTypesResolver,
+  methodsResolver,
+  proteinsResolver,
+} from "./tags";
 
 const resolvers = {
   MonthlyBreakdown: monthlyBreakdownResolver,
@@ -23,7 +29,11 @@ const resolvers = {
 
   Recipe: {
     archived: archivedResolver,
+    holidays: holidaysResolver,
     image: imageResolver,
+    mealTypes: mealTypesResolver,
+    methods: methodsResolver,
+    proteins: proteinsResolver,
     relatedRecipes: relatedRecipesResolver,
   },
 

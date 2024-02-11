@@ -36,6 +36,10 @@ type Recipe {
   archived: Boolean!
   ingredients: [IngredientCategory!]!
   tags: [String!]!
+  holidays: [String!]!
+  methods: [String!]!
+  proteins: [String!]!
+  mealTypes: [String!]!
   time: [Time!]!
   image: Image
   related: [String!]

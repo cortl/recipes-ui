@@ -1,3 +1,5 @@
+import type { GraphQLRecipe } from "../../types/graphql";
+
 import {
   HolidayTags,
   MealTypeTags,
@@ -5,17 +7,23 @@ import {
   ProteinTags,
 } from "./recipe-tag";
 
-type IRecipeTags = {
-  slug: string;
-  tags: string[];
-};
+type IRecipeTags = Pick<
+  GraphQLRecipe,
+  "holidays" | "mealTypes" | "methods" | "proteins" | "slug"
+>;
 
-const RecipeTags: React.FC<IRecipeTags> = ({ slug, tags }) => (
+const RecipeTags: React.FC<IRecipeTags> = ({
+  slug,
+  holidays,
+  mealTypes,
+  methods,
+  proteins,
+}) => (
   <>
-    <ProteinTags slug={slug} tags={tags} />
-    <MealTypeTags slug={slug} tags={tags} />
-    <MethodTags slug={slug} tags={tags} />
-    <HolidayTags slug={slug} tags={tags} />
+    <ProteinTags slug={slug} tags={proteins} />
+    <MealTypeTags slug={slug} tags={mealTypes} />
+    <MethodTags slug={slug} tags={methods} />
+    <HolidayTags slug={slug} tags={holidays} />
   </>
 );
 

@@ -2,26 +2,21 @@ import { RecipeTagType, useTagTypeColorMapping } from "../colors";
 import { TagCollection } from "../components/tag-collection";
 
 type IGenericRecipeTag = {
-  type: RecipeTagType;
+  type: string;
   tags: string[];
   slug: string;
+  color: string;
 };
 
-const Generic: React.FC<IGenericRecipeTag> = ({ slug, type, tags }) => {
-  const { color, contains, key } = useTagTypeColorMapping(type);
-
-  const givenTags = tags.filter((tag) => contains.includes(tag));
-
-  if (!givenTags.length) {
-    return null;
-  }
+const Generic: React.FC<IGenericRecipeTag> = ({ slug, type, tags, color }) => {
+  if (!tags.length) return null;
 
   return (
     <TagCollection
       colorScheme={color}
-      id={`${slug}-${key}`}
+      id={`${slug}-${type}`}
       slug={slug}
-      tags={givenTags}
+      tags={tags}
     />
   );
 };
@@ -31,20 +26,28 @@ type IRecipeTags = {
   tags: string[];
 };
 
-const ProteinTags: React.FC<IRecipeTags> = ({ tags, slug }) => (
-  <Generic slug={slug} tags={tags} type={RecipeTagType.PROTEIN_TYPE} />
-);
+const ProteinTags: React.FC<IRecipeTags> = ({ tags, slug }) => {
+  const { color, key } = useTagTypeColorMapping(RecipeTagType.PROTEIN_TYPE);
 
-const MealTypeTags: React.FC<IRecipeTags> = ({ tags, slug }) => (
-  <Generic slug={slug} tags={tags} type={RecipeTagType.MEAL_TYPE} />
-);
+  return <Generic color={color} slug={slug} tags={tags} type={key} />;
+};
 
-const MethodTags: React.FC<IRecipeTags> = ({ tags, slug }) => (
-  <Generic slug={slug} tags={tags} type={RecipeTagType.METHOD_TYPE} />
-);
+const MealTypeTags: React.FC<IRecipeTags> = ({ tags, slug }) => {
+  const { color, key } = useTagTypeColorMapping(RecipeTagType.MEAL_TYPE);
 
-const HolidayTags: React.FC<IRecipeTags> = ({ tags, slug }) => (
-  <Generic slug={slug} tags={tags} type={RecipeTagType.HOLIDAY_TYPE} />
-);
+  return <Generic color={color} slug={slug} tags={tags} type={key} />;
+};
+
+const MethodTags: React.FC<IRecipeTags> = ({ tags, slug }) => {
+  const { color, key } = useTagTypeColorMapping(RecipeTagType.METHOD_TYPE);
+
+  return <Generic color={color} slug={slug} tags={tags} type={key} />;
+};
+
+const HolidayTags: React.FC<IRecipeTags> = ({ tags, slug }) => {
+  const { color, key } = useTagTypeColorMapping(RecipeTagType.HOLIDAY_TYPE);
+
+  return <Generic color={color} slug={slug} tags={tags} type={key} />;
+};
 
 export { ProteinTags, MealTypeTags, MethodTags, HolidayTags };

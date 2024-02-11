@@ -16,7 +16,10 @@ const GET_HOMEPAGE_RECIPES = gql`
         height
         width
       }
-      tags
+      holidays
+      methods
+      proteins
+      mealTypes
       time {
         label
         units {
@@ -48,7 +51,10 @@ const GET_RECIPE_QUERY = gql`
         category
         items
       }
-      tags
+      holidays
+      methods
+      proteins
+      mealTypes
       time {
         label
         units {

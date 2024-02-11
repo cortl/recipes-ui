@@ -102,6 +102,10 @@ type Image = {
 
 type GraphQLRecipe = Recipe & {
   image: Image | null;
+  holidays: string[]
+  methods: string[]
+  proteins: string[]
+  mealTypes: string[]
 };
 
 export { SortDirection };
