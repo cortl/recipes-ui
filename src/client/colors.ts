@@ -10,21 +10,25 @@ enum RecipeTagType {
 const MAPPING = {
   [RecipeTagType.PROTEIN_TYPE]: {
     color: "red",
+    colorHex: "#E53E3E",
     contains: PROTEINS,
     key: "protein",
   },
   [RecipeTagType.MEAL_TYPE]: {
     color: "teal",
+    colorHex: "#38B2AC",
     contains: MEAL_TYPES,
     key: "mealtype",
   },
   [RecipeTagType.METHOD_TYPE]: {
     color: "purple",
+    colorHex: "#9F7AEA",
     contains: METHODS,
     key: "method",
   },
   [RecipeTagType.HOLIDAY_TYPE]: {
     color: "yellow",
+    colorHex: "F6E05E",
     contains: HOLIDAYS,
     key: "holiday",
   },
@@ -44,14 +48,14 @@ const getRecipeTagTypeForTag = (tag: string): RecipeTagType | null => {
   return null;
 };
 
-const getColorForTagType = (tagType: RecipeTagType): Color => {
-  const { color } = MAPPING[tagType];
+const getColorForTagType = (tagType: RecipeTagType): string => {
+  const { colorHex } = MAPPING[tagType];
 
-  if (!color) {
+  if (!colorHex) {
     throw new Error(`No color defined for ${tagType}`);
   }
 
-  return color as unknown as Color;
+  return colorHex;
 };
 
 type UseTagTypeForColorMappingReturn = {

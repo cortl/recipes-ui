@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import type { ApexOptions } from "apexcharts";
 
 import type { TagDistribution } from "../../../types/statistics";
-// import { getColorForTagType, getRecipeTagTypeForTag } from "../../colors";
+import { getColorForTagType, getRecipeTagTypeForTag } from "../../colors";
 
 const Chart = dynamic(async () => import("react-apexcharts"), { ssr: false });
 
@@ -13,37 +13,29 @@ type RecipeTagDistributionGraphProps = {
   readonly distributions: TagDistribution[];
 };
 
-type Series = { name: string; data: number[] };
-
 const RecipeTagDistributionGraph: React.FC<RecipeTagDistributionGraphProps> = ({
   distributions,
 }) => {
   const series = React.useMemo(() => {
-    const stuff = distributions.reduce<Series[]>((acc, distribution) => {
-      acc.push({
-        data: [distribution.count],
-        name: distribution.tag,
-      });
+    const stuff = distributions.reduce<ApexAxisChartSeries>(
+      (acc, distribution) => {
+        const { tag, count } = distribution;
+        const tagType = getRecipeTagTypeForTag(tag);
+        const color = tagType ? getColorForTagType(tagType) : "#00B5D8";
 
-      return acc;
-    }, []);
+        acc.push({
+          color,
+          data: [count],
+          name: tag,
+        });
+
+        return acc;
+      },
+      [],
+    );
 
     return stuff;
   }, [distributions]);
-
-  // TODO
-  // const colors = series.map((distributionSeries) => {
-  //   const { name } = distributionSeries;
-  //   const tagType = getRecipeTagTypeForTag(name);
-
-  //   if (!tagType) {
-  //     return "gray";
-  //   }
-
-  //   const color = getColorForTagType(tagType);
-
-  //   return color;
-  // });
 
   const options: ApexOptions = {
     chart: {

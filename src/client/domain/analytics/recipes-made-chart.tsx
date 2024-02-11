@@ -24,8 +24,13 @@ const RecipesMadeChart: React.FC<RecipesMadeChartProps> = ({
       },
       type: "area",
     },
+    colors: ["#3182CE"],
     dataLabels: {
       enabled: false,
+    },
+    fill: {
+      colors: ["#90CDF4"],
+      type: "solid",
     },
     markers: {
       size: 0,
@@ -36,7 +41,7 @@ const RecipesMadeChart: React.FC<RecipesMadeChartProps> = ({
       },
     },
     stroke: {
-      curve: "straight",
+      curve: "smooth",
     },
     tooltip: {
       shared: false,
