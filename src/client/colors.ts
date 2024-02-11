@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/no-unused-properties */
 import { HOLIDAYS, MEAL_TYPES, METHODS, PROTEINS } from "../constants/tags";
 
 enum RecipeTagType {
@@ -42,7 +41,7 @@ const getRecipeTagTypeForTag = (tag: string): RecipeTagType | null => {
 
   if (MEAL_TYPES.includes(tag)) return RecipeTagType.MEAL_TYPE;
 
-  return null
+  return null;
 };
 
 const getColorForTagType = (tagType: RecipeTagType): Color => {
@@ -55,5 +54,25 @@ const getColorForTagType = (tagType: RecipeTagType): Color => {
   return color as unknown as Color;
 };
 
-export { getRecipeTagTypeForTag, getColorForTagType };
-/* eslint-enable unicorn/no-unused-properties */
+type UseTagTypeForColorMappingReturn = {
+  contains: string[];
+  key: string;
+  color: Color;
+};
+
+type UseTagTypeColorMappingFn = (
+  tagType: RecipeTagType,
+) => UseTagTypeForColorMappingReturn;
+
+const useTagTypeColorMapping: UseTagTypeColorMappingFn = (tagType) => {
+  const { contains, key, color } = MAPPING[tagType];
+
+  return { color: color as unknown as Color, contains, key };
+};
+
+export {
+  RecipeTagType,
+  getRecipeTagTypeForTag,
+  getColorForTagType,
+  useTagTypeColorMapping,
+};

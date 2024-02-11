@@ -1,36 +1,5 @@
-import { HOLIDAYS, MEAL_TYPES, METHODS, PROTEINS } from "../../constants/tags";
+import { RecipeTagType, useTagTypeColorMapping } from "../colors";
 import { TagCollection } from "../components/tag-collection";
-
-enum RecipeTagType {
-  PROTEIN_TYPE = "protein",
-  MEAL_TYPE = "mealtype",
-  METHOD_TYPE = "method",
-  HOLIDAY_TYPE = "holiday",
-}
-
-// TODO: this is duplicated between here are colors.ts
-const MAPPING = {
-  [RecipeTagType.PROTEIN_TYPE]: {
-    color: "red",
-    contains: PROTEINS,
-    key: "protein",
-  },
-  [RecipeTagType.MEAL_TYPE]: {
-    color: "teal",
-    contains: MEAL_TYPES,
-    key: "mealtype",
-  },
-  [RecipeTagType.METHOD_TYPE]: {
-    color: "purple",
-    contains: METHODS,
-    key: "method",
-  },
-  [RecipeTagType.HOLIDAY_TYPE]: {
-    color: "yellow",
-    contains: HOLIDAYS,
-    key: "holiday",
-  },
-};
 
 type IGenericRecipeTag = {
   type: RecipeTagType;
@@ -39,7 +8,7 @@ type IGenericRecipeTag = {
 };
 
 const Generic: React.FC<IGenericRecipeTag> = ({ slug, type, tags }) => {
-  const { contains, key, color } = MAPPING[type];
+  const { color, contains, key } = useTagTypeColorMapping(type);
 
   const givenTags = tags.filter((tag) => contains.includes(tag));
 
