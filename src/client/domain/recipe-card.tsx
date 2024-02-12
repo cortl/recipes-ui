@@ -8,7 +8,7 @@ import type { GraphQLRecipe } from "../../types/graphql";
 import { RecipeTags } from "./recipe-tags";
 import { TimeTag } from "./time-tag";
 
-type IRecipeCard = GraphQLRecipe
+type IRecipeCard = GraphQLRecipe;
 
 const RecipeCard: React.FC<IRecipeCard> = ({
   image,
@@ -34,7 +34,13 @@ const RecipeCard: React.FC<IRecipeCard> = ({
       </LinkBox>
     )}
     <Box p="6">
-      <RecipeTags holidays={holidays} mealTypes={mealTypes} methods={methods} proteins={proteins} slug={slug} />
+      <RecipeTags
+        holidays={holidays}
+        mealTypes={mealTypes}
+        methods={methods}
+        proteins={proteins}
+        slug={slug}
+      />
       <Stack mt={1}>
         <TimeTag time={time} />
       </Stack>

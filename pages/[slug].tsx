@@ -105,8 +105,7 @@ const RecipePage: NextPage<RecipePageProps> = ({
   const url = `${baseUrl}/${slug}`;
 
   return (
-    // TODO: this image is busted
-    <Layout image={`${baseUrl}${image}`} title={title} url={url}>
+    <Layout image={image?.url} title={title} url={url}>
       <Container fontSize="lg" maxW="container.lg">
         <Flex alignItems="center" {...flexProps}>
           <Box maxW="lg" ml="auto" mr="auto" pb={5} pt={5}>
