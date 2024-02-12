@@ -70,6 +70,22 @@ const GET_RECIPE_QUERY = gql`
       relatedRecipes {
         title
         slug
+        holidays
+        methods
+        proteins
+        mealTypes
+        time {
+          label
+          units {
+            label
+            measurement
+          }
+        }
+        image {
+          url
+          height
+          width
+        }
       }
     }
   }

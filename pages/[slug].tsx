@@ -30,14 +30,10 @@ import { capitalizeFirstLetter } from "../src/client/utils";
 import type { Ingredient, Time } from "../src/types/recipe";
 import type { GraphQLRecipe } from "../src/types/graphql";
 import { GET_RECIPE_QUERY } from "../src/client/queries";
-
-type LinkedRecipe = {
-  slug: string;
-  title: string;
-};
+import { ResultsList } from "../src/client/domain/results-list";
 
 type RecipePageProps = GraphQLRecipe & {
-  relatedRecipes: LinkedRecipe[];
+  relatedRecipes: GraphQLRecipe[];
 };
 
 type IngredientCollectionProps = BoxProps & {
@@ -99,8 +95,7 @@ const RecipePage: NextPage<RecipePageProps> = ({
   const { colorMode } = useColorMode();
   const borderColor =
     colorMode === "light" ? "blackAlpha.300" : "whiteAlpha.300";
-  const shouldDisplayMiscSection =
-    Boolean(notes.length) || Boolean(relatedRecipes.length);
+  const shouldDisplayMiscSection = Boolean(notes.length);
   const flexProps: FlexProps = image
     ? {
         flexWrap: ["wrap", "wrap", "nowrap"],
@@ -185,6 +180,14 @@ const RecipePage: NextPage<RecipePageProps> = ({
             ))}
           </List>
         </Stack>
+        {relatedRecipes.length && (
+          <Stack as="section" mt={8}>
+            <Heading borderBottom="1px" borderColor={borderColor} size="xl">
+              {"Related"}
+            </Heading>
+            <ResultsList recipes={relatedRecipes} />
+          </Stack>
+        )}
         {shouldDisplayMiscSection && (
           <Stack as="section" mt={8}>
             <Heading borderBottom="1px" borderColor={borderColor} size="xl">
@@ -197,20 +200,6 @@ const RecipePage: NextPage<RecipePageProps> = ({
                   {notes.map((note, i) => (
                     <ListItem key={`note-${i}`}>{note}</ListItem>
                   ))}
-                </UnorderedList>
-              </>
-            )}
-            {relatedRecipes.length && (
-              <>
-                <Heading size="md">{"Related Recipes"}</Heading>
-                <UnorderedList listStylePos="inside">
-                  {relatedRecipes.map(
-                    ({ slug: relatedSlug, title: relatedTitle }) => (
-                      <ListItem key={`related-${relatedSlug}`}>
-                        <Link href={`/${relatedSlug}`}>{relatedTitle}</Link>
-                      </ListItem>
-                    ),
-                  )}
                 </UnorderedList>
               </>
             )}
