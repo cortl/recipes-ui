@@ -40,6 +40,11 @@ const RecipeTagDistributionGraph: React.FC<RecipeTagDistributionGraphProps> = ({
   const options: ApexOptions = {
     chart: {
       offsetX: -10,
+      offsetY: -20,
+      parentHeightOffset: 0,
+      sparkline: {
+        enabled: false, // interesting prop
+      },
       stacked: true,
       stackType: "100%",
       toolbar: {
@@ -47,14 +52,46 @@ const RecipeTagDistributionGraph: React.FC<RecipeTagDistributionGraphProps> = ({
       },
       type: "bar",
     },
+    dataLabels: {
+      formatter: (val, opt) => {
+        const value = Number(val);
+        const fixed = Number(value.toFixed(1));
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const {
+          seriesIndex,
+          globals: { seriesNames },
+        } = opt;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        const label = seriesNames[seriesIndex];
+
+        // TODO: this doesnt play well with mobile either
+        if (fixed < 10) return fixed;
+
+        return `${fixed}% ${label}`;
+      },
+    },
     grid: {
       padding: {
+        bottom: 0,
         left: 0,
         right: 0,
+        top: 0,
       },
+    },
+    legend: {
+      horizontalAlign: "left",
+      show: true,
+      showForSingleSeries: true,
     },
     plotOptions: {
       bar: {
+        dataLabels: {
+          position: "center",
+          total: {
+            enabled: false,
+          },
+        },
         horizontal: true,
       },
     },
@@ -64,6 +101,7 @@ const RecipeTagDistributionGraph: React.FC<RecipeTagDistributionGraphProps> = ({
       width: 1,
     },
     tooltip: {
+      enabled: false,
       shared: false,
       y: {
         formatter: (val) => `${val} tag(s)`,

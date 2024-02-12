@@ -8,20 +8,22 @@ import type { Recipe } from "../../../types/recipe";
 
 type TagResolver<T> = (parent: Recipe) => T;
 
-type TagsResolver = (typeList: string[]) => TagResolver<string[]>;
+type TagTypeFilter = (typeList: string[]) => TagResolver<string[]>;
 
-const tagsResolver: TagsResolver = (typeList) => (parent) => {
-  const { tags } = parent;
+// TODO: move elsewhere
+const tagTypeFilter: TagTypeFilter = (typeList) => (recipe) => {
+  const { tags } = recipe;
 
   return tags.filter((tag) => typeList.includes(tag));
 };
 
-const methodsResolver = tagsResolver(METHODS);
-const holidaysResolver = tagsResolver(HOLIDAYS);
-const proteinsResolver = tagsResolver(PROTEINS);
-const mealTypesResolver = tagsResolver(MEAL_TYPES);
+const methodsResolver = tagTypeFilter(METHODS);
+const holidaysResolver = tagTypeFilter(HOLIDAYS);
+const proteinsResolver = tagTypeFilter(PROTEINS);
+const mealTypesResolver = tagTypeFilter(MEAL_TYPES);
 
 export {
+  tagTypeFilter,
   methodsResolver,
   holidaysResolver,
   proteinsResolver,

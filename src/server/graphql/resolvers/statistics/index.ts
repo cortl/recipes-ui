@@ -6,7 +6,13 @@ import {
 } from "../../../utils/recipe-utils";
 import type { YearStatistic } from "../../../../types/statistics";
 
-import { getRecipeTagDistributionResolver } from "./recipe-distribution-by-tags";
+import {
+  getRecipeTagDistributionResolver,
+  holidayDistribtionResolver,
+  mealTypeDistribtionResolver,
+  methodsDistribtionResolver,
+  proteinDistribtionResolver,
+} from "./recipe-distribution-by-tags";
 
 type StatisticsResolverContext = {
   recipes: Recipe[];
@@ -146,8 +152,12 @@ const monthlyBreakdownResolver = {
 const yearStatisticResolver = {
   averageRating: averageRatingResolver,
   favoriteTag: favoriteTagResolver,
+  holidayDistribution: holidayDistribtionResolver,
+  mealTypeDistribution: mealTypeDistribtionResolver,
+  methodsDistribution: methodsDistribtionResolver,
   monthlyBreakdown: allMonthlyBreakdownResolver,
   numberOfTopRatings: topRatingsResolver,
+  proteinDistribution: proteinDistribtionResolver,
   tagDistribution: getRecipeTagDistributionResolver,
   topRecipes: topRecipesResolver,
   totalRecipesMade: totalRecipesCountResolver,

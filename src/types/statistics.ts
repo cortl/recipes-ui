@@ -18,6 +18,10 @@ type YearStatistic = {
   numberOfTopRatings: number;
   favoriteTag: string;
   tagDistribution: TagDistribution[];
+  holidayDistribution: TagDistribution[];
+  proteinDistribution: TagDistribution[];
+  mealTypeDistribution: TagDistribution[];
+  methodsDistribution: TagDistribution[];
   monthlyBreakdown: MonthlyBreakdown[];
   topRecipes: GraphQLRecipe[];
 };

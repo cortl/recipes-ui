@@ -25,7 +25,7 @@ const MAPPING = {
   },
   [RecipeTagType.HOLIDAY_TYPE]: {
     color: "yellow",
-    colorHex: "F6E05E",
+    colorHex: "#F6E05E",
     key: "holiday",
   },
 };

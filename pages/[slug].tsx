@@ -86,7 +86,10 @@ const RecipePage: NextPage<RecipePageProps> = ({
   servings,
   time,
   slug,
-  tags,
+  holidays,
+  proteins,
+  methods,
+  mealTypes,
   createdDate,
   source,
   notes,
@@ -115,7 +118,13 @@ const RecipePage: NextPage<RecipePageProps> = ({
             <Stack>
               <PageHeader text={title} />
               <Center>
-                <RecipeTags slug={slug} tags={tags} />
+                <RecipeTags
+                  holidays={holidays}
+                  mealTypes={mealTypes}
+                  methods={methods}
+                  proteins={proteins}
+                  slug={slug}
+                />
               </Center>
               <Text size="small" textAlign="center">
                 {`Adapted from `}

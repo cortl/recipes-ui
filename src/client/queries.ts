@@ -112,6 +112,22 @@ const GET_STATISTICS = gql`
           tag
           count
         }
+        holidayDistribution {
+          tag
+          count
+        }
+        methodsDistribution {
+          tag
+          count
+        }
+        proteinDistribution {
+          tag
+          count
+        }
+        mealTypeDistribution {
+          tag
+          count
+        }
         monthlyBreakdown {
           title
           totalRecipesMade

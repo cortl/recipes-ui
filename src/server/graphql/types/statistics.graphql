@@ -16,7 +16,11 @@ type YearStatistic {
   numberOfTopRatings: Int!
   favoriteTag: String!
   tagDistribution: [TagDistribution!]!
-  monthlyBreakdown: [MonthlyBreakdown!]! #TODO
+  holidayDistribution: [TagDistribution!]!
+  proteinDistribution: [TagDistribution!]!
+  mealTypeDistribution: [TagDistribution!]!
+  methodsDistribution: [TagDistribution!]!
+  monthlyBreakdown: [MonthlyBreakdown!]!
   topRecipes: [Recipe!]!
 }
 
