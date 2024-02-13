@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Suspense } from "react";
 import {
   Box,
@@ -27,40 +29,47 @@ const RecipeCard: React.FC<IRecipeCard> = ({
   proteins,
   mealTypes,
   time,
-}) => (
-  <Card>
-    {image && (
-      <LinkBox>
-        <LinkOverlay as={Link} href={`/${slug}`}>
-          <Suspense fallback={<Skeleton height="100%" width="100%" />}>
+}) => {
+  const [loaded, setLoaded] = React.useState(false);
+
+  return (
+    <Card>
+      {image && (
+        <LinkBox>
+          <LinkOverlay as={Link} href={`/${slug}`}>
+            <Skeleton isLoaded={loaded} />
             <Image
               alt={`Image of ${title} recipe`}
+              className={`${!loaded ? "opacity-0" : "opacity-100"}}`}
               height={image.height}
+              onLoad={(): void => {
+                setLoaded(true);
+              }}
               src={image.url}
               width={image.width}
             />
-          </Suspense>
-        </LinkOverlay>
-      </LinkBox>
-    )}
-    <Box p="6">
-      <RecipeTags
-        holidays={holidays}
-        mealTypes={mealTypes}
-        methods={methods}
-        proteins={proteins}
-        slug={slug}
-      />
-      <Stack mt={1}>
-        <TimeTag time={time} />
-      </Stack>
-      <Box as="h4" fontWeight="semibold" lineHeight="tight" mt="1">
-        <Link href={`/${slug}`}>
-          <Text noOfLines={1}>{title}</Text>
-        </Link>
+          </LinkOverlay>
+        </LinkBox>
+      )}
+      <Box p="6">
+        <RecipeTags
+          holidays={holidays}
+          mealTypes={mealTypes}
+          methods={methods}
+          proteins={proteins}
+          slug={slug}
+        />
+        <Stack mt={1}>
+          <TimeTag time={time} />
+        </Stack>
+        <Box as="h4" fontWeight="semibold" lineHeight="tight" mt="1">
+          <Link href={`/${slug}`}>
+            <Text noOfLines={1}>{title}</Text>
+          </Link>
+        </Box>
       </Box>
-    </Box>
-  </Card>
-);
+    </Card>
+  );
+};
 
 export { RecipeCard };
