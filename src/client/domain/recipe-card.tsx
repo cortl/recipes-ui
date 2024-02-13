@@ -1,4 +1,12 @@
-import { Box, Text, LinkOverlay, LinkBox, Stack } from "@chakra-ui/react";
+import React, { Suspense } from "react";
+import {
+  Box,
+  Text,
+  LinkOverlay,
+  LinkBox,
+  Stack,
+  Skeleton,
+} from "@chakra-ui/react";
 import { Link } from "@chakra-ui/next-js";
 import Image from "next/image";
 
@@ -24,12 +32,14 @@ const RecipeCard: React.FC<IRecipeCard> = ({
     {image && (
       <LinkBox>
         <LinkOverlay as={Link} href={`/${slug}`}>
-          <Image
-            alt={`Image of ${title} recipe`}
-            height={image.height}
-            src={image.url}
-            width={image.width}
-          />
+          <Suspense fallback={<Skeleton height="100%" width="100%" />}>
+            <Image
+              alt={`Image of ${title} recipe`}
+              height={image.height}
+              src={image.url}
+              width={image.width}
+            />
+          </Suspense>
         </LinkOverlay>
       </LinkBox>
     )}
