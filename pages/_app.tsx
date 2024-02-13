@@ -1,6 +1,11 @@
 import type { AppProps } from "next/app";
 import type { ReactNode } from "react";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  defaultDataIdFromObject,
+} from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import { theme } from "../src/client/theme";
@@ -10,6 +15,14 @@ import "../styles/globals.css";
 
 const client = new ApolloClient({
   cache: new InMemoryCache({
+    dataIdFromObject: (responseObject): string | undefined => {
+      switch (responseObject.__typename) {
+        case "Recipe":
+          return `Recipe:${responseObject.slug}`;
+        default:
+          return defaultDataIdFromObject(responseObject);
+      }
+    },
     typePolicies: {
       Query: {
         fields: {

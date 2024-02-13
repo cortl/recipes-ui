@@ -33,6 +33,7 @@ const HomePage: NextPage = () => {
   const [offset, setOffset] = useState(0);
   const [filtersToggled, setToggledFilters] = useState(false);
   const isBottom = usePageBottom();
+  const [isLoading, setIsLoading] = useState(false);
   const { loading, error, data, fetchMore } = useRecipes(
     filters,
     useableSearch,
@@ -48,13 +49,21 @@ const HomePage: NextPage = () => {
   }, [fetchMore, setOffset]);
 
   useEffect(() => {
-    if (data?.recipes && isBottom && offset <= data.recipes.length) {
-      void fetchMore({
+    const recipesLength = data?.recipes.length ?? 0;
+
+    const fetchMoreRecipes = async (): Promise<void> => {
+      setIsLoading(true);
+      await fetchMore({
         variables: { limit: PAGE_SIZE, offset: offset + PAGE_SIZE },
       });
       setOffset(offset + PAGE_SIZE);
+      setIsLoading(false);
+    };
+
+    if (isBottom && offset <= recipesLength && !isLoading) {
+      void fetchMoreRecipes();
     }
-  }, [isBottom, fetchMore, setOffset, offset, data]);
+  }, [isBottom, fetchMore, setOffset, offset, data, isLoading]);
 
   const onEnter = useCallback(
     (e: React.KeyboardEvent) => {
@@ -68,10 +77,10 @@ const HomePage: NextPage = () => {
 
   const content = error ? (
     <Error message={error.message} />
-  ) : loading || !data?.recipes ? (
+  ) : loading || !data?.recipes.length ? (
     <Loading />
   ) : (
-    <ResultsList recipes={data.recipes} />
+    <ResultsList loading={isLoading} recipes={data.recipes} />
   );
 
   return (
