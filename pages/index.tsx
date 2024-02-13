@@ -80,7 +80,10 @@ const HomePage: NextPage = () => {
   ) : loading || !data?.recipes.length ? (
     <Loading />
   ) : (
-    <ResultsList loading={isLoading} recipes={data.recipes} />
+    <>
+      <ResultsList recipes={data.recipes} />
+      {isLoading && <Loading />}
+    </>
   );
 
   return (
