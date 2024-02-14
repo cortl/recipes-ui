@@ -17,10 +17,12 @@ import {
   Box,
   Center,
   useColorMode,
+  Skeleton,
 } from "@chakra-ui/react";
 import { Link } from "@chakra-ui/next-js";
 import Image from "next/image";
 import type { ReactElement } from "react";
+import React from "react";
 
 import { createApolloClient } from "../src/client/apollo-client";
 import { Layout } from "../src/client/components/layout";
@@ -37,8 +39,8 @@ type RecipePageProps = GraphQLRecipe & {
 };
 
 type IngredientCollectionProps = BoxProps & {
-  showLabel?: boolean;
-  ingredient: Ingredient;
+  readonly showLabel?: boolean;
+  readonly ingredient: Ingredient;
 };
 
 const IngredientCollection: React.FC<IngredientCollectionProps> = ({
@@ -93,6 +95,7 @@ const RecipePage: NextPage<RecipePageProps> = ({
 }) => {
   const { name: author, url: sourceUrl } = source;
   const { colorMode } = useColorMode();
+  const [isImageLoaded, setImageLoaded] = React.useState(false);
   const borderColor =
     colorMode === "light" ? "blackAlpha.300" : "whiteAlpha.300";
   const shouldDisplayMiscSection = Boolean(notes.length);
@@ -132,12 +135,17 @@ const RecipePage: NextPage<RecipePageProps> = ({
           </Box>
           <Box maxW="lg" ml="auto" mr="auto" pb={5} pl={[0, 0, 5]} pt={5}>
             {image && (
-              <Image
-                alt={`Cover image for ${title} recipe`}
-                height={image.height}
-                src={image.url}
-                width={image.width}
-              />
+              <Skeleton isLoaded={isImageLoaded}>
+                <Image
+                  alt={`Cover image for ${title} recipe`}
+                  height={image.height}
+                  onLoad={(): void => {
+                    setImageLoaded(true);
+                  }}
+                  src={image.url}
+                  width={image.width}
+                />
+              </Skeleton>
             )}
           </Box>
         </Flex>
