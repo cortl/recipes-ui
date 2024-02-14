@@ -37,17 +37,18 @@ const RecipeCard: React.FC<IRecipeCard> = ({
       {image && (
         <LinkBox>
           <LinkOverlay as={Link} href={`/${slug}`}>
-            <Skeleton isLoaded={loaded} />
-            <Image
-              alt={`Image of ${title} recipe`}
-              className={`${!loaded ? "opacity-0" : "opacity-100"}}`}
-              height={image.height}
-              onLoad={(): void => {
-                setLoaded(true);
-              }}
-              src={image.url}
-              width={image.width}
-            />
+            <Skeleton isLoaded={loaded}>
+              <Image
+                alt={`Image of ${title} recipe`}
+                className={`${!loaded ? "opacity-0" : "opacity-100"}}`}
+                height={image.height}
+                onLoad={(): void => {
+                  setLoaded(true);
+                }}
+                src={image.url}
+                width={image.width}
+              />
+            </Skeleton>
           </LinkOverlay>
         </LinkBox>
       )}
