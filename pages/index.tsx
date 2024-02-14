@@ -9,9 +9,11 @@ import {
   IconButton,
   Input,
   Stack,
+  chakra,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { SearchIcon, ViewIcon } from "@chakra-ui/icons";
+import { IoIosFunnel } from "react-icons/io";
 
 import { Layout } from "../src/client/components/layout";
 import { Error } from "../src/client/components/error";
@@ -22,6 +24,8 @@ import { Filters } from "../src/client/domain/filters";
 import { ResultsList } from "../src/client/domain/results-list";
 import { usePageBottom } from "../src/client/hooks/use-page-bottom";
 import { PageHeader } from "../src/client/components/page-header";
+
+const FunnelIcon = chakra(IoIosFunnel);
 
 const PAGE_SIZE = 12;
 
@@ -120,7 +124,7 @@ const HomePage: NextPage = () => {
               />
               <IconButton
                 aria-label="filter recipes"
-                icon={<ViewIcon />}
+                icon={<FunnelIcon />}
                 isActive={filtersToggled}
                 onClick={(): void => {
                   setToggledFilters(!filtersToggled);
