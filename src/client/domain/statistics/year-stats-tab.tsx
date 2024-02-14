@@ -1,7 +1,7 @@
 import React from "react";
 import { Heading, TabPanel } from "@chakra-ui/react";
 
-import type { YearStatistic } from "../../../types/statistics";
+import type { TagDistribution, YearStatistic } from "../../../types/statistics";
 import { ResultsList } from "../results-list";
 
 import { StatsOverview } from "./stats-overview";
@@ -10,7 +10,18 @@ import { RecipesMadeChart } from "./recipes-made-chart";
 
 type YearStatsProps = YearStatistic;
 
-const DISTRIBUTIONS = [
+type DistributionKey = {
+  [K in keyof YearStatistic]: YearStatistic[K] extends TagDistribution[]
+    ? K
+    : never;
+}[keyof YearStatistic];
+
+type DistributionItem = {
+  key: DistributionKey;
+  text: string;
+};
+
+const DISTRIBUTIONS: DistributionItem[] = [
   { key: "methodsDistribution", text: "Methods" },
   { key: "mealTypeDistribution", text: "Courses" },
   { key: "proteinDistribution", text: "Proteins" },
@@ -26,23 +37,16 @@ const YearStats: React.FC<YearStatsProps> = (year) => {
         {title}
       </Heading>
       <StatsOverview {...year} />
-      {DISTRIBUTIONS
-        // @ts-expect-error this is fine
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        .filter(({ key }) => Boolean(year[key].length))
-        .map(({ key, text }) => (
+      {DISTRIBUTIONS.filter(({ key }) => Boolean(year[key].length)).map(
+        ({ key, text }) => (
           <>
             <Heading as="h3" mt="3" size="md">
               {text}
             </Heading>
-            <RecipeTagDistributionGraph
-              // @ts-expect-error this is fine
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-              distributions={year[key]}
-              key={key}
-            />
+            <RecipeTagDistributionGraph distributions={year[key]} key={key} />
           </>
-        ))}
+        ),
+      )}
       <Heading as="h3" mt="5" size="md">
         {"Recipes made"}
       </Heading>
