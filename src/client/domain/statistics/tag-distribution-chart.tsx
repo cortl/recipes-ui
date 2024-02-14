@@ -65,8 +65,7 @@ const RecipeTagDistributionGraph: React.FC<RecipeTagDistributionGraphProps> = ({
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         const label = seriesNames[seriesIndex];
 
-        // TODO: this doesnt play well with mobile either
-        if (fixed < 10) return fixed;
+        if (fixed < 15) return fixed;
 
         return `${fixed}% ${label}`;
       },
@@ -101,7 +100,7 @@ const RecipeTagDistributionGraph: React.FC<RecipeTagDistributionGraphProps> = ({
       width: 1,
     },
     tooltip: {
-      enabled: false,
+      enabled: true,
       shared: false,
       y: {
         formatter: (val) => `${val} tag(s)`,

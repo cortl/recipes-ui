@@ -10,55 +10,39 @@ import { RecipesMadeChart } from "./recipes-made-chart";
 
 type YearStatsProps = YearStatistic;
 
+const DISTRIBUTIONS = [
+  { key: "methodsDistribution", text: "Methods" },
+  { key: "mealTypeDistribution", text: "Courses" },
+  { key: "proteinDistribution", text: "Proteins" },
+  { key: "holidayDistribution", text: "Holidays" },
+];
+
 const YearStats: React.FC<YearStatsProps> = (year) => {
-  const {
-    title,
-    holidayDistribution,
-    mealTypeDistribution,
-    methodsDistribution,
-    proteinDistribution,
-    monthlyBreakdown,
-    topRecipes,
-  } = year;
+  const { title, monthlyBreakdown, topRecipes } = year;
 
   return (
-    <TabPanel>
+    <TabPanel padding={{ base: 0, md: 4 }}>
       <Heading as="h2" mb="5" mt="5" size="lg">
         {title}
       </Heading>
       <StatsOverview {...year} />
-      {methodsDistribution.length && (
-        <>
-          <Heading as="h3" mt="3" size="md">
-            {"Methods"}
-          </Heading>
-          <RecipeTagDistributionGraph distributions={methodsDistribution} />
-        </>
-      )}
-      {mealTypeDistribution.length && (
-        <>
-          <Heading as="h3" mt="3" size="md">
-            {"Courses"}
-          </Heading>
-          <RecipeTagDistributionGraph distributions={mealTypeDistribution} />
-        </>
-      )}
-      {proteinDistribution.length && (
-        <>
-          <Heading as="h3" mt="3" size="md">
-            {"Proteins"}
-          </Heading>
-          <RecipeTagDistributionGraph distributions={proteinDistribution} />
-        </>
-      )}
-      {holidayDistribution.length && (
-        <>
-          <Heading as="h3" mt="3" size="md">
-            {"Holidays"}
-          </Heading>
-          <RecipeTagDistributionGraph distributions={holidayDistribution} />
-        </>
-      )}
+      {DISTRIBUTIONS
+        // @ts-expect-error this is fine
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        .filter(({ key }) => Boolean(year[key].length))
+        .map(({ key, text }) => (
+          <>
+            <Heading as="h3" mt="3" size="md">
+              {text}
+            </Heading>
+            <RecipeTagDistributionGraph
+              // @ts-expect-error this is fine
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              distributions={year[key]}
+              key={key}
+            />
+          </>
+        ))}
       <Heading as="h3" mt="5" size="md">
         {"Recipes made"}
       </Heading>

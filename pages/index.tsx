@@ -12,7 +12,7 @@ import {
   chakra,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
-import { SearchIcon, ViewIcon } from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
 import { IoIosFunnel } from "react-icons/io";
 
 import { Layout } from "../src/client/components/layout";

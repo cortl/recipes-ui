@@ -26,11 +26,9 @@ type StatsPageProps = {
 const StatsPage: NextPage<StatsPageProps> = ({ statistics }) => {
   const { colorMode } = useColorMode();
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const { years } = statistics;
   const borderColor =
     colorMode === "light" ? "blackAlpha.300" : "whiteAlpha.300";
-
-  // TODO: this is to fix mobile view
-  const years = React.useMemo(() => statistics.years.slice(0, 4), [statistics]);
 
   return (
     <Layout description="Statistics" title="Statistics" url={baseUrl}>
@@ -43,10 +41,10 @@ const StatsPage: NextPage<StatsPageProps> = ({ statistics }) => {
           borderColor={borderColor}
           borderRadius="lg"
           mt="8"
-          padding="5"
+          padding={{ base: 2, md: 4 }}
           variant="soft-rounded"
         >
-          <TabList>
+          <TabList overflowX="auto" pb="2">
             {years.map((year) => (
               <Tab key={year.title}>{year.title}</Tab>
             ))}
