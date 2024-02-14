@@ -22,7 +22,7 @@ const YearStats: React.FC<YearStatsProps> = (year) => {
 
   return (
     <TabPanel padding={{ base: 0, md: 4 }}>
-      <Heading as="h2" mb="5" mt="5" size="lg">
+      <Heading as="h2" mb="5" mt="5" size="lg" textAlign="center">
         {title}
       </Heading>
       <StatsOverview {...year} />
