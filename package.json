@@ -1,9 +1,11 @@
 {
   "name": "recipes-ui",
   "private": true,
+  "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "publish": "VERSION=$(jq -r .version package.json) && docker build -t cortl/recipes-ui:$VERSION . ",
     "start": "next start -p 8080",
     "lint": "next lint && npx eslint src",
     "lint:fix": "next lint --fix && npx eslint src --fix",
