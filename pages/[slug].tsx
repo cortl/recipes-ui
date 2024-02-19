@@ -187,7 +187,7 @@ const RecipePage: NextPage<RecipePageProps> = ({
             ))}
           </List>
         </Stack>
-        {relatedRecipes.length && (
+        {Boolean(relatedRecipes.length) && (
           <Stack as="section" mt={8}>
             <Heading borderBottom="1px" borderColor={borderColor} size="xl">
               {"Related"}
