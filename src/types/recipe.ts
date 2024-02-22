@@ -19,10 +19,10 @@ type Source = {
 };
 
 type Image = {
-  height: number
-  width: number
-  path: string
-}
+  height: number;
+  width: number;
+  path: string;
+};
 
 type Recipe = {
   title: string;
