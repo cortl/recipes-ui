@@ -1,7 +1,5 @@
 import { GraphQLError } from "graphql";
 import Fuse from "fuse.js";
-import sharp from "sharp";
-import fetch from "node-fetch";
 
 import * as RecipeRepository from "../../repository/recipes";
 import type {
@@ -86,38 +84,13 @@ const recipeResolver = async (
   return recipe;
 };
 
-const imageResolver = async ({ image }: Recipe): Promise<Image | null> => {
+const imageResolver = ({ image }: Recipe): Image | null => {
   if (image) {
-    try {
-      const imageUrl = `https://storage.googleapis.com/cortl-recipe-images/${image}`;
-      const response = await fetch(imageUrl);
-
-      if (!response.ok) {
-        return null;
-      }
-
-      const buffer = await response.arrayBuffer();
-      const metadata = await sharp(buffer).metadata();
-
-      if (!metadata.width) {
-        return null;
-      }
-
-      if (!metadata.height) {
-        return null;
-      }
-
-      return {
-        height: metadata.height,
-        url: imageUrl,
-        width: metadata.width,
-      };
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-
-      return null;
-    }
+    return {
+      height: image.height,
+      url: `https://storage.googleapis.com/cortl-recipe-images/${image.path}`,
+      width: image.width,
+    };
   }
 
   return null;

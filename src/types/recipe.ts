@@ -18,6 +18,12 @@ type Source = {
   name: string;
 };
 
+type Image = {
+  height: number
+  width: number
+  path: string
+}
+
 type Recipe = {
   title: string;
   servings: number;
@@ -31,7 +37,7 @@ type Recipe = {
   ingredients: Ingredient[];
   tags: string[];
   time: Time[];
-  image: string | null;
+  image: Image | null;
   related?: string[] | null;
 
   [key: string]: unknown;
