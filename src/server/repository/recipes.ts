@@ -39,23 +39,15 @@ const getRecipes = async (): Promise<Recipe[]> => {
     return cachedRecipes;
   }
 
-  const bucket = storage.bucket(RECIPE_BUCKET);
-
   try {
     // eslint-disable-next-line no-console
     console.log("Fetching new recipes");
 
-    const [files] = await bucket.getFiles();
+    const file = storage.bucket(RECIPE_BUCKET).file(`index.json`);
+    const [content] = await file.download();
 
-    const jsonFiles = files.filter((file) => file.name.endsWith(".json"));
-
-    const recipes = await Promise.all(
-      jsonFiles.map(async (file) => {
-        const [content] = await file.download();
-
-        return JSON.parse(content.toString()) as Recipe;
-      }),
-    );
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const recipes: Recipe[] = JSON.parse(content.toString());
 
     cachedRecipes = recipes;
     lastFetchTime = new Date();
