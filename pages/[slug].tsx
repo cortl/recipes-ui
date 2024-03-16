@@ -142,6 +142,7 @@ const RecipePage: NextPage<RecipePageProps> = ({
                   onLoad={(): void => {
                     setImageLoaded(true);
                   }}
+                  priority
                   src={image.url}
                   width={image.width}
                 />

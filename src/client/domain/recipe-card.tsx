@@ -45,6 +45,7 @@ const RecipeCard: React.FC<IRecipeCard> = ({
                 onLoad={(): void => {
                   setLoaded(true);
                 }}
+                priority
                 src={image.url}
                 width={image.width}
               />
