@@ -58,6 +58,11 @@ const recipesResolver = async (
 
   if (args.where?.title?.like) {
     const fuse = new Fuse(results, {
+      findAllMatches: true,
+      ignoreLocation: true,
+      includeMatches: true,
+      includeScore: true,
+      isCaseSensitive: false,
       keys: ["title"],
     });
 
