@@ -1,4 +1,4 @@
-const HOLIDAYS = ["Thanksgiving", "Christmas", "Super Bowl"];
+const HOLIDAYS = ["Thanksgiving", "Christmas", "Super Bowl", "Camping"];
 
 const METHODS = [
   "Baking",

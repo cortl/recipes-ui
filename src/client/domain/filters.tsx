@@ -27,7 +27,7 @@ const FILTERS = [
   { name: "Protein", tags: PROTEINS },
   { name: "Meal", tags: MEAL_TYPES },
   { name: "Methods", tags: METHODS },
-  { name: "Holidays", tags: HOLIDAYS },
+  { name: "Events", tags: HOLIDAYS },
 ];
 
 const Filters: React.FC<IFilters> = ({ onChange }) => {
